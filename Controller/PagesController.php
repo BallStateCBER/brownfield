@@ -173,4 +173,8 @@ class PagesController extends AppController {
 		$this->Flash->success('Cache cleared');
 		$this->render('home');
 	}
+
+	public function testimonials() {
+		$this->set('title_for_layout', 'Testimonials');
+	}
 }
