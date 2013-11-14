@@ -36,5 +36,9 @@ class AppController extends Controller {
 		'Js' => array('Jquery'),
 		'Cache'
 	);
-	public $components = array('DataCenter.Flash');
+	public $components = array(
+		'DataCenter.Flash',
+		'Cookie',
+		'RequestHandler'
+	);
 }
