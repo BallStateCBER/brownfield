@@ -154,4 +154,12 @@ class PagesController extends AppController {
 			)
 		));
 	}
+
+	public function grants_awarded() {
+		$this->loadModel('Datum');
+		$this->set(array(
+			'grants' => $this->Datum->getGrantsAwarded(),
+			'title_for_layout' => 'Brownfield Grants Awarded in Indiana'
+		));
+	}
 }
