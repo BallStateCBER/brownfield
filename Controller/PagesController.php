@@ -42,4 +42,24 @@ class PagesController extends AppController {
 			'topics' => $this->Report->getTopicList()
 		));
 	}
+	
+	public function select_tab($county = null) {
+		$this->set(array(
+			'county' => $county, 
+			'title_for_layout' => null
+		));
+	}
+
+	// Redirects /:state to /:state/:first-county/:first-topic
+	public function select_county($state) {
+		$this->loadModel('Location');
+		$state_id = $this->Location->getStateID($state);
+		list($county_id, $county_name) = $this->Location->getFirstCounty($state_id);
+		$state_abbrev = strtolower($this->Location->getStateAbbreviation($state));
+		$this->redirect("/$state_abbrev/$county_name/population");
+	}
+
+	public function select_chart($state, $county) {
+		$this->redirect("/$state/$county/population");
+	}
 }
