@@ -162,4 +162,8 @@ class PagesController extends AppController {
 			'title_for_layout' => 'Brownfield Grants Awarded in Indiana'
 		));
 	}
+
+	public function resources() {
+		$this->set('title_for_layout', 'Additional Resources');
+	}
 }
