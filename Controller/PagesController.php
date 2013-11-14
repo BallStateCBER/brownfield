@@ -166,4 +166,11 @@ class PagesController extends AppController {
 	public function resources() {
 		$this->set('title_for_layout', 'Additional Resources');
 	}
+	
+	public function clear_cache() {
+		Cache::clear();
+		clearCache();
+		$this->Flash->success('Cache cleared');
+		$this->render('home');
+	}
 }
