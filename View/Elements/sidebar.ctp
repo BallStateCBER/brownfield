@@ -1,16 +1,18 @@
 <?php
-extract($sidebar_vars);
-/* Provides the following:
- * 		$states
- * 		$state_abbreviations
- * 		$selected_state
- * 		$selected_county
- * 		$selected_tab
- * 		$selected_topic
- * 		$sidebar_mode
- * 		$topics
- * 		$profiles_link 		*/
-$logged_in = $this->Session->check('Auth.User.id');
+	App::import('Lib', 'SetSharedVars');
+	$sidebar_vars = getSharedVariables($this->params);
+
+	/* Provides the following:
+	 * 		$states
+	 * 		$state_abbreviations
+	 * 		$selected_state
+	 * 		$selected_county
+	 * 		$selected_tab
+	 * 		$selected_topic
+	 * 		$sidebar_mode
+	 * 		$topics
+	 * 		$profiles_link 		*/
+	$logged_in = $this->Session->check('Auth.User.id');
 ?>
 
 <div id="sidebar">
