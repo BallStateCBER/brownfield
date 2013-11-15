@@ -31,7 +31,7 @@ class CsvReport extends Report {
 		return $table;
 	}
 	
-	public function renderIfDataIsAvailable($values, $view = '/tables/table') {
+	public function renderIfDataIsAvailable($values, $view = '/Tables/table') {
 		if ($this->recursiveImplode('', $values) != '') {
 			// data is available
 		} else {
