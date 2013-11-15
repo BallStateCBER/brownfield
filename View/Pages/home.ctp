@@ -1,188 +1,126 @@
 <?php
-/**
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.View.Pages
- * @since         CakePHP(tm) v 0.10.0.1076
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-if (Configure::read('debug') == 0):
-	throw new NotFoundException();
-endif;
-App::uses('Debugger', 'Utility');
-?>
-<iframe src="http://cakephp.org/bake-banner" width="830" height="160" style="overflow:hidden; border:none;">
-	<p>For updates and important announcements, visit http://cakefest.org</p>
-</iframe>
-<h2><?php echo __d('cake_dev', 'Release Notes for CakePHP %s.', Configure::version()); ?></h2>
-<a href="http://cakephp.org/changelogs/<?php echo Configure::version(); ?>"><?php echo __d('cake_dev', 'Read the changelog'); ?> </a>
-<?php
-if (Configure::read('debug') > 0):
-	Debugger::checkSecurityKeys();
-endif;
-?>
-<p id="url-rewriting-warning" style="background-color:#e32; color:#fff;">
-	<?php echo __d('cake_dev', 'URL rewriting is not properly configured on your server.'); ?>
-	1) <a target="_blank" href="http://book.cakephp.org/2.0/en/installation/advanced-installation.html#apache-and-mod-rewrite-and-htaccess" style="color:#fff;">Help me configure it</a>
-	2) <a target="_blank" href="http://book.cakephp.org/2.0/en/development/configuration.html#cakephp-core-configuration" style="color:#fff;">I don't / can't use URL rewriting</a>
-</p>
-<p>
-<?php
-	if (version_compare(PHP_VERSION, '5.2.8', '>=')):
-		echo '<span class="notice success">';
-			echo __d('cake_dev', 'Your version of PHP is 5.2.8 or higher.');
-		echo '</span>';
-	else:
-		echo '<span class="notice">';
-			echo __d('cake_dev', 'Your version of PHP is too low. You need PHP 5.2.8 or higher to use CakePHP.');
-		echo '</span>';
-	endif;
-?>
-</p>
-<p>
-	<?php
-		if (is_writable(TMP)):
-			echo '<span class="notice success">';
-				echo __d('cake_dev', 'Your tmp directory is writable.');
-			echo '</span>';
-		else:
-			echo '<span class="notice">';
-				echo __d('cake_dev', 'Your tmp directory is NOT writable.');
-			echo '</span>';
-		endif;
-	?>
-</p>
-<p>
-	<?php
-		$settings = Cache::settings();
-		if (!empty($settings)):
-			echo '<span class="notice success">';
-				echo __d('cake_dev', 'The %s is being used for core caching. To change the config edit APP/Config/core.php ', '<em>'. $settings['engine'] . 'Engine</em>');
-			echo '</span>';
-		else:
-			echo '<span class="notice">';
-				echo __d('cake_dev', 'Your cache is NOT working. Please check the settings in APP/Config/core.php');
-			echo '</span>';
-		endif;
-	?>
-</p>
-<p>
-	<?php
-		$filePresent = null;
-		if (file_exists(APP . 'Config' . DS . 'database.php')):
-			echo '<span class="notice success">';
-				echo __d('cake_dev', 'Your database configuration file is present.');
-				$filePresent = true;
-			echo '</span>';
-		else:
-			echo '<span class="notice">';
-				echo __d('cake_dev', 'Your database configuration file is NOT present.');
-				echo '<br/>';
-				echo __d('cake_dev', 'Rename APP/Config/database.php.default to APP/Config/database.php');
-			echo '</span>';
-		endif;
-	?>
-</p>
-<?php
-if (isset($filePresent)):
-	App::uses('ConnectionManager', 'Model');
-	try {
-		$connected = ConnectionManager::getDataSource('default');
-	} catch (Exception $connectionError) {
-		$connected = false;
+	$total_topics = 0;
+	foreach ($topics as $c => $t) {
+		$total_topics += count($t);
 	}
 ?>
-<p>
-	<?php
-		if ($connected && $connected->isConnected()):
-			echo '<span class="notice success">';
-	 			echo __d('cake_dev', 'Cake is able to connect to the database.');
-			echo '</span>';
-		else:
-			echo '<span class="notice">';
-				echo __d('cake_dev', 'Cake is NOT able to connect to the database.');
-				echo '<br /><br />';
-				echo $connectionError->getMessage();
-			echo '</span>';
-		endif;
-	?>
-</p>
-<?php endif;?>
-<?php
-	App::uses('Validation', 'Utility');
-	if (!Validation::alphaNumeric('cakephp')) {
-		echo '<p><span class="notice">';
-			echo __d('cake_dev', 'PCRE has not been compiled with Unicode support.');
-			echo '<br/>';
-			echo __d('cake_dev', 'Recompile PCRE with Unicode support by adding <code>--enable-unicode-properties</code> when configuring');
-		echo '</span></p>';
-	}
+
+<div id="site_intro">
+	<?php if (! $this->Session->check('Auth.User.id')): ?>
+		<p>
+			<?php echo $this->Html->link(
+				'Sign up for a <strong>free account</strong>',
+				array('controller' => 'users', 'action' => 'register'),
+				array('escape' => false)
+			); ?>
+			or
+			<?php echo $this->Html->link(
+				'log in',
+				array('controller' => 'users', 'action' => 'login'),
+				array('id' => 'login_link_home')
+			); ?>
+			<?php
+				$this->Js->get('#login_link_home');
+				$this->Js->event('click', "showSidebarLogin()", array('stop' => true));
+			?>
+			to access the Brownfield Grant Writers' Tool.
+		</p>
+	<?php endif; ?>
+
+	<h1>Data</h1>
+	<div class="section">
+		<p>
+			Browse graphs, data tables, and downloadable spreadsheets of up-to-date, county-level data.
+			All data includes links to the original source to assist you in further research. 
+		</p>
+		<div class="previews">
+			<a href="/img/preview/preview4.png" rel="shadowbox[Previews]"><img src="/img/preview/preview4.png" /></a>
+			<a href="/img/preview/preview1.png" rel="shadowbox[Previews]"><img src="/img/preview/preview1.png" /></a>
+			<a href="/img/preview/preview3.png" rel="shadowbox[Previews]"><img src="/img/preview/preview3.png" /></a>
+		</div>
+	</div>
+
+	<h1>Topics</h1>
+	<div>
+		<div class="section">
+			<p>
+				Each of our <?php echo $total_topics; ?> topics, covering the <strong>demographics</strong>, 
+				<strong>economics</strong>, and <strong>health</strong> of your county, include explanations
+				of the topic's relevance to brownfield sites and brownfield cleanup efforts.
+			</p>
+			<div id="preview_topics_teaser">
+				<div>
+					<ul>
+						<li>Cancer Death and Incidence Rates</li>
+						<li>Death Rate by Cause</li>
+						<li>Age Breakdown of Disabled Citizens</li>
+						<li>Percent of Citizens in Poverty</li>
+						<li>Unemployment Rate</li>
+						<li>Personal and Household Income</li>
+						<li><a href="#" id="preview_all_topics">View all <?php echo $total_topics; ?>...</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="preview_topics_full" style="display: none;">
+				<table>
+					<?php foreach ($topics as $category => $category_topics): ?>
+						<tr>
+							<td>
+								<img src="/img/<?php echo $category; ?>.png" />
+							</td>
+							<td>
+								<ul>
+									<?php foreach ($category_topics as $topic_key => $topic_title): ?>
+										<li>
+											<?php echo $topic_title; ?>
+										</li>
+									<?php endforeach; ?>
+								</ul>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<h1>TIF-in-a-Box</h1>
+	<div class="section">
+		<p>
+			Our <strong>TIF-in-a-Box</strong> feature presents information about Tax Increment Financing, 
+			a tool used by local governments to allocate changes to local taxes caused by new business development 
+			for a specific purpose. 
+		</p>
+		<p>
+			Included in TIF-in-a-Box is the <strong>Economic Impact Calculator</strong>, a tool for estimating 
+			the economic and fiscal effects of new business development.
+		</p>
+		<div class="previews">
+			<a href="/img/preview/preview5.png" rel="shadowbox[Previews_Calc]"><img src="/img/preview/preview5.png" /></a>
+			<a href="/img/preview/preview6.png" rel="shadowbox[Previews_Calc]"><img src="/img/preview/preview6.png" /></a>
+		</div>
+	</div>
+	
+	<p id="frontpage_feedback">
+		<strong>We want your feedback</strong> to help us continue to improve this resource. If you have success stories,
+		requests for improvements, or any other comments or questions about this website, please 
+		email Project Manager Srikant Devaraj at <a href="mailto:sdevaraj@bsu.edu">sdevaraj@bsu.edu</a>.
+	</p>
+</div>
+
+<?php 
+	// Add to the JS buffer
+	$this->Js->buffer("
+		$('preview_all_topics').observe('click', function (event) {
+			event.stop();
+			Effect.SlideUp('preview_topics_teaser', {
+				duration: 0.5,
+				afterFinish: function() {
+					Effect.SlideDown('preview_topics_full', {
+						duration: 0.5
+					});
+				}
+			});
+		});
+	");
 ?>
-<h3><?php echo __d('cake_dev', 'Editing this Page'); ?></h3>
-<p>
-<?php
-echo __d('cake_dev', 'To change the content of this page, create: APP/View/Pages/home.ctp.<br />
-To change its layout, create: APP/View/Layouts/default.ctp.<br />
-You can also add some CSS styles for your pages at: APP/webroot/css.');
-?>
-</p>
-
-<h3><?php echo __d('cake_dev', 'Getting Started'); ?></h3>
-<p>
-	<?php
-		echo $this->Html->link(
-			sprintf('<strong>%s</strong> %s', __d('cake_dev', 'New'), __d('cake_dev', 'CakePHP 2.0 Docs')),
-			'http://book.cakephp.org/2.0/en/',
-			array('target' => '_blank', 'escape' => false)
-		);
-	?>
-</p>
-<p>
-	<?php
-		echo $this->Html->link(
-			__d('cake_dev', 'The 15 min Blog Tutorial'),
-			'http://book.cakephp.org/2.0/en/tutorials-and-examples/blog/blog.html',
-			array('target' => '_blank', 'escape' => false)
-		);
-	?>
-</p>
-
-<h3><?php echo __d('cake_dev', 'More about Cake'); ?></h3>
-<p>
-<?php echo __d('cake_dev', 'CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Active Record, Association Data Mapping, Front Controller and MVC.'); ?>
-</p>
-<p>
-<?php echo __d('cake_dev', 'Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.'); ?>
-</p>
-
-<ul>
-	<li><a href="http://cakefoundation.org/"><?php echo __d('cake_dev', 'Cake Software Foundation'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'Promoting development related to CakePHP'); ?></li></ul></li>
-	<li><a href="http://www.cakephp.org"><?php echo __d('cake_dev', 'CakePHP'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'The Rapid Development Framework'); ?></li></ul></li>
-	<li><a href="http://book.cakephp.org"><?php echo __d('cake_dev', 'CakePHP Documentation'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'Your Rapid Development Cookbook'); ?></li></ul></li>
-	<li><a href="http://api20.cakephp.org"><?php echo __d('cake_dev', 'CakePHP API'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'Quick Reference'); ?></li></ul></li>
-	<li><a href="http://bakery.cakephp.org"><?php echo __d('cake_dev', 'The Bakery'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'Everything CakePHP'); ?></li></ul></li>
-	<li><a href="http://live.cakephp.org"><?php echo __d('cake_dev', 'The Show'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'The Show is a live and archived internet radio broadcast CakePHP-related topics and answer questions live via IRC, Skype, and telephone.'); ?></li></ul></li>
-	<li><a href="http://groups.google.com/group/cake-php"><?php echo __d('cake_dev', 'CakePHP Google Group'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'Community mailing list'); ?></li></ul></li>
-	<li><a href="irc://irc.freenode.net/cakephp">irc.freenode.net #cakephp</a>
-	<ul><li><?php echo __d('cake_dev', 'Live chat about CakePHP'); ?></li></ul></li>
-	<li><a href="http://github.com/cakephp/"><?php echo __d('cake_dev', 'CakePHP Code'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'For the Development of CakePHP Git repository, Downloads'); ?></li></ul></li>
-	<li><a href="http://cakephp.lighthouseapp.com/"><?php echo __d('cake_dev', 'CakePHP Lighthouse'); ?> </a>
-	<ul><li><?php echo __d('cake_dev', 'CakePHP Tickets, Wiki pages, Roadmap'); ?></li></ul></li>
-</ul>
