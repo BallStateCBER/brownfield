@@ -72,6 +72,7 @@ class PagesController extends AppController {
 		$topic = (isset($path_parts[2]) && ! empty($path_parts[2])) ? $path_parts[2] : null;
 
 		// Validate county
+		$this->loadModel('Location');
 		$state_id = is_numeric($state) ? $state : $this->Location->getStateID($state);
 		$state_full_name = $this->Location->getStateFullName($state_id);
 		if (! $this->Location->isCountyInState($county, $state_id)) {
