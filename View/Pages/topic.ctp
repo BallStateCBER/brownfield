@@ -20,7 +20,7 @@
 <div class="topic">
 	<?php
 		$element_cache_key = "$selected_topic.$state_abbreviation.$county_name_simplified";
-		$description = '<p class="description">'.$text->autoLink(nl2br($description)).'</p>';
+		$description = '<p class="description">'.$this->Text->autoLink(nl2br($description)).'</p>';
 		
 		$chart = $this->element('reports/chart', array(
 			'topic' => $selected_topic, 
