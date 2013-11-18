@@ -15,7 +15,7 @@
 	<?php if (! isset($_GET['v1'])): ?>
 		<?php
 			$topic = $selected_topic;
-			$description = '<p class="description">'.$text->autoLink(nl2br($description)).'</p>';
+			$description = '<p class="description">'.$this->Text->autoLink(nl2br($description)).'</p>';
 			
 			$chart_availability = $this->requestAction("/reports/getStatus/chart/$topic/$state_id/$county_id");
 			$chart = $this->element('reports/chart', array(
@@ -82,7 +82,7 @@
 					Sorry, but this chart is not currently available. Please check back later.
 				</p>
 			<?php endif; ?>
-			<p class="description"><?php echo $text->autoLink(nl2br($description)); ?></p>
+			<p class="description"><?php echo $this->Text->autoLink(nl2br($description)); ?></p>
 			<fieldset class="collapsible collapsed">
 				<legend>Data Table</legend>
 				<?php echo $this->element('table', array('selectedChart' => $selected_topic, 'county_id' => $county_id)); ?>
@@ -94,7 +94,7 @@
 				<?php if (isset($sources) && ! empty($sources)): ?>
 					<ul>
 						<?php foreach ($sources as $source): ?>
-							<li><?php echo $text->autoLink(nl2br($source)); ?></li>
+							<li><?php echo $this->Text->autoLink(nl2br($source)); ?></li>
 						<?php endforeach; ?>
 					</ul>
 				<?php else: ?>
