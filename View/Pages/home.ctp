@@ -88,17 +88,11 @@
 </div>
 
 <?php 
-	// Add to the JS buffer
 	$this->Js->buffer("
-		$('preview_all_topics').observe('click', function (event) {
-			event.stop();
-			Effect.SlideUp('preview_topics_teaser', {
-				duration: 0.5,
-				afterFinish: function() {
-					Effect.SlideDown('preview_topics_full', {
-						duration: 0.5
-					});
-				}
+		$('#preview_all_topics').click(function (event) {
+			event.preventDefault();
+			$('#preview_topics_teaser').slideUp(500, function() {
+				$('#preview_topics_full').slideDown(500);
 			});
 		});
 	");
