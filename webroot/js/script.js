@@ -31,7 +31,7 @@ function onNavSubmenuHandleClick(tab) {
 	var nav_submenu_handle = $('#nav_submenu_handle_' + tab);
 	var nav_submenu = $('#nav_submenu_' + tab);
 	nav_submenu.slideToggle({
-		duration: 500;
+		duration: 500,
 		start: function() {
 			if (nav_submenu.is(':visible')) {
 				nav_submenu_handle.attr('class', 'closed');
