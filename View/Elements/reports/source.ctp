@@ -2,7 +2,7 @@
 	<?php if (isset($sources) && ! empty($sources)): ?>
 		<ul>
 			<?php foreach ($sources as $source): ?>
-				<li><?php echo $text->autoLink(nl2br($source)); ?></li>
+				<li><?php echo $this->Text->autoLink(nl2br($source)); ?></li>
 			<?php endforeach; ?>
 		</ul>
 	<?php else: ?>
