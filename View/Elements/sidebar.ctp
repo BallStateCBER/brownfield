@@ -32,13 +32,46 @@
 		<div class="other_links">
 			<a href="/">Home</a>
 			<?php if ($logged_in): ?>
-				<?php echo $this->Html->link('Brownfield Grants Awarded in Indiana', array('controller' => 'pages', 'action' => 'grants_awarded')); ?>
-				<?php echo $this->Html->link('TIF-in-a-Box', array('controller' => 'calculators', 'action' => 'tif')); ?>
-				<?php echo $this->Html->link('Additional Resources', array('controller' => 'pages', 'action' => 'resources')); ?>
+				<?php echo $this->Html->link(
+					'Brownfield Grants Awarded in Indiana', 
+					array(
+						'controller' => 'pages', 
+						'action' => 'grants_awarded'
+					)
+				); ?>
+				<?php echo $this->Html->link(
+					'TIF-in-a-Box', 
+					array(
+						'controller' => 'calculators', 
+						'action' => 'tif'
+					)
+				); ?>
+				<?php echo $this->Html->link(
+					'Additional Resources', 
+					array(
+						'controller' => 'pages', 
+						'action' => 'resources'
+					)
+				); ?>
 				<a href="http://profiles.cberdata.org/">CBER County Profiles</a>
-				<?php echo $this->Html->link('Log Out', array('controller' => 'users', 'action' => 'logout')); ?>
+				<?php echo $this->Html->link(
+					'Log Out', 
+					array(
+						'controller' => 'users', 
+						'action' => 'logout'
+					)
+				); ?>
 			<?php else: ?>
-				<?php echo $this->Html->link('Log In', array('controller' => 'users', 'action' => 'login'), array('id' => 'login_link_sidebar')); ?>
+				<?php echo $this->Html->link(
+					'Log In', 
+					array(
+						'controller' => 'users', 
+						'action' => 'login'
+					), 
+					array(
+						'id' => 'login_link_sidebar'
+					)
+				); ?>
 				<?php if (! (isset($this->params['action']) && $this->params['action'] == 'login')): ?>
 					<?php
 						$this->Js->get('#login_link_sidebar');
@@ -50,10 +83,28 @@
 						</div>
 					</div>
 				<?php endif; ?>
-				<?php echo $this->Html->link('Register Account', array('controller' => 'users', 'action' => 'register')); ?>
+				<?php echo $this->Html->link(
+					'Register Account', 
+					array(
+						'controller' => 'users', 
+						'action' => 'register'
+					)
+				); ?>
 			<?php endif; ?>
-			<?php echo $this->Html->link('Testimonials', array('controller' => 'pages', 'action' => 'testimonials')); ?>
-			<?php echo $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'contact')); ?>
+			<?php echo $this->Html->link(
+				'Testimonials', 
+				array(
+					'controller' => 'pages', 
+					'action' => 'testimonials'
+				)
+			); ?>
+			<?php echo $this->Html->link(
+				'Contact Us', 
+				array(
+					'controller' => 'pages', 
+					'action' => 'contact'
+				)
+			); ?>
 		</div>
 	</div>
 	
