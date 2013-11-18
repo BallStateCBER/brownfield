@@ -6,27 +6,6 @@
 ?>
 
 <div id="site_intro">
-	<?php if (! $this->Session->check('Auth.User.id')): ?>
-		<p>
-			<?php echo $this->Html->link(
-				'Sign up for a <strong>free account</strong>',
-				array('controller' => 'users', 'action' => 'register'),
-				array('escape' => false)
-			); ?>
-			or
-			<?php echo $this->Html->link(
-				'log in',
-				array('controller' => 'users', 'action' => 'login'),
-				array('id' => 'login_link_home')
-			); ?>
-			<?php
-				$this->Js->get('#login_link_home');
-				$this->Js->event('click', "showSidebarLogin()", array('stop' => true));
-			?>
-			to access the Brownfield Grant Writers' Tool.
-		</p>
-	<?php endif; ?>
-
 	<h1>Data</h1>
 	<div class="section">
 		<p>
