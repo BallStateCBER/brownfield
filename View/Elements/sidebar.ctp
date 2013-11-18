@@ -1,7 +1,4 @@
 <?php
-	require_once(APPLIBS.'set_shared_vars.php');
-	$sidebar_vars = getSharedVariables($this->params);
-
 	/* Provides the following:
 	 * 		$states
 	 * 		$state_abbreviations
@@ -12,6 +9,9 @@
 	 * 		$sidebar_mode
 	 * 		$topics
 	 * 		$profiles_link 		*/
+	require_once(APPLIBS.'set_shared_vars.php');
+	$sidebar_vars = getSharedVariables($this->params);
+	extract($sidebar_vars);
 ?>
 
 <div id="sidebar">
