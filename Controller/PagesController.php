@@ -67,7 +67,7 @@ class PagesController extends AppController {
 	 * If no topic is provided, will default to the first topic listed in ReportsController::getTopicList() */
 	public function topic($state = null) {
 		// Collect parameters from the URL
-		$path_parts = explode('/', $this->request->params['url']['url']);
+		$path_parts = $this->request->params['pass'];
 		$county = isset($path_parts[1]) ? $path_parts[1] : null;
 		$topic = (isset($path_parts[2]) && ! empty($path_parts[2])) ? $path_parts[2] : null;
 
