@@ -16,7 +16,9 @@
 		source_availability
 		sources
 */ ?>
-<h1 class="page_title"><?php echo $topic_full_name; ?></h1>
+<h1 class="page_title">
+	<?php echo $topic_full_name; ?>
+</h1>
 <div class="topic">
 	<?php
 		$element_cache_key = "$selected_topic.$state_abbreviation.$county_name_simplified";
@@ -47,6 +49,7 @@
 			'sources' => $sources
 		));
 	?>
+	
 	<?php if ($chart_availability == 1): // Chart not supported for this topic ?>
 		<?php echo $table; ?>
 		<?php echo $description; ?>
@@ -54,13 +57,18 @@
 		<?php echo $chart ?>
 		<?php echo $description; ?>
 		<fieldset class="collapsible collapsed">
-			<legend>Data Table</legend>
+			<legend>
+				Data Table
+			</legend>
 			<?php echo $table; ?>
 		</fieldset>
 	<?php endif; ?>
+	
 	<?php if ($csv_availability == 0 || $excel5_availability == 0 || $excel2007_availability == 0): ?>
 		<fieldset class="collapsible collapsed">
-			<legend>Download Spreadsheet</legend>
+			<legend>
+				Download Spreadsheet
+			</legend>
 			<div>
 				<ul class="download_options">
 					<?php if ($excel2007_availability == 0): ?>
@@ -75,10 +83,14 @@
 									'state' => $state_abbreviation, 
 									'county' => $county_name_simplified
 								),
-								array('escape' => false, 'title' => 'Download Excel 2007 spreadsheet')
+								array(
+									'escape' => false, 
+									'title' => 'Download Excel 2007 spreadsheet'
+								)
 							); ?>
 						</li>
 					<?php endif; ?>
+					
 					<?php if ($excel5_availability == 0): ?>
 						<li>
 							<?php echo $this->Html->link(
@@ -91,10 +103,14 @@
 									'state' => $state_abbreviation, 
 									'county' => $county_name_simplified
 								),
-								array('escape' => false, 'title' => 'Download Excel 5.0 spreadsheet')
+								array(
+									'escape' => false, 
+									'title' => 'Download Excel 5.0 spreadsheet'
+								)
 							); ?>
 						</li>
 					<?php endif; ?>
+					
 					<?php if ($csv_availability == 0): ?>
 						<li>
 							<?php echo $this->Html->link(
@@ -107,7 +123,10 @@
 									'state' => $state_abbreviation, 
 									'county' => $county_name_simplified
 								),
-								array('escape' => false, 'title' => 'Download CSV (comma-separated values) spreadsheet')
+								array(
+									'escape' => false, 
+									'title' => 'Download CSV (comma-separated values) spreadsheet'
+								)
 							); ?>
 						</li>
 					<?php endif; ?>
@@ -115,8 +134,11 @@
 			</div>
 		</fieldset>
 	<?php endif; ?>
+	
 	<fieldset class="collapsible collapsed">
-		<legend>Source</legend>
+		<legend>
+			Source
+		</legend>
 		<?php echo $source_element; ?>
 	</fieldset> 
 </div>
