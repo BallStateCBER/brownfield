@@ -17,7 +17,7 @@
 	$passed = $this->request->params['pass'];
 	if (isset($passed[1]) && $passed[1] == 'all_charts') {
 		$path = 'all_charts';
-	} elseif (in_array($passed[0], $state_abbreviations) && in_array($passed[1], $counties_simplified)) {
+	} elseif (count($passed) >= 2 && in_array($passed[0], $state_abbreviations) && in_array($passed[1], $counties_simplified)) {
 		$path = implode('/', array_slice($passed, 2)); // the part of the current path AFTER state and county
 	} else {
 		$path = '';
