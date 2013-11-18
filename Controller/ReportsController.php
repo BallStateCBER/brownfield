@@ -51,7 +51,6 @@ class ReportsController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('*');
 		$this->cache_reports = Configure::read('cache_reports');
 	}
 
