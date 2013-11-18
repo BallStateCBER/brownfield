@@ -143,4 +143,4 @@
 	</fieldset> 
 </div>
 
-<script type="text/javascript">setupCollapsibleFieldsets();</script>
+<?php $this->Js->buffer("setupCollapsibleFieldsets();"); ?>
