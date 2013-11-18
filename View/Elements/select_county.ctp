@@ -24,7 +24,10 @@
 	}
 ?>
 <div id="county_selection">
-	<p>State</p>
+	<p>
+		State
+	</p>
+
 	<select name="state" id="select_state">
 		<?php foreach ($states as $state): ?>
 			<option value="<?php echo strtolower($state['Location']['abbreviation']); ?>"<?php if ($selected_state = $state['Location']['abbreviation']): ?>selected="selected"<?php endif; ?>>
@@ -32,11 +35,16 @@
 			</option>
 		<?php endforeach; ?>
 	</select>
-	<p>County</p>
+
+	<p>
+		County
+	</p>
+
 	<select name="county" id="select_county">
 		<?php if (! $selected_county): ?>
 			<option selected="selected"></option>
 		<?php endif; ?>
+		
 		<?php foreach ($counties_full_names as $id => $name): ?>
 			<option 
 				value="<?php echo $counties_simplified[$id]; ?>" 
