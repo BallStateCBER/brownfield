@@ -1,0 +1,530 @@
+/* TOPIC PAGES */
+div.topic {
+	img.chart {
+		display: block; 
+		margin: auto;
+	}
+	
+	p.chart_unavailable {
+		background-color: #FFCBAF; 
+		border: 1px solid #7F0000; 
+		color: #7F0000; 
+		padding: 5px;
+	}
+}
+
+.topic {
+	fieldset {
+		border: 1px solid black; 
+		margin-top: 10px; 
+		padding: 10px;
+	}
+	
+	legend {
+		background-color: white; 
+		font-family: "Palatino Linotype", Palatino, Georgia, serif; 
+		font-size: 22px; 
+		font-weight: normal; 
+		margin-left: 10px; 
+		padding: 0 5px;
+	}
+	
+	fieldset{
+		&.collapsible {
+			margin: 0 1px;
+		}
+		
+		&.collapsed {
+			border-width: 1px 0 0 0; 
+			margin: 0; 
+			padding-bottom: 0; 
+			padding-top: 0;
+		}
+	}
+	
+	.description {
+		padding: 20px 0;
+	}
+	
+	.description, 
+	.topic .source, 
+	.topic .resorting {
+		color: #333; 
+		font-size: 12px;
+	} 
+}
+
+div.chart {
+	img.chart {
+		display: block; 
+		margin: auto;
+	}
+}
+.chart {
+	fieldset {
+		border: 1px solid black; 
+		margin-top: 10px; 
+		padding: 10px;
+		
+		&.collapsible {
+			margin: 0 1px;
+		}
+		
+		&.collapsed {
+			border-width: 1px 0 0 0; 
+			margin: 0; 
+			padding-bottom: 0; 
+			padding-top: 0;
+		}
+	}
+	
+	legend {
+		background-color: white; 
+		font-family: "Palatino Linotype", Palatino, Georgia, serif; 
+		font-size: 22px; 
+		font-weight: normal; 
+		margin-left: 10px; 
+		padding: 0 5px;
+	}
+	
+	.description {
+		padding: 20px 0;
+	}
+	
+	.description, 
+	.topic .source, 
+	.topic .resorting {
+		color: #333; 
+		font-size: 12px;
+	}
+}
+.topic {
+	.download_options {
+		margin: 0;
+		
+		li {
+			list-style-type: none; 
+			padding: 0;
+		}
+	}
+}
+
+/* DATA TABLES */
+.datatable {
+	table {
+		background-color: #fff; 
+		border-collapse:collapse; 
+		font-size: 12px; 
+		margin: auto;
+		
+		tbody {
+			tr.no_header {
+				> td:first-child {
+					border-left: 0;
+				}
+			}
+		}
+	}
+	
+	thead {
+		th {
+			text-align: center;
+		}
+		
+		tr.sort_header {
+			th {
+				background-color: #DFEEFF; 
+				border-bottom: 1px solid #AFAFAF; 
+				border-right: 1px dotted #FFFFFF; 
+				border-top: 0 solid #FFFFFF; 
+				padding: 4px;
+			}
+		}
+	}
+	tbody {
+		th {
+			text-align: left; 
+			padding: 5px;
+		}
+		
+		td {
+			text-align: right; 
+			padding: 5px;
+			
+			&.increase {
+				color: green; 
+				font-weight: bold;
+			}
+			
+			&.decrease {
+				color: red; 
+				font-weight: bold;
+			}
+		}
+	}
+	tbody, 
+	tfoot {
+		th {
+			border-top: 1px solid #AFAFAF;
+		}
+		
+		td {
+			border-left: 1px dotted #AFAFAF;
+			border-top: 1px dotted #AFAFAF; 
+		}
+	} 
+	
+	th {
+		font-weight: bold;
+		
+		&.title {
+			font-size: 14px;
+		}
+	}
+	.resorting {
+		text-align: center;
+	}
+	
+	.footnotes {
+		border: 1px solid #DDD; 
+		margin: auto; 
+		padding: 5px; 
+		width: 400px;
+	}
+	
+	.sortable {
+		thead {
+			tr.sort_header {
+				th {
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}
+
+/* CALCULATOR */
+#calc_input_container {
+	height: auto; 
+	width: auto;
+	
+	div.field_name {
+		font-size: 12px; 
+		font-weight: bold;
+	}
+	
+	div.field_block {
+		clear: both; 
+		float: none;
+	}
+	
+	.field_block {
+		input {
+			text-align: right;
+		}
+	}
+	
+	input, 
+	select {
+		font-size: 12px; 
+		margin-bottom: 12px; 
+		width: 150px;
+	}
+}
+
+
+#basic_calc_input_container {
+	div.field_name {
+		font-size: 12px; 
+		font-weight: bold;
+	}
+	
+	.field_block {
+		margin-bottom: 20px;
+		
+		input {
+			text-align: left;
+		}
+	}
+	
+	.note {
+		font-size: 90%; 
+		font-weight: normal;
+	}
+	
+	.choose_option {
+		th,
+		td {
+			padding: 5px; 
+			vertical-align: top;
+		}
+	}
+}
+
+#basic_calc_input_container input, 
+#calc_input_container select {
+	font-size: 12px;
+}
+
+#basic_calc_input_output_separator {
+	clear: both; 
+	margin: 20px auto 20px auto; 
+	width: 80%;
+}
+
+#calc_industry_id {
+	position: relative; 
+	z-index: 2;
+}
+#calc_loading_graphic_container {
+	float: right;
+
+	img {
+		margin-right: 7px; 
+		margin-top: 7px; 
+		vertical-align: middle;
+	}	
+}
+
+#calc_output_container {
+	float: left; 
+	font-size: 13px; 
+	margin: 0 0 40px 25px;
+	
+	.row {
+		border-bottom: 1px dotted #333333; 
+		clear: both; 
+		padding: 5px 0; 
+		text-align: right;
+	}
+	
+	.value_name {
+		float: left; 
+		margin-right: 10px; 
+		text-align: left;
+		
+		img {
+			vertical-align: middle;
+		}
+	}
+	
+	.value_amount {
+		display: inline; 
+		font-weight: bold;
+	}
+	
+	.section_header {
+		border-bottom: 1px dotted black; 
+		clear: both; 
+		font-size: 14pt; 
+		font-weight: bold; 
+		margin-top: 30px;
+	}
+	
+	#tax_impact_section_header {
+		border: 0;
+	}
+	
+	.direct_total {
+		border-bottom: 1px dotted black; 
+		clear: both; 
+		font-size: 10pt; 
+		text-align: right;
+	}
+	
+	.economic_multipliers, 
+	.total_impact, 
+	.tax_detail {
+		padding-top: 10px;
+	}
+	
+	.value_amount_column {
+		float: right; 
+		font-weight: bold; 
+		margin-left: 10px; 
+		min-width: 85px;
+	}
+	
+	.output_help_toggler {
+		float: left; 
+		margin-left: -20px; 
+		width: 20px;
+	}
+}
+
+#calc_input_container, 
+#calc_output_container {
+	.help_toggler {
+		cursor: default;
+	}
+	
+	.help_text {
+		background-color: #CFE5FF; 
+		border: 1px dotted #00006F; 
+		color: #00006F; 
+		font-size: 12px; 
+		font-weight: normal; 
+		max-width: 300px; 
+		padding: 2px; 
+		position: absolute; 
+		z-index: 2;
+	}
+}
+
+
+/* GRANTS AWARDED */
+.grants_awarded {
+	border-collapse: collapsed; 
+	font-size: 13px;
+	
+	.year {
+		font-weight: bold;
+	}
+	
+	td {
+		border: 1px solid #bbb; 
+		padding: 5px; 
+		vertical-align: top;
+	}
+	
+	ul {
+		margin: 0; 
+		padding: 0;
+	}
+	
+	li {
+		list-style-type: none;
+	}
+}
+
+
+/* OTHER */
+.nav_submenu_graphical_handle {
+	cursor: pointer;
+}
+#testimonials {
+	h1 {
+		margin-bottom: 20px;
+	}
+	
+	section {
+		margin-bottom: 40px; 
+		text-align: right;
+	}
+	
+	blockquote {
+		color: #333;
+		font-size: 120%;
+		margin: 0;
+		padding: .5em 10px; 
+		quotes:"\201C""\201D""\2018""\2019"; 
+		text-align: justify;
+		
+		&:before {
+			color: #888; 
+			content: open-quote; 
+			font: italic normal 4em Georgia; 
+			line-height: .1em; 
+			margin-right: .25em; 
+			vertical-align: -.4em;
+		}
+		
+		p {
+			display: inline;
+		}
+	}
+	
+	section {
+		> div {
+			display: inline-block; 
+			font-size: 90%; 
+			font-style: normal; 
+			font-weight: bold; 
+			text-align: left; 
+			width: 50%;
+		}
+	}
+	
+	div.title {
+		color: #555; 
+		margin-bottom: 20px;
+	}
+}
+
+/* FRONT PAGE */
+#frontpage_panels {
+	bottom: 0; 
+	position: absolute; 
+	right: 0;
+	
+	img {
+		margin: 0 6px;
+	}
+}
+
+#site_intro {
+	margin-left: 15px;
+	
+	.section {
+		border-left: 1px solid #2A406E; 
+		border-radius: 5px; 
+		padding-left: 10px;
+		margin-bottom: 40px;
+	}
+	
+	h1 {
+		color: #2A406E; 
+		font-family: "Palatino Linotype", Palatino, Georgia, serif;
+	}
+	
+	p {
+		font-size: 120%; 
+		line-height: 140%;
+	}
+	
+	> p {
+		margin-bottom: 40px;
+	}
+	
+	.previews {
+		text-align: center;
+		
+		img {
+			border: 1px solid #AAA; 
+			box-shadow: 2px 2px 2px #BBB;
+			cursor: pointer; 
+			height: 100px; 
+			margin-right: 20px; 
+		}
+	}
+}
+
+#preview_topics_full {
+	> div {
+		> div {
+			border: 1px solid #AAA;
+			border-radius: 5px; 
+			margin: 5px 0;
+		}
+	}
+	
+	img {
+		float: left; 
+		height: 250px;
+	}
+	
+	ul {
+		float: left;
+		font-size: 90%; 
+		margin-top: 0; 
+		padding-left: 18px;
+	}
+	
+	td {
+		vertical-align: top;
+	}
+	
+	tr {
+		border: 1px solid #AAA;
+	}
+}
