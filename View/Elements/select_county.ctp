@@ -1,4 +1,4 @@
-<?php
+<?php pr($this->request->params);
 	/* Variables provided:
 	 * 		$states
 	 * 		$selected_state
@@ -14,12 +14,11 @@
 		$selected_state = null;
 	}
 	
-	//Debugger::dump($this->params);
-	$split_url = explode('/', $this->params['url']['url']);
-	if (isset($split_url[2]) && $split_url[2] == 'all_charts') {
+	$passed = $this->request->params['pass'];
+	if (isset($passed[1]) && $passed[1] == 'all_charts') {
 		$path = 'all_charts';
-	} elseif (in_array($split_url[0], $state_abbreviations) && in_array($split_url[1], $counties_simplified)) {
-		$path = implode('/', array_slice($split_url, 2)); // the part of the current path AFTER state and county
+	} elseif (in_array($passed[0], $state_abbreviations) && in_array($passed[1], $counties_simplified)) {
+		$path = implode('/', array_slice($passed, 2)); // the part of the current path AFTER state and county
 	} else {
 		$path = '';
 	}
