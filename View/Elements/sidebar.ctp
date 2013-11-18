@@ -56,10 +56,10 @@
 			<?php echo $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'contact')); ?>
 		</div>
 	</div>
-	<div class="awards_trapezoid"></div>
+	
 	<div class="inner awards">
-		<h2 style="margin: 0;">
-			<img src="/img/trophy.png" /> Awards
+		<h2>
+			Awards
 		</h2>
 		<ul>
 			<li>
