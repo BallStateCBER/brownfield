@@ -1,5 +1,5 @@
 <?php
-	App::import('Lib', 'SetSharedVars');
+	require_once(APPLIBS.'set_shared_vars.php');
 	$sidebar_vars = getSharedVariables($this->params);
 
 	/* Provides the following:
