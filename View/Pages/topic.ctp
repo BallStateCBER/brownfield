@@ -74,7 +74,7 @@
 					<?php if ($excel2007_availability == 0): ?>
 						<li>
 							<?php echo $this->Html->link(
-								$this->Html->image('document-excel-table.png').' Excel 2007',
+								$this->Html->image('/data_center/img/icons/document-excel-table.png').' Excel 2007',
 								array(
 									'controller' => 'reports', 
 									'action' => 'switchboard', 
@@ -94,7 +94,7 @@
 					<?php if ($excel5_availability == 0): ?>
 						<li>
 							<?php echo $this->Html->link(
-								$this->Html->image('document-excel-table.png').' Excel 5.0',
+								$this->Html->image('/data_center/img/icons/document-excel-table.png').' Excel 5.0',
 								array(
 									'controller' => 'reports', 
 									'action' => 'switchboard', 
@@ -114,7 +114,7 @@
 					<?php if ($csv_availability == 0): ?>
 						<li>
 							<?php echo $this->Html->link(
-								$this->Html->image('document-excel-csv.png').' CSV',
+								$this->Html->image('/data_center/img/icons/document-excel-csv.png').' CSV',
 								array(
 									'controller' => 'reports', 
 									'action' => 'switchboard', 
