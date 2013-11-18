@@ -1,4 +1,4 @@
-<?php pr($this->request->params);
+<?php
 	/* Variables provided:
 	 * 		$states
 	 * 		$selected_state
