@@ -22,7 +22,7 @@ function toggleFieldset(fieldset) {
 		});
 	} else {
 		internal.slideDown(500, function() {
-			fieldset.removeClassName('collapsed');
+			fieldset.removeClass('collapsed');
 		});
 	}
 }
