@@ -1,19 +1,3 @@
-<?php
-	/* Provides the following:
-	 * 		$states
-	 * 		$state_abbreviations
-	 * 		$selected_state
-	 * 		$selected_county
-	 * 		$selected_tab
-	 * 		$selected_topic
-	 * 		$sidebar_mode
-	 * 		$topics
-	 * 		$profiles_link 		*/
-	require_once(APPLIBS.'set_shared_vars.php');
-	$sidebar_vars = getSharedVariables($this->params);
-	extract($sidebar_vars);
-?>
-
 <div id="sidebar">
 	<!-- The following <a><img /></a> needs to be on one line or Internet Explorer will render it with trailing space -->
 	<a href="/" title="Click to return to the home page" id="sidebar_topper"><img src="/img/navigationtopper.png" /></a>
