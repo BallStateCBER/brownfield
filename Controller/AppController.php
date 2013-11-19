@@ -42,4 +42,104 @@ class AppController extends Controller {
 		'Cookie',
 		'RequestHandler'
 	);
+	
+	public function beforeRender() {
+		$this->setSidebarVars();
+	}
+	
+	private function setSidebarVars() {
+		$retval = array();
+		$sidebar_vars = array();
+		$this->loadModel('Location');
+		$states = $this->Location->getStatesAndAbbreviations();
+		$state_abbreviations = array();
+		foreach ($states as $state) {
+			$id = $state['Location']['id'];
+			$ab = $state['Location']['abbreviation'];
+			$state_abbreviations[$id] = strtolower($ab);
+		}
+		
+		// Defaults
+		$selected_state = $selected_county = $selected_tab = $selected_topic = $topics = $profiles_link = null;
+		$state_id = 14;
+		
+		// Figure out what page we're on and what should / shouldn't be shown 
+		if (count($this->request->params['pass'])) {
+			$passed_params = $this->request->params['pass'];
+	
+			// Is a state selected?
+			if (isset($passed_params[0]) && in_array($passed_params[0], $state_abbreviations)) {
+				$selected_state = $passed_params[0];
+				$state_id = $this->Location->getStateID($selected_state);
+			}
+			
+			// Is a county selected?
+			if ($selected_state && isset($passed_params[1])) {
+				$counties_simplified = $this->Location->getCountiesSimplified($selected_state);
+				if (in_array($passed_params[1], $counties_simplified)) {
+					$selected_county = $passed_params[1];
+				}
+			}
+			
+			// Is a topic selected?
+			if ($selected_state && $selected_county && isset($passed_params[2])) {
+				$this->loadModel('Report');
+				$topics = $this->Report->getTopicList(true);
+				foreach ($topics as $tab => $topics_in_tab) {
+					$simple_topic_names = array_keys($topics_in_tab);
+					if (in_array($passed_params[2], $simple_topic_names)) {
+						$selected_tab = $tab;	// Used to have the correct sub-menu in the sidebar already opened
+						$selected_topic = $passed_params[2];
+						break;
+					}
+				}
+			}
+			
+			// Determine the sidebar mode, if not 'home'
+			if (isset($selected_county)) {
+				$sidebar_mode = 'county';
+			} elseif ($passed_params[0] == 'tif' || $passed_params[0] == 'calculators') {
+				$sidebar_mode = 'tif';
+			}
+		}
+		
+		// Sidebar is in 'county' mode when a state/county has been selected, 'tif' mode for the calculator, and 'home' mode all other times.
+		if (! isset($sidebar_mode)) {
+			$sidebar_mode = 'home';
+		}
+		
+		// Get link to corresponding County Profiles page
+		if (isset($selected_state) && isset($selected_county) && $profiles_url = $this->Location->getCountyProfilesLink($selected_county, $selected_state)) {
+			$full_county_name = $this->Location->getCountyFullName($selected_county, $selected_state, true);
+			$profiles_link = "<a href=\"$profiles_url\">CBER Profile of $full_county_name</a>";
+		}
+		
+		$retval = compact(
+			'states', 
+			'state_abbreviations', 
+			'selected_state', 
+			'selected_county', 
+			'selected_tab', 
+			'selected_topic', 
+			'sidebar_mode', 
+			'topics',
+			'profiles_link'
+		);
+		
+		if ($sidebar_mode == 'tif') {
+			$this->loadModel('Calculator');
+			$retval['naics_industries'] = $this->Calculator->getNaicsIndustries();
+			$retval['counties'] = $this->Location->getCountiesFull($state_id);
+		}
+		
+		if ($sidebar_mode == 'county' || $sidebar_mode == 'home') {
+			if (! isset($counties_simplified)) {
+				$counties_simplified = $this->Location->getCountiesSimplified($state_id);
+			}
+			$retval['counties_full_names'] = $this->Location->getCountiesFull($state_id);
+			$retval['counties_simplified'] = $counties_simplified;
+		}
+		
+		$this->set($retval);
+	}
 }
