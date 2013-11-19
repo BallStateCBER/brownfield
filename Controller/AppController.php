@@ -37,6 +37,7 @@ class AppController extends Controller {
 		'Cache'
 	);
 	public $components = array(
+		'DebugKit.Toolbar',
 		'DataCenter.Flash',
 		'Cookie',
 		'RequestHandler'
