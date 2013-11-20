@@ -37,49 +37,63 @@
 		
 		<hr />
 		
-		<div class="other_links">
-			<a href="/">
-				Home
-			</a>
-			<?php echo $this->Html->link(
-				'Brownfield Grants Awarded in Indiana', 
-				array(
-					'controller' => 'pages', 
-					'action' => 'grants_awarded'
-				)
-			); ?>
-			<?php echo $this->Html->link(
-				'TIF-in-a-Box', 
-				array(
-					'controller' => 'calculators', 
-					'action' => 'tif'
-				)
-			); ?>
-			<?php echo $this->Html->link(
-				'Additional Resources', 
-				array(
-					'controller' => 'pages', 
-					'action' => 'resources'
-				)
-			); ?>
-			<a href="http://profiles.cberdata.org/">
-				CBER County Profiles
-			</a>
-			<?php echo $this->Html->link(
-				'Testimonials', 
-				array(
-					'controller' => 'pages', 
-					'action' => 'testimonials'
-				)
-			); ?>
-			<?php echo $this->Html->link(
-				'Contact Us', 
-				array(
-					'controller' => 'pages', 
-					'action' => 'contact'
-				)
-			); ?>
-		</div>
+		<ul class="other_links">
+			<li>
+				<a href="/">
+					Home
+				</a>
+			</li>
+			<li>
+				<?php echo $this->Html->link(
+					'Brownfield Grants Awarded in Indiana', 
+					array(
+						'controller' => 'pages', 
+						'action' => 'grants_awarded'
+					)
+				); ?>
+			</li>
+			<li>
+				<?php echo $this->Html->link(
+					'TIF-in-a-Box', 
+					array(
+						'controller' => 'calculators', 
+						'action' => 'tif'
+					)
+				); ?>
+			</li>
+			<li>
+				<?php echo $this->Html->link(
+					'Additional Resources', 
+					array(
+						'controller' => 'pages', 
+						'action' => 'resources'
+					)
+				); ?>
+			</li>
+			<li>
+				<a href="http://profiles.cberdata.org/">
+					CBER County Profiles
+				</a>
+			</li>
+			<li>
+				<?php echo $this->Html->link(
+					'Testimonials', 
+					array(
+						'controller' => 'pages', 
+						'action' => 'testimonials'
+					)
+				); ?>
+			</li>
+			<li>
+				<?php echo $this->Html->link(
+					'Contact Us', 
+					array(
+						'controller' => 'pages', 
+						'action' => 'contact'
+					)
+				); ?>
+			</li>
+		</ul>
 	</div>
 	
 	<div class="inner awards">
