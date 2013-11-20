@@ -1,4 +1,6 @@
 <?php
+App::uses('GoogleCharts', 'GoogleCharts.Lib');
+
 class Chart extends AppModel {
 	public $useTable = false;
 	
@@ -71,5 +73,5 @@ class Chart extends AppModel {
 	
 	public function isValidCounty($county_id) {
 		return (is_numeric($county_id) && $county_id >= 1 && $county_id <= 92);
-	}
+	}	
 }
