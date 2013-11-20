@@ -96,7 +96,7 @@ class PagesController extends AppController {
 			$this->set(array(
 				'invalidTopicSelected' => $topic
 			));
-			$this->render('/errors/invalid_topic');
+			$this->render('/Errors/invalid_topic');
 			return false;
 		}
 
