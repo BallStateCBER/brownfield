@@ -141,8 +141,20 @@ class Location extends AppModel {
 		return $result;
 	}
 	
-	public function getCountyProfilesLink($county, $state) {
-		return 'http://profiles.cberdata.org/';
+	public function getCountyProfilesLink($county_id) {
+		if ($cache = Configure::read('cache_location_queries')) {
+			$cache_key = "getCountyProfilesLink($county_id)";
+			if ($cached = Cache::read($cache_key)) {
+				return $cached;	
+			}
+		}
+		$result = 'http://profiles.cberdata.org/profiles/introduction/';
+		$county_name = $this->getCountyNameFromID($county_id);
+		$result .= Inflector::slug($county_name);
+		if ($cache) {
+			Cache::write($cache_key, $result);
+		}
+		return $result;
 	}
 
 	public function getCountySimplifiedName($county, $state) {
