@@ -1,7 +1,3 @@
-<?php
-	// $topics, $selected_state, $selected_county, $selected_tab, and $selected_topic are provided
-?>
-
 <div id="submenus">
 	<?php foreach ($topics as $tab => $topics_set): ?>
 		<h2 
