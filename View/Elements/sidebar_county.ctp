@@ -4,10 +4,17 @@
 			class="<?php echo $selected_tab == $tab ? 'open' : 'closed'; ?>" 
 			id="nav_submenu_handle_<?php echo $tab; ?>" 
 			title="Click to open/close"
-			onclick="onNavSubmenuHandleClick('<?php echo $tab; ?>')"
 		>
-			<?php echo ucwords($tab); ?>
+			<a href="#">
+				<?php echo ucwords($tab); ?>
+			</a>
 		</h2>
+		<?php $this->Js->buffer("
+			$('#nav_submenu_handle_$tab a').click(function (event) {
+				event.preventDefault();
+				onNavSubmenuHandleClick('$tab');
+			});
+		"); ?>
 		<div 
 			class="submenu" 
 			id="nav_submenu_<?php echo $tab; ?>" 
