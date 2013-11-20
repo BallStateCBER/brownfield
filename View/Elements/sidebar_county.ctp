@@ -1,12 +1,5 @@
 <?php
 	// $topics, $selected_state, $selected_county, $selected_tab, and $selected_topic are provided
-	
-	// These are the heights of the opened <ul>s, and are hard-coded for smoother opening/closing animations
-	$list_heights = array(
-		'demographics' => 684,
-		'economy' => 261,
-		'health' => 492
-	);
 ?>
 
 <div id="submenus">
@@ -27,7 +20,7 @@
 			<?php endif; ?>
 		>
 			<div>
-				<ul style="min-height: <?php echo $list_heights[$tab]; ?>px;">
+				<ul>
 					<?php foreach ($topics_set as $topic_name => $topic_title): ?>
 						<li <?php if ($selected_topic == $topic_name): ?>class="selected"<?php endif; ?>>
 							<a href="/<?php echo "$selected_state/$selected_county/$topic_name"; ?>">
