@@ -1,8 +1,13 @@
 <?php
 App::uses('GoogleCharts', 'GoogleCharts.Lib');
+App::uses('Datum', 'Model');
+App::uses('Location', 'Model');
 
 class Chart extends AppModel {
 	public $useTable = false;
+	
+	public $category_id = null;
+	public $locations = array();	// Each member is an array of [loc_type_id, loc_id]
 	
 	/* Chart::getChartList() should be updated whenever charts are added or when their method 
 	 * names or human-readable titles are changed. This is used by the navigation sidebar and 
@@ -73,5 +78,96 @@ class Chart extends AppModel {
 	
 	public function isValidCounty($county_id) {
 		return (is_numeric($county_id) && $county_id >= 1 && $county_id <= 92);
-	}	
+	}
+	
+	private function getStartYear() {
+		$dates = array_keys($this->values);
+		return substr(reset($dates), 0, 4);
+	}
+	
+	private function getEndYear() {
+		$dates = array_keys($this->values);
+		return substr(end($dates), 0, 4);
+	}
+	
+	// If no parameters are passed, assumes the first location specified in $this->locations
+	private function getLocName($loc_type_id = null, $loc_id = null, $full_name = false) {
+		if ($loc_type_id == null) {
+			$loc_type_id = $this->locations[0][0];
+			$loc_id = $this->locations[0][1];	
+		}
+		$Location = new Location();
+		return $Location->getLocationName($loc_type_id, $loc_id, $full_name);
+	}
+	
+	/**
+	 * Returns GoogleCharts object with default options
+	 *
+	 * @return GoogleCharts
+	 */
+	private function getChartObject() {
+		$chart = new GoogleCharts();
+		$chart->options(array(
+			'legend' => 'bottom'
+		));
+		return $chart;	
+	}
+	
+	public function getChart($topic, $county_id) {
+		if (method_exists($this, $topic)) {
+			return $this->$topic($county_id);
+		}
+		return false;
+	}
+	
+	public function population($county = 1) {
+		// General parameters
+		$this->category_id = array('Population' => 1);
+		$this->locations = array(array(2, $county));
+		$county_name = $this->getLocName();
+		
+		// Create chart object
+		$chart = $this->getChartObject();
+		$chart->type('LineChart');
+		$chart->columns(array(
+			'year' => array(
+				'type' => 'number',
+				'label' => 'Year'
+			),
+			'values' => array(
+				'type' => 'number',
+				'label' => 'Population'
+			)
+		));
+		
+		// Get data
+		//TODO: Add dates, values to class attributes
+		$Datum = new Datum();
+		list($this->dates, $this->values) = $Datum->getSeries(
+			array_pop($this->category_id), 
+			$this->locations[0][0], 
+			$this->locations[0][1]
+		);
+
+		// Add data to chart
+		foreach ($this->values as $year => $value) {
+			$row = array(
+				'year' => substr($year, 0, 4),
+				'values' => $value
+			);
+			$chart->addRow($row);
+		}
+		
+		$chart->options(array(
+			'seriesType' => 'line',
+			'hAxis' => array(
+				'format' => '####',
+				'gridlines' => array('color' => 'transparent'),
+				'slantedText' => false
+			),
+			'title' => "Population of $county_name County, Indiana (".$this->getStartYear().' - '.$this->getEndYear().')'
+		));
+		
+		return $chart;
+	}
 }
