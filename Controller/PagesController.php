@@ -20,6 +20,7 @@
  */
 
 App::uses('AppController', 'Controller');
+App::uses('GoogleCharts', 'GoogleCharts.Lib');
 
 /**
  * Static content controller
@@ -31,7 +32,11 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 	public $name = 'Pages';
-	public $helpers = array('Html', 'Session');
+	public $helpers = array(
+		'Html', 
+		'Session',
+		'GoogleCharts.GoogleCharts'
+	);
 	public $uses = array();
 	
 	public function home() {
