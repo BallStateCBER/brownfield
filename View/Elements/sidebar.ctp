@@ -1,7 +1,9 @@
 <div id="sidebar">
-	<a href="/" title="Click to return to the home page" id="sidebar_topper">
-		<img src="/img/navigationtopper.png" />
-	</a>
+	<h2>
+		<a href="/">
+			Home
+		</a>
+	</h2>
 	
 	<div class="inner">
 		<?php 
@@ -37,12 +39,7 @@
 		
 		<hr />
 		
-		<ul class="other_links">
-			<li>
-				<a href="/">
-					Home
-				</a>
-			</li>
+		<ul class="other_links">				
 			<li>
 				<?php echo $this->Html->link(
 					'Brownfield Grants Awarded in Indiana', 
