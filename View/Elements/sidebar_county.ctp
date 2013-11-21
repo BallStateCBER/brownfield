@@ -1,3 +1,12 @@
+<?php echo $this->element('select_county', compact(
+	'selected_state', 
+	'selected_county', 
+	'states', 
+	'state_abbreviations', 
+	'counties_full_names', 
+	'counties_simplified'
+)); ?>
+
 <div id="submenus">
 	<?php foreach ($topics as $tab => $topics_set): ?>
 		<h2 
@@ -42,17 +51,3 @@
 		</a>
 	</h2>
 </div>
-
-<hr />
-
-<?php 
-	$vars = compact(
-		'selected_state', 
-		'selected_county', 
-		'states', 
-		'state_abbreviations', 
-		'counties_full_names', 
-		'counties_simplified'
-	);
-	echo $this->element('select_county', $vars);
-?>
