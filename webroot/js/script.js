@@ -18,7 +18,7 @@ function setupCollapsibleTopicSections() {
 	$('.topic section h2 a').click(function (event) {
 		event.preventDefault();
 		var link = $(this);
-		var container = link.parent('h2').next('div.collapsable');
+		var container = link.parent('h2').next('div');
 		container.slideToggle();
 	});
 }
