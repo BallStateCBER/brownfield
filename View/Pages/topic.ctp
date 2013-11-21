@@ -51,24 +51,35 @@
 	?>
 	
 	<?php if ($chart_availability == 1): // Chart not supported for this topic ?>
-		<?php echo $table; ?>
-		<?php echo $description; ?>
-	<?php else: ?>
-		<?php echo $chart ?>
-		<?php echo $description; ?>
-		<fieldset class="collapsible collapsed">
-			<legend>
-				Data Table
-			</legend>
+		<section>
 			<?php echo $table; ?>
-		</fieldset>
+			<?php echo $description; ?>
+		</section>
+	<?php else: ?>
+		<section>
+			<?php echo $chart ?>
+			<?php echo $description; ?>
+		</section>
+		
+		<section>
+			<h2>
+				<a href="#">
+					Data Table
+				</a>
+			</h2>
+			<div>
+				<?php echo $table; ?>
+			</div>
+		</section>
 	<?php endif; ?>
 	
 	<?php if ($csv_availability == 0 || $excel5_availability == 0 || $excel2007_availability == 0): ?>
-		<fieldset class="collapsible collapsed">
-			<legend>
-				Download Spreadsheet
-			</legend>
+		<section>
+			<h2>
+				<a href="#">
+					Download Spreadsheet
+				</a>
+			</h2>
 			<div>
 				<ul class="download_options">
 					<?php if ($excel2007_availability == 0): ?>
@@ -132,15 +143,19 @@
 					<?php endif; ?>
 				</ul>
 			</div>
-		</fieldset>
+		</section>
 	<?php endif; ?>
 	
-	<fieldset class="collapsible collapsed">
-		<legend>
-			Source
-		</legend>
-		<?php echo $source_element; ?>
-	</fieldset> 
+	<section>
+		<h2>
+			<a href="#">
+				Source
+			</a>
+		</h2>
+		<div>
+			<?php echo $source_element; ?>
+		</div> 
+	</section>
 </div>
 
-<?php $this->Js->buffer("setupCollapsibleFieldsets();"); ?>
+<?php $this->Js->buffer("setupCollapsibleTopicSections();"); ?>
