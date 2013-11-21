@@ -1,11 +1,11 @@
 <div id="sidebar">
-	<h2>
-		<a href="/">
-			Home
-		</a>
-	</h2>
-	
 	<div class="inner">
+		<h2>
+			<a href="/">
+				Home
+			</a>
+		</h2>
+		
 		<?php 
 			if ($sidebar_mode == 'county') {
 				echo $this->element('sidebar_county', compact(
