@@ -61,7 +61,7 @@
 			<?php echo $description; ?>
 		</section>
 		
-		<section>
+		<section class="collapsable">
 			<h2>
 				<a href="#">
 					Data Table
@@ -74,7 +74,7 @@
 	<?php endif; ?>
 	
 	<?php if ($csv_availability == 0 || $excel5_availability == 0 || $excel2007_availability == 0): ?>
-		<section>
+		<section class="collapsable">
 			<h2>
 				<a href="#">
 					Download Spreadsheet
@@ -146,7 +146,7 @@
 		</section>
 	<?php endif; ?>
 	
-	<section>
+	<section class="collapsable">
 		<h2>
 			<a href="#">
 				Source
