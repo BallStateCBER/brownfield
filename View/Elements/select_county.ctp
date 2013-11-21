@@ -25,19 +25,7 @@
 ?>
 <div id="county_selection">
 	<p>
-		State
-	</p>
-
-	<select name="state" id="select_state">
-		<?php foreach ($states as $state): ?>
-			<option value="<?php echo strtolower($state['Location']['abbreviation']); ?>"<?php if ($selected_state = $state['Location']['abbreviation']): ?>selected="selected"<?php endif; ?>>
-				<?php echo $state['Location']['name']; ?>
-			</option>
-		<?php endforeach; ?>
-	</select>
-
-	<p>
-		County
+		Indiana Counties
 	</p>
 
 	<select name="county" id="select_county">
