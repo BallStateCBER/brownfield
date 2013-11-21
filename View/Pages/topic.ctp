@@ -48,6 +48,8 @@
 			'availability' => $source_availability,
 			'sources' => $sources
 		));
+		
+		$this->Html->script('sorttable', array('inline' => false));
 	?>
 	
 	<?php if ($chart_availability == 1): // Chart not supported for this topic ?>
