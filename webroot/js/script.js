@@ -14,6 +14,15 @@ function setupCollapsibleFieldsets() {
 	});
 }
 
+function setupCollapsibleTopicSections() {
+	$('.topic section h2 a').click(function (event) {
+		event.preventDefault();
+		var link = $(this);
+		var container = link.parent('h2').next('div');
+		container.slideToggle();
+	});
+}
+
 function toggleFieldset(fieldset) {
 	var internal = fieldset.find('.fieldset_internal');		
 	if (internal.is(':visible')) {
