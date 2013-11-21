@@ -49,8 +49,7 @@
 <?php $this->Js->buffer("
 	$('#select_county').change(function () {
 		var county_name = $('#select_county').val();
-		var state_name = $('#select_state').val();
 		var path = '$path';
-		window.location = '/' + state_name + '/' + county_name + '/' + path;
+		window.location = '/in/' + county_name + '/' + path;
 	});
 "); ?>
