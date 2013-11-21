@@ -1,10 +1,20 @@
 <?php
 // This element expects $topic, $state, and $county
 $request_response = $this->requestAction(
-	array('controller' => 'reports', 'action' => 'switchboard'),
 	array(
-		'pass' => array('table', $topic, $state, $county),
-		'named' => array('table_version' => 2)
+		'controller' => 'reports', 
+		'action' => 'switchboard'
+	),
+	array(
+		'pass' => array(
+			'table', 
+			$topic, 
+			$state, 
+			$county
+		),
+		'named' => array(
+			'table_version' => 2
+		)
 	)
 );
 
@@ -44,11 +54,11 @@ if ($request_response) {
 					Footer
 		*/
 
-	// If the option is set to hide the first column
-	if (in_array('hide_first_col', $options)) {
-		$hide_first_col = true;
-		array_shift($columns);
-	}
+		// If the option is set to hide the first column
+		if (in_array('hide_first_col', $options)) {
+			$hide_first_col = true;
+			array_shift($columns);
+		}
 	?>
 	<div class="datatable">
 		<?php if (count($table) > 1): ?>
