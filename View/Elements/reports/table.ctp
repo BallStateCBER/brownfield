@@ -1,30 +1,30 @@
 <?php
-// This element expects $topic, $state, and $county
-$request_response = $this->requestAction(
-	array(
-		'controller' => 'reports', 
-		'action' => 'switchboard'
-	),
-	array(
-		'pass' => array(
-			'table', 
-			$topic, 
-			$state, 
-			$county
+	// This element expects $topic, $state, and $county
+	$request_response = $this->requestAction(
+		array(
+			'controller' => 'reports', 
+			'action' => 'switchboard'
 		),
-		'named' => array(
-			'table_version' => 2
+		array(
+			'pass' => array(
+				'table', 
+				$topic, 
+				$state, 
+				$county
+			),
+			'named' => array(
+				'table_version' => 2
+			)
 		)
-	)
-);
-
-// If an error is triggered as part of retrieving data, requestAction() will return FALSE
-// Error is assumed to be code 2, data unavailable 
-if ($request_response) {
-	extract($request_response);
-} else {
-	$error = 2;	
-}
+	);
+	
+	// If an error is triggered as part of retrieving data, requestAction() will return FALSE
+	// Error is assumed to be code 2, data unavailable 
+	if ($request_response) {
+		extract($request_response);
+	} else {
+		$error = 2;	
+	}
 ?>
 
 <?php if ($request_response && $error == 0): ?>
