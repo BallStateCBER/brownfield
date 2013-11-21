@@ -81,15 +81,6 @@
 					)
 				); ?>
 			</li>
-			<li>
-				<?php echo $this->Html->link(
-					'Contact Us', 
-					array(
-						'controller' => 'pages', 
-						'action' => 'contact'
-					)
-				); ?>
-			</li>
 		</ul>
 	</div>
 	
