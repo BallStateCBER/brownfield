@@ -40,11 +40,9 @@ class PagesController extends AppController {
 	public $uses = array();
 	
 	public function home() {
-		$this->loadModel('Report');
 		$this->set(array(
 			'title_for_layout' => '',
-			'use_shadowbox' => true,
-			'topics' => $this->Report->getTopicList()
+			'use_shadowbox' => true
 		));
 	}
 	
