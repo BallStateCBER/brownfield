@@ -60,8 +60,11 @@ class AppController extends Controller {
 		}
 		
 		// Defaults
-		$selected_state = $selected_county = $selected_tab = $selected_topic = $topics = $profiles_link = null;
+		$selected_state = $selected_county = $selected_tab = $selected_topic = $profiles_link = null;
 		$state_id = 14;
+		
+		$this->loadModel('Report');
+		$topics = $this->Report->getTopicList(true);
 		
 		// Figure out what page we're on and what should / shouldn't be shown 
 		if (count($this->request->params['pass'])) {
@@ -83,8 +86,6 @@ class AppController extends Controller {
 			
 			// Is a topic selected?
 			if ($selected_state && $selected_county && isset($passed_params[2])) {
-				$this->loadModel('Report');
-				$topics = $this->Report->getTopicList(true);
 				foreach ($topics as $tab => $topics_in_tab) {
 					$simple_topic_names = array_keys($topics_in_tab);
 					if (in_array($passed_params[2], $simple_topic_names)) {
