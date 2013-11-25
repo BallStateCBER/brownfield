@@ -493,22 +493,13 @@ div.chart {
 	blockquote {
 		color: #333;
 		font-size: 120%;
-		margin: 0;
-		padding: .5em 10px; 
-		quotes:"\201C""\201D""\2018""\2019"; 
+		margin: 0; 
 		text-align: justify;
-		
 		&:before {
-			color: #888; 
-			content: open-quote; 
-			font: italic normal 4em Georgia; 
-			line-height: .1em; 
-			margin-right: .25em; 
-			vertical-align: -.4em;
+			content: '"';	
 		}
-		
-		p {
-			display: inline;
+		&:after {
+			content: '"';	
 		}
 	}
 	
