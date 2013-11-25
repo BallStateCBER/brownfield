@@ -1,5 +1,3 @@
-// Handles situations where the user reaching this page by refreshing or going back in their
-// browser history starts the calculator with some selections already made.
 function initializeTIFCalculator() {
 	var calc_industry_id = $('#calc_industry_id');
 	calc_industry_id.change(function () {
@@ -34,6 +32,9 @@ function initializeTIFCalculator() {
 	var industry_index = industry_id_select.selectedIndex;
 	var input_options_select = $('calc_input_options');
 	var input_option_index = input_options_select.selectedIndex;
+	
+	// Handles situations where the user reaching this page by refreshing or going back in their
+	// browser history starts the calculator with some selections already made.
 	if (county_id) {
 		onCountySelection(county_id, (industry_index == 0));
 		if (industry_index != 0) {
