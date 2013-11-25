@@ -60,7 +60,7 @@
 					Select an industry...
 				</option>
 				<?php foreach ($naics_industries as $industry_id => $industry_name): ?>
-			 		<option class="foo_option" value="<?php echo $industry_id; ?>">
+			 		<option value="<?php echo $industry_id; ?>">
 			 			<?php echo $industry_name; ?>
 			 		</option>
 				<?php endforeach; ?>
