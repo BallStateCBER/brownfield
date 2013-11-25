@@ -66,7 +66,7 @@ function onCountySelection(county_id, reset_subsequent) {
 	}
 	var url = '/calculators/getLocalIndustries/' + county_id;
 	$.ajax({
-		url: url
+		url: url,
 		success: function(data) {
 			if (data.match('Error')) {
 				alert('Error finding industries for this county: ' + data);
