@@ -1,40 +1,67 @@
 <?php $this->Html->script('tif_calculator', array('inline' => false)); ?>
+
 <form method="get">
 	<div id="calc_input_container">
-		<h2>Economic Impact Calculator</h2>
+		<h2>
+			Economic Impact Calculator
+		</h2>
 		
-		<p>Enter Company Information...</p>
+		<p>
+			Enter Company Information...
+		</p>
 		<div class="field_block">
-			<div class="field_name">County</div>
+			<div class="field_name">
+				County
+			</div>
 			<select name="county_id" id="calc_county_id">
-				<option value="" id="calc_county_id_leading_choice">Select a county...</option>
+				<option value="" id="calc_county_id_leading_choice">
+					Select a county...
+				</option>
 				<?php foreach ($counties as $id => $name): ?>
-			 		<option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+			 		<option value="<?php echo $id; ?>">
+			 			<?php echo $name; ?>
+			 		</option>
 				<?php endforeach; ?>
 			</select>
 		</div>
 
 		<div class="field_block">
-			<div class="field_name">Industrial classification</div>
+			<div class="field_name">
+				Industrial classification
+			</div>
 			<select name="industry_id" id="calc_industry_id" disabled="disabled">
-				<option value="" id="calc_industry_id_leading_choice">Select an industry...</option>
+				<option value="" id="calc_industry_id_leading_choice">
+					Select an industry...
+				</option>
 				<?php foreach ($naics_industries as $industry_id => $industry_name): ?>
-			 		<option class="foo_option" value="<?php echo $industry_id; ?>"><?php echo $industry_name; ?></option>
+			 		<option class="foo_option" value="<?php echo $industry_id; ?>">
+			 			<?php echo $industry_name; ?>
+			 		</option>
 				<?php endforeach; ?>
 			</select>
 		</div>
 
 		<div class="field_block">
-			<div class="field_name">Choose input method</div>
+			<div class="field_name">
+				Choose input method
+			</div>
 			<select name="option" id="calc_input_options" disabled="disabled">
-				<option value="" id="calc_input_option_leading_choice">Choose one...</option>
-				<option value="a">Annual Production</option>
-				<option value="b">Number of Employees</option>
+				<option value="" id="calc_input_option_leading_choice">
+					Choose one...
+				</option>
+				<option value="a">
+					Annual Production
+				</option>
+				<option value="b">
+					Number of Employees
+				</option>
 			</select>
 		</div>
 
 		<div class="field_block" id="option_a_input" style="display: none;">
-			<div class="field_name">Annual production (sales, in dollars):</div>
+			<div class="field_name">
+				Annual production (sales, in dollars):
+			</div>
 			<input type="text" name="annual_production" id="calc_annual_production" />
 		</div>
 
