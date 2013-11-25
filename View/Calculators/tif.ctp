@@ -94,7 +94,7 @@
 		<div id="option_b_input" style="display: none;">
 			<div class="field_block">
 				<div class="field_name">
-					<img src="/img/question.png" id="calc_employees_help_toggler" class="help_toggler" />
+					<img src="/data_center/img/icons/question.png" id="calc_employees_help_toggler" class="help_toggler" />
 					Annual number of employees (not FTEs):
 					<div id="calc_employees_help" class="help_text" style="display: none;">
 						FTE: Full-time equivalents<br />
