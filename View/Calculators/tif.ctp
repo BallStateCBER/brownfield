@@ -117,36 +117,6 @@
 	You can also use the <a href="/tif_basic">'Basic' version of this calculator</a>, meant for older browsers and browsers with Javascript disabled
 </p>
 
-<?php $this->Js->buffer("
-	var calc_industry_id = $('#calc_industry_id');
-	calc_industry_id.change(function () {
-		onIndustrySelection(true);
-	});
-	$('#calc_county_id').change(function () {
-		var value = $(this).val();
-		onCountySelection(value, true);
-	});
-	$('#calc_input_options').change(function () {
-		onInputMethodSelection(this.selectedIndex);
-	});
-	$('#calc_annual_production').change(function () {
-		$(this).val(moneyFormat($(this).val()));
-	});
-	var calc_employees_help_toggler = $('#calc_employees_help_toggler');
-	calc_employees_help_toggler.mouseover(function () {
-		$('#calc_employees_help').show();
-	});
-	calc_employees_help_toggler.mouseout(function () {
-		$('#calc_employees_help').hide();
-	});
-	$('#calculate_button').click(function () {
-		calculateImpact(true);
-	});
-	$('#calc_employees').change(function () {
-		$(this).val(addCommas($(this).val()));
-	});
-"); ?>
-
 <div id="calc_output_container" style="display: none;"></div>
 
 <div id="calc_footer"></div>

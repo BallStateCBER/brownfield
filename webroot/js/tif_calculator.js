@@ -1,6 +1,34 @@
 // Handles situations where the user reaching this page by refreshing or going back in their
 // browser history starts the calculator with some selections already made.
 function initializeTIFCalculator() {
+	var calc_industry_id = $('#calc_industry_id');
+	calc_industry_id.change(function () {
+		onIndustrySelection(true);
+	});
+	$('#calc_county_id').change(function () {
+		var value = $(this).val();
+		onCountySelection(value, true);
+	});
+	$('#calc_input_options').change(function () {
+		onInputMethodSelection(this.selectedIndex);
+	});
+	$('#calc_annual_production').change(function () {
+		$(this).val(moneyFormat($(this).val()));
+	});
+	var calc_employees_help_toggler = $('#calc_employees_help_toggler');
+	calc_employees_help_toggler.mouseover(function () {
+		$('#calc_employees_help').show();
+	});
+	calc_employees_help_toggler.mouseout(function () {
+		$('#calc_employees_help').hide();
+	});
+	$('#calculate_button').click(function () {
+		calculateImpact(true);
+	});
+	$('#calc_employees').change(function () {
+		$(this).val(addCommas($(this).val()));
+	});
+	
 	var county_id = $('calc_county_id').getValue();
 	var industry_id_select = $('calc_industry_id');
 	var industry_index = industry_id_select.selectedIndex;
