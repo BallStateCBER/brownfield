@@ -2,13 +2,6 @@
 	TIF-in-a-Box
 </h1>
 
-<div id="calc_intro_text_teaser"  style="display: none;">
-	Tax Increment Financing (TIF) is a tool used by local governments to... 
-	<span class="fake_link" id="calc_intro_text_open_handle">
-		(read on)
-	</span>
-</div>
-
 <div id="calc_intro_text">
 	<div>
 		<p>
@@ -161,13 +154,5 @@
 <div id="calc_footer"></div>
 
 <?php $this->Js->buffer("
-	$('#calc_intro_text_open_handle').click(function (event) {
-		event.preventDefault();
-		showCalcIntroText();
-	});
-	$('#calc_intro_text_close_handle').click( function(event) {
-		event.preventDefault();
-		hideCalcIntroText(true);
-	});
 	initializeTIFCalculator();
 "); ?>
