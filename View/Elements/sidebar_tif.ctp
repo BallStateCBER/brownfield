@@ -1,4 +1,4 @@
-<script type="text/javascript"  src="/js/tif_calculator.js"></script>
+<?php $this->Html->script('tif_calculator', array('inline' => false)); ?>
 <form method="get">
 	<div id="calc_input_container">
 		<h2>Economic Impact Calculator</h2>
