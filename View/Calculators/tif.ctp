@@ -145,8 +145,6 @@
 	$('#calc_employees').change(function () {
 		$(this).val(addCommas($(this).val()));
 	});
-	var loading_image = new Image(16, 11);
-	loading_image.src = '/data_center/img/loading_small.gif';
 "); ?>
 
 <div id="calc_output_container" style="display: none;"></div>
