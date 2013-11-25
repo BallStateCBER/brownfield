@@ -80,8 +80,12 @@ function onCountySelection(county_id, reset_subsequent) {
 					industry_select.selectedIndex = 0;
 				}
 				if (local_industry_count > 0) {
-					var options = $('option.foo_option');
-					options.each(function (option) {
+					var options = $('#calc_industry_id option');
+					options.each(function () {
+						option = $(this);
+						if (option.id == 'calc_industry_id_leading_choice') {
+							return;
+						}
 						var industry_id = option.val();
 						pos = industry_ids.indexOf(industry_id);
 						if (pos == -1) {
