@@ -89,14 +89,8 @@
 		'employees',
 		array(
 			'id' => 'calc_employees',
-			'label' => '
-				<img src="/data_center/img/icons/question.png" id="calc_employees_help_toggler" class="help_toggler" />
-				Annual number of employees (not FTEs)
-				<div id="calc_employees_help" class="help_text">
-					FTE: Full-time equivalents<br />
-					This number can be a combination of both full-time and part-time employees.
-				</div>
-			',
+			'label' => 'Annual number of employees (not FTEs)',
+			'after' => '<div class="footnote">FTE: Full-time equivalents<br />This number can be a combination of both full-time and part-time employees.</div>',
 			'div' => array(
 				'id' => 'option_b_input'
 			)
