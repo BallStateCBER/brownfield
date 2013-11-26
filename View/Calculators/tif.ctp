@@ -26,98 +26,102 @@
 
 <?php $this->Html->script('tif_calculator', array('inline' => false)); ?>
 
-<form method="get">
-	<div id="calc_input_container">
-		<h2>
-			Economic Impact Calculator
-		</h2>
-		
-		<p>
-			Enter Company Information...
-		</p>
-		<div class="field_block">
-			<div class="field_name">
-				County
-			</div>
-			<select name="county_id" id="calc_county_id">
-				<option value="" id="calc_county_id_leading_choice">
-					Select a county...
-				</option>
-				<?php foreach ($counties as $id => $name): ?>
-			 		<option value="<?php echo $id; ?>">
-			 			<?php echo $name; ?>
-			 		</option>
-				<?php endforeach; ?>
-			</select>
-		</div>
+<?php $this->Form->create(false); ?>
+<div id="calc_input_container">
+	<h2>
+		Economic Impact Calculator
+	</h2>
+	
+	<p>
+		Enter Company Information...
+	</p>
+	
+	<?php echo $this->Form->input(
+		'county_id',
+		array(
+			'type' => 'select',
+			'id' => 'calc_county_id',
+			'options' => $counties,
+			'label' => 'County',
+			'empty' => 'Select an Indiana county...'
+		)
+	); ?>
 
-		<div class="field_block">
-			<div class="field_name">
-				Industrial classification
-			</div>
-			<select name="industry_id" id="calc_industry_id" disabled="disabled">
-				<option value="" id="calc_industry_id_leading_choice">
-					Select an industry...
-				</option>
-				<?php foreach ($naics_industries as $industry_id => $industry_name): ?>
-			 		<option value="<?php echo $industry_id; ?>">
-			 			<?php echo $industry_name; ?>
-			 		</option>
-				<?php endforeach; ?>
-			</select>
-		</div>
+	<?php echo $this->Form->input(
+		'industry_id',
+		array(
+			'type' => 'select',
+			'id' => 'calc_industry_id',
+			'options' => $naics_industries,
+			'label' => 'Industrial classification',
+			'disabled' => true,
+			'empty' => 'Select an industry...'
+		)
+	); ?>
+	
+	<?php echo $this->Form->input(
+		'option',
+		array(
+			'type' => 'select',
+			'id' => 'calc_input_options',
+			'options' => array(
+				'a' => 'Annual Production',
+				'b' => 'Number of Employees'
+			),
+			'label' => 'Input method',
+			'disabled' => true,
+			'empty' => 'Choose one...'
+		)
+	); ?>
 
-		<div class="field_block">
-			<div class="field_name">
-				Choose input method
-			</div>
-			<select name="option" id="calc_input_options" disabled="disabled">
-				<option value="" id="calc_input_option_leading_choice">
-					Choose one...
-				</option>
-				<option value="a">
-					Annual Production
-				</option>
-				<option value="b">
-					Number of Employees
-				</option>
-			</select>
-		</div>
+	<?php echo $this->Form->input(
+		'annual_production',
+		array(
+			'id' => 'calc_annual_production',
+			'label' => 'Annual production (sales, in dollars)',
+			'div' => array(
+				'id' => 'option_a_input'
+			)
+		)
+	); ?>
 
-		<div class="field_block" id="option_a_input" style="display: none;">
-			<div class="field_name">
-				Annual production (sales, in dollars):
-			</div>
-			<input type="text" name="annual_production" id="calc_annual_production" />
-		</div>
-
-		<div id="option_b_input" style="display: none;">
-			<div class="field_block">
-				<div class="field_name">
-					<img src="/data_center/img/icons/question.png" id="calc_employees_help_toggler" class="help_toggler" />
-					Annual number of employees (not FTEs):
-					<div id="calc_employees_help" class="help_text" style="display: none;">
-						FTE: Full-time equivalents<br />
-						This number can be a combination of both full-time and part-time employees.
-					</div>
+	<?php echo $this->Form->input(
+		'employees',
+		array(
+			'id' => 'calc_employees',
+			'label' => '
+				<img src="/data_center/img/icons/question.png" id="calc_employees_help_toggler" class="help_toggler" />
+				Annual number of employees (not FTEs)
+				<div id="calc_employees_help" class="help_text">
+					FTE: Full-time equivalents<br />
+					This number can be a combination of both full-time and part-time employees.
 				</div>
-				<input type="text" name="employees" id="calc_employees" />
-			</div>
-		</div>
-		<div id="calculate_button_container">
-			<input id="calculate_button" type="button" disabled="disabled" value="Calculate Impact &rarr;" />
-			<div id="calc_loading_graphic_container" style="display: none;">
-				<img src="/img/loading2.gif" />
-			</div>
-		</div>
+			',
+			'div' => array(
+				'id' => 'option_b_input'
+			)
+		)
+	); ?>
+	
+	<?php echo $this->Form->end(array(
+		'label' => 'Calculate Impact',
+		'id' => 'calculate_button',
+		'disabled' => true,
+		'div' => array(
+			'id' => 'calculate_button_container'
+		)
+	)); ?>
+	
+	<div id="calc_loading_graphic_container">
+		<img src="/img/loading2.gif" />
 	</div>
-</form>
+</div>
 
-<p style="font-size: 0.9em">
+<p class="basic_calculator_note">
 	You can also use the <a href="/tif_basic">'Basic' version of this calculator</a>, meant for older browsers and browsers with Javascript disabled
 </p>
 
-<div id="calc_output_container" style="display: none;"></div>
+<div id="calc_output_container"></div>
 
 <div id="calc_footer"></div>
 
