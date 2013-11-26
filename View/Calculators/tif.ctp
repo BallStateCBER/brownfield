@@ -90,7 +90,7 @@
 		array(
 			'id' => 'calc_employees',
 			'label' => 'Annual number of employees (not FTEs)',
-			'after' => '<div class="footnote">FTE: Full-time equivalents<br />This number can be a combination of both full-time and part-time employees.</div>',
+			'after' => '<p class="footnote">FTE: Full-time equivalents<br />This number can be a combination of both full-time and part-time employees.</p>',
 			'div' => array(
 				'id' => 'option_b_input'
 			)
