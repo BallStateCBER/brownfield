@@ -12,7 +12,7 @@
 							<div class="output_help_toggler">
 								<?php if (isset($measure_info['help'])): ?>
 									<img 
-										src="img/question.png" 
+										src="/data_center/img/icons/question.png" 
 										class="help_toggler" 
 										onmouseover="$('calc_<?php echo $measure; ?>_<?php echo $section; ?>_help').show();" 
 										onmouseout="$('calc_<?php echo $measure; ?>_<?php echo $section; ?>_help').hide();" 
@@ -45,7 +45,7 @@
 		<div class="section_header" id="tax_impact_section_header">
 			<div class="output_help_toggler" style="margin-left:-20px;">
 				<img 
-					src="img/question.png" 
+					src="/data_center/img/icons/question.png" 
 					class="help_toggler" 
 					onmouseover="$('calc_taximpact_help').show();" 
 					onmouseout="$('calc_taximpact_help').hide();" 
@@ -72,7 +72,7 @@
 						<div class="output_help_toggler">
 							<?php if (isset($row['help'])): ?>
 								<img 
-									src="img/question.png" 
+									src="/data_center/img/icons/question.png" 
 									class="help_toggler" 
 									onmouseover="$('calc_<?php echo $tax_type; ?>_taximpact_help').show();" 
 									onmouseout="$('calc_<?php echo $tax_type; ?>_taximpact_help').hide();" 
