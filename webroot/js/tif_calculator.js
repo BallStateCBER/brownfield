@@ -160,7 +160,6 @@ function calculateImpact(animate) {
 	}
 	var container = $('#calc_output_container');
 	var calc_loading_graphic_container = $('#calc_loading_graphic_container');
-	hideCalcIntroText(animate);
 	if (animate && container.is(':visible')) {
 		$('.calc_section').each(function () {
 			$(this).slideUp(200, function () {
