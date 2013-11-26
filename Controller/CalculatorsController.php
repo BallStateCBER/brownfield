@@ -14,7 +14,12 @@ class CalculatorsController extends AppController {
 	}
 
 	public function tif() {
-		$this->set('title_for_layout', 'TIF-in-a-Box');
+		$this->loadModel('Location');
+		$this->set(array(
+			'title_for_layout' => 'TIF-in-a-Box',
+			'naics_industries' => $this->Calculator->getNaicsIndustries(),
+			'counties' => $this->Location->getCountiesFull(14)
+		));
 	}
 
 	public function tif_basic() {
