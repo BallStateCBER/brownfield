@@ -167,14 +167,6 @@ function calculateImpact(animate) {
 				updateCalculatorOutput(url, animate);
 			});
 		});
-		/*
-		var slide_duration = 0.9;
-		Effect.SlideUp(container, {
-			queue: {position: 'end', scope: 'calculator', limit: 1},
-			duration: slide_duration,
-			afterFinish: function() {updateCalculatorOutput(url, animate);}
-		});
-		*/
 	} else {
 		updateCalculatorOutput(url, animate);
 	}
