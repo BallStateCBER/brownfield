@@ -99,12 +99,10 @@ class AppController extends Controller {
 			// Determine the sidebar mode, if not 'home'
 			if (isset($selected_county)) {
 				$sidebar_mode = 'county';
-			} elseif ($passed_params[0] == 'tif' || $passed_params[0] == 'calculators') {
-				$sidebar_mode = 'tif';
 			}
 		}
 		
-		// Sidebar is in 'county' mode when a state/county has been selected, 'tif' mode for the calculator, and 'home' mode all other times.
+		// Sidebar is in 'county' mode when a state/county has been selected and 'home' mode all other times.
 		if (! isset($sidebar_mode)) {
 			$sidebar_mode = 'home';
 		}
@@ -126,12 +124,6 @@ class AppController extends Controller {
 			'topics',
 			'profiles_link'
 		);
-		
-		if ($sidebar_mode == 'tif') {
-			$this->loadModel('Calculator');
-			$retval['naics_industries'] = $this->Calculator->getNaicsIndustries();
-			$retval['counties'] = $this->Location->getCountiesFull($state_id);
-		}
 		
 		if ($sidebar_mode == 'county' || $sidebar_mode == 'home') {
 			if (! isset($counties_simplified)) {
