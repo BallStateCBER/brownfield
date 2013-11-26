@@ -87,8 +87,7 @@ function onCountySelection(county_id, reset_subsequent) {
 							return;
 						}
 						var industry_id = option.val();
-						pos = industry_ids.indexOf(industry_id);
-						if (pos == -1) {
+						if (industry_ids.indexOf(industry_id) == -1) {
 							option.hide();
 						} else {
 							option.show();
@@ -99,10 +98,7 @@ function onCountySelection(county_id, reset_subsequent) {
 			}
 		},
 		error: function() {
-			var options = $('option.foo_option');
-			options.each(function(option) {
-				option.show();
-			});
+			$('#calc_industry_id option').show();
 		}
 	});
 }
@@ -183,7 +179,7 @@ function updateCalculatorOutput(url, animate) {
 			function () {
 				$.ajax({
 					url: url,
-					complete: function (data) {
+					success: function (data) {
 						container.html(data);
 						calc_loading_graphic_container.fadeIn(loading_fade_duration);
 						container.slideDown(slide_duration);
@@ -195,7 +191,7 @@ function updateCalculatorOutput(url, animate) {
 		calc_loading_graphic_container.show();
 		$.ajax({
 			url: url,
-			complete: function (data) {
+			success: function (data) {
 				container.html(data);
 				calc_loading_graphic_container.hide();
 				container.show();
