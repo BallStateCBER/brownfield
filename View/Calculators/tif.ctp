@@ -107,7 +107,7 @@
 	)); ?>
 	
 	<div id="calc_loading_graphic_container">
-		<img src="/img/loading2.gif" />
+		<img src="/data_center/img/loading_small.gif" />
 	</div>
 </div>
 
