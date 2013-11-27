@@ -103,12 +103,9 @@
 		'disabled' => true,
 		'div' => array(
 			'id' => 'calculate_button_container'
-		)
+		),
+		'after' => '<img src="/data_center/img/loading_small.gif" id="calc_loading_indicator" />'
 	)); ?>
-	
-	<div id="calc_loading_graphic_container">
-		<img src="/data_center/img/loading_small.gif" />
-	</div>
 </div>
 
 <p class="basic_calculator_note">
