@@ -56,11 +56,19 @@ function initializeTIFCalculator() {
  * (or shows all industries if there's an error looking the industries up)
  * and resets both industry selection and input-type selection if reset_subsequent is set to TRUE. */
 function onCountySelection(county_id, reset_subsequent) {
-	$('#calc_county_id_leading_choice').hide();
+	if (county_id == '') {
+		$('#calc_industry_id_container').hide();
+		$('#calc_input_options_container').hide();
+		$('#calculate_button_container').hide();
+	} else {
+		$('#calc_industry_id_container').show();
+	}
+	
+	$('#calc_county_id option:first-child').hide();
 	var industry_select = $('#calc_industry_id');
 	industry_select.removeAttr('disabled');
 	if (reset_subsequent) {
-		resetInputOptions();
+		resetInputOptions();`
 		$('#calc_input_options').attr('disabled', 'disabled');
 		$('#calculate_button').attr('disabled', 'disabled');
 	}
