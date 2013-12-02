@@ -2,39 +2,39 @@
 	TIF-in-a-Box
 </h1>
 
-<div id="calc_intro_text">
-	<div>
-		<p>
-			<strong>Tax Increment Financing (TIF)</strong> is a tool used by local governments to allocate changes to local taxes caused by new 
-			business development for a specific purpose.  In a typical setting, the growth of property taxes associated with a 
-			new business will be applied to a purpose that has significant impact on the community.  Examples of these are 
-			installation of water or sewer infrastructure, construction or expansion of roadways, or remediation of a brownfield.
-		</p>
-		<p>
-			This section provides <strong>some basic material on TIFs</strong> found in studies by 
-			<a href="/files/Bartsch and Wells, (2003).pdf">Bartsch and Wells (2003)</a> and 
-			<a href="/files/Paull, 2008.pdf">Paull (2008)</a> funded by the 
-			<a href="http://www.nemw.org/">Northeast-Midwest Institute</a> and the enabling legislation from Indiana contained in 
-			<a href="/files/IC 36-7-14.html">IC 36-7-14</a>, which deals with TIFs and their uses.  
-		</p>
-		<p>
-			This section also includes our <strong>Economic Impact Calculator</strong>, a tool for estimating the economic and fiscal effects of new business development.
-			To use the Economic Impact Calculator, enter company information into the form below.  
-		</p>
-	</div>
-</div>
+<h2>
+	Tax Increment Financing
+</h2>
+<p>
+	Tax Increment Financing (TIF) is a tool used by local governments to allocate changes to local taxes caused by new 
+	business development for a specific purpose.  In a typical setting, the growth of property taxes associated with a 
+	new business will be applied to a purpose that has significant impact on the community.  Examples of these are 
+	installation of water or sewer infrastructure, construction or expansion of roadways, or remediation of a brownfield.
+</p>
+
+<h2>
+	Studies and Legislation
+</h2>
+<p>
+	More information about TIF can be found in studies by 
+	<a href="/files/Bartsch and Wells, (2003).pdf">Bartsch and Wells (2003)</a> and 
+	<a href="/files/Paull, 2008.pdf">Paull (2008)</a>. These studies were funded by the 
+	<a href="http://www.nemw.org/">Northeast-Midwest Institute</a> and enabled Indiana state legislation  
+	<a href="/files/IC 36-7-14.html">IC 36-7-14</a>, which deals with TIF and its uses.
+</p>
+
+<h2>
+	Economic Impact Calculator
+</h2>
+<p>
+	The Economic Impact Calculator is a tool for estimating the economic and fiscal effects of new business development.
+	To use the Economic Impact Calculator, enter company information into the form below.  
+</p>
 
 <?php $this->Html->script('tif_calculator', array('inline' => false)); ?>
 
 <?php $this->Form->create(false); ?>
 <div id="calc_input_container">
-	<h2>
-		Economic Impact Calculator
-	</h2>
-	
-	<p>
-		Enter Company Information...
-	</p>
 	
 	<?php echo $this->Form->input(
 		'county_id',
