@@ -73,7 +73,10 @@
 			),
 			'label' => 'Input method',
 			'disabled' => true,
-			'empty' => 'Choose one...'
+			'empty' => 'Choose one...',
+			'div' => array(
+				'id' => 'calc_input_options_container'
+			)
 		)
 	); ?>
 
