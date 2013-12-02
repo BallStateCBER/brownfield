@@ -55,7 +55,10 @@
 			'options' => $naics_industries,
 			'label' => 'Industrial classification',
 			'disabled' => true,
-			'empty' => 'Select an industry...'
+			'empty' => 'Select an industry...',
+			'div' => array(
+				'id' => 'calc_industry_id_container'
+			)
 		)
 	); ?>
 	
