@@ -67,7 +67,7 @@ function onCountySelection(county_id, reset_subsequent) {
 	var industry_select = $('#calc_industry_id');
 	industry_select.removeAttr('disabled');
 	if (reset_subsequent) {
-		resetInputOptions();`
+		resetInputOptions();
 		$('#calc_input_options').attr('disabled', 'disabled');
 		$('#calculate_button').attr('disabled', 'disabled');
 	}
