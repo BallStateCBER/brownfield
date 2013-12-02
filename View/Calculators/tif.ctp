@@ -28,7 +28,7 @@
 </h2>
 <p>
 	The Economic Impact Calculator is a tool for estimating the economic and fiscal effects of new business development.
-	To use the Economic Impact Calculator, enter company information into the form below.  
+	To use the Economic Impact Calculator, enter company information into the form below.
 </p>
 
 <?php $this->Html->script('tif_calculator', array('inline' => false)); ?>
@@ -107,10 +107,6 @@
 		'after' => '<img src="/data_center/img/loading_small.gif" id="calc_loading_indicator" />'
 	)); ?>
 </div>
-
-<p class="basic_calculator_note">
-	You can also use the <a href="/tif_basic">'Basic' version of this calculator</a>, meant for older browsers and browsers with Javascript disabled
-</p>
 
 <div id="calc_output_container"></div>
 
