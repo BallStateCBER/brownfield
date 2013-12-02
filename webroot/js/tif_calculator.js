@@ -111,7 +111,7 @@ function onCountySelection(county_id, reset_subsequent) {
 }
 
 function onIndustrySelection(reset_subsequent) {
-	$('#calc_industry_id_leading_choice').hide();
+	$('#calc_industry_id option:first-child').hide();
 	$('#calculate_button').attr('disabled', 'disabled');
 	var calc_input_options = $('#calc_input_options');
 	calc_input_options.removeAttr('disabled');
