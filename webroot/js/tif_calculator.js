@@ -1,6 +1,5 @@
 function initializeTIFCalculator() {
-	var calc_industry_id = $('#calc_industry_id');
-	calc_industry_id.change(function () {
+	$('#calc_industry_id').change(function () {
 		onIndustrySelection(true);
 	});
 	$('#calc_county_id').change(function () {
