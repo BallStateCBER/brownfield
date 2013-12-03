@@ -19,7 +19,8 @@ function initializeTIFCalculator() {
 	calc_employees_help_toggler.mouseout(function () {
 		$('#calc_employees_help').hide();
 	});
-	$('#calculate_button').click(function () {
+	$('#calculate_button').click(function (event) {
+		event.preventDefault();
 		calculateImpact(true);
 	});
 	$('#calc_employees').change(function () {
