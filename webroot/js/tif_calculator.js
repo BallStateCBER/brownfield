@@ -12,13 +12,6 @@ function initializeTIFCalculator() {
 	$('#calc_annual_production').change(function () {
 		$(this).val(moneyFormat($(this).val()));
 	});
-	var calc_employees_help_toggler = $('#calc_employees_help_toggler');
-	calc_employees_help_toggler.mouseover(function () {
-		$('#calc_employees_help').show();
-	});
-	calc_employees_help_toggler.mouseout(function () {
-		$('#calc_employees_help').hide();
-	});
 	$('#calculate_button').click(function (event) {
 		event.preventDefault();
 		calculateImpact(true);
