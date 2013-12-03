@@ -139,6 +139,7 @@ function onInputMethodSelection(selected_index) {
 		$('#option_a_input').hide();
 		$('#option_b_input').show();
 	}
+	$('#calculate_button_container').show();
 	$('#calculate_button').removeAttr('disabled');
 }
 
