@@ -70,9 +70,10 @@ function onCountySelection(county_id, reset_subsequent) {
 	$.ajax({
 		url: url,
 		success: function(data) {
+			var industry_options = industry_select.children();
 			if (data.match('Error')) {
 				alert('Error finding industries for this county: ' + data);
-				industry_select.children().show();
+				industry_options.show();
 			} else {
 				var industry_ids = data.split(' ');
 				var local_industry_count = industry_ids.length;
@@ -80,8 +81,7 @@ function onCountySelection(county_id, reset_subsequent) {
 					industry_select.selectedIndex = 0;
 				}
 				if (local_industry_count > 0) {
-					var options = $('#calc_industry_id option');
-					options.each(function () {
+					industry_options.each(function () {
 						option = $(this);
 						if (option.id == 'calc_industry_id_leading_choice') {
 							return;
