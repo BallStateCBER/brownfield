@@ -14,7 +14,7 @@ function initializeTIFCalculator() {
 	});
 	$('#calculate_button').click(function (event) {
 		event.preventDefault();
-		calculateImpact(true);
+		calculateImpact();
 	});
 	$('#calc_employees').change(function () {
 		$(this).val(addCommas($(this).val()));
@@ -37,7 +37,7 @@ function initializeTIFCalculator() {
 				onInputMethodSelection(input_option_index);
 				(input_option_index == 1) ? user_input = $('#calc_annual_production').val() : user_input = $('#calc_employees').val();
 				if (inputToInt(user_input)) {
-					calculateImpact(false);
+					calculateImpact();
 				}
 			}
 		}
@@ -137,7 +137,7 @@ function onInputMethodSelection(selected_index) {
 	$('#calculate_button').removeAttr('disabled');
 }
 
-function calculateImpact(animate) {
+function calculateImpact() {
 	var county_id = $('#calc_county_id').val();
 	var industry_id = $('#calc_industry_id').val();
 	var selected_option = $('#calc_input_options').val();
@@ -159,41 +159,29 @@ function calculateImpact(animate) {
 	}
 	var container = $('#calc_output_container');
 	var calc_loading_graphic_container = $('#calc_loading_graphic_container');
-	if (animate && container.is(':visible')) {
+	if (container.is(':visible')) {
 		$('.calc_section').each(function () {
 			$(this).slideUp(200, function () {
 				container.hide();
-				updateCalculatorOutput(url, animate);
+				updateCalculatorOutput(url);
 			});
 		});
 	} else {
-		updateCalculatorOutput(url, animate);
+		updateCalculatorOutput(url);
 	}
 }
 
-function updateCalculatorOutput(url, animate) {
+function updateCalculatorOutput(url) {
 	var container = $('#calc_output_container');
 	var calc_loading_graphic_container = $('#calc_loading_graphic_container');
-	if (animate) {
-		$.ajax({
-			url: url,
-			success: function (data) {
-				$('calc_loading_indicator').hide();
-				container.html(data);
-				container.slideDown(500);
-			}
-		});
-	} else {
-		calc_loading_graphic_container.show();
-		$.ajax({
-			url: url,
-			success: function (data) {
-				container.html(data);
-				calc_loading_graphic_container.hide();
-				container.show();
-			}
-		});
-	}
+	$.ajax({
+		url: url,
+		success: function (data) {
+			$('calc_loading_indicator').hide();
+			container.html(data);
+			container.slideDown(500);
+		}
+	});
 }
 
 function moneyFormat(input) {
