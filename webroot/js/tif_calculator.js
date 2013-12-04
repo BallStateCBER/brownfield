@@ -76,11 +76,10 @@ function onCountySelection(county_id, reset_subsequent) {
 				industry_options.show();
 			} else {
 				var industry_ids = data.split(' ');
-				var local_industry_count = industry_ids.length;
 				if (reset_subsequent) {
 					industry_select.selectedIndex = 0;
 				}
-				if (local_industry_count > 0) {
+				if (industry_ids.length > 0) {
 					
 					// Only show industries that correspond to the selected county
 					industry_options.each(function () {
