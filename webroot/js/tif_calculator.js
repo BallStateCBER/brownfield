@@ -21,14 +21,13 @@ function initializeTIFCalculator() {
 	});
 	
 	var county_id = $('#calc_county_id').val();
-	var industry_id_select = $('#calc_industry_id');
-	var industry_index = industry_id_select.val();
+	var industry = $('#calc_industry_id').val();
 	var input_option = $('#calc_input_options').val();
 	
 	// Handles situations where the user reaching this page by refreshing or going back in their
 	// browser history starts the calculator with some selections already made.
 	if (county_id) {
-		var industry_is_selected = (industry_index != ''); 
+		var industry_is_selected = (industry != ''); 
 		onCountySelection(county_id, ! industry_is_selected);
 		if (industry_is_selected) {
 			var input_option_is_selected = (input_option != '');
