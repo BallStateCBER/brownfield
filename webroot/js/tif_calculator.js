@@ -127,7 +127,7 @@ function resetInputOptions() {
 }
 
 function onInputMethodSelection(method) {
-	$('#calc_input_option_leading_choice').hide();
+	$('#calc_input_options option:first-child').hide();
 	if (method == 'a') {
 		$('#option_a_input').show();
 		$('#option_b_input').hide();
