@@ -175,21 +175,14 @@ function updateCalculatorOutput(url, animate) {
 	var container = $('#calc_output_container');
 	var calc_loading_graphic_container = $('#calc_loading_graphic_container');
 	if (animate) {
-		var slide_duration = 0.8;
-		var loading_fade_duration = 0.5;
-		calc_loading_graphic_container.fadeIn(
-			loading_fade_duration,
-			function () {
-				$.ajax({
-					url: url,
-					success: function (data) {
-						container.html(data);
-						calc_loading_graphic_container.fadeIn(loading_fade_duration);
-						container.slideDown(slide_duration);
-					}
-				});
+		$.ajax({
+			url: url,
+			success: function (data) {
+				$('calc_loading_indicator').hide();
+				container.html(data);
+				container.slideDown(500);
 			}
-		);
+		});
 	} else {
 		calc_loading_graphic_container.show();
 		$.ajax({
