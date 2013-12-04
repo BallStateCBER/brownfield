@@ -127,7 +127,6 @@ function resetInputOptions() {
 }
 
 function onInputMethodSelection(method) {
-	console.log(method);
 	$('#calc_input_option_leading_choice').hide();
 	if (method == 'a') {
 		$('#option_a_input').show();
