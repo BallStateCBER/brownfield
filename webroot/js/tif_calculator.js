@@ -49,7 +49,7 @@ function initializeTIFCalculator() {
 /* This hides industries that aren't found in the selected county 
  * (or shows all industries if there's an error looking the industries up)
  * and resets both industry selection and input-type selection if reset_subsequent is set to TRUE. */
-function onCountySelection(county_id, reset_subsequent) {
+function onCountySelection(county_id) {
 	if (county_id == '') {
 		$('#calc_industry_id_container').hide();
 		$('#calc_input_options_container').hide();
@@ -61,7 +61,7 @@ function onCountySelection(county_id, reset_subsequent) {
 	$('#calc_county_id option:first-child').hide();
 	var industry_select = $('#calc_industry_id');
 	industry_select.removeAttr('disabled');
-	if (reset_subsequent) {
+	if ($('#calc_industry_id').val() == '') {
 		resetInputOptions();
 		$('#calc_input_options').attr('disabled', 'disabled');
 		$('#calculate_button').attr('disabled', 'disabled');
@@ -76,9 +76,6 @@ function onCountySelection(county_id, reset_subsequent) {
 				industry_options.show();
 			} else {
 				var industry_ids = data.split(' ');
-				if (reset_subsequent) {
-					industry_select.selectedIndex = 0;
-				}
 				if (industry_ids.length > 0) {
 					
 					// Only show industries that correspond to the selected county
@@ -173,11 +170,11 @@ function calculateImpact() {
 
 function updateCalculatorOutput(url) {
 	var container = $('#calc_output_container');
-	var calc_loading_graphic_container = $('#calc_loading_graphic_container');
+	$('#calc_loading_indicator').show();
 	$.ajax({
 		url: url,
 		success: function (data) {
-			$('calc_loading_indicator').hide();
+			$('#calc_loading_indicator').hide();
 			container.html(data);
 			container.slideDown(500);
 		}
