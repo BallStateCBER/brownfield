@@ -126,12 +126,12 @@ function resetInputOptions() {
 	$('#calc_input_options').selectedIndex = 0;
 }
 
-function onInputMethodSelection(selected_index) {
+function onInputMethodSelection(method) {
 	$('#calc_input_option_leading_choice').hide();
-	if (selected_index == 1) { // option A
+	if (method == 'a') {
 		$('#option_a_input').show();
 		$('#option_b_input').hide();
-	} else if (selected_index == 2) { // option B
+	} else if (method == 'b') {
 		$('#option_a_input').hide();
 		$('#option_b_input').show();
 	}
