@@ -35,7 +35,9 @@ function initializeTIFCalculator() {
 			onIndustrySelection(! input_option_is_selected);
 			if (input_option != '') {
 				onInputMethodSelection(input_option);
-				(input_option == 'a') ? user_input = $('#calc_annual_production').val() : user_input = $('#calc_employees').val();
+				var user_input = (input_option == 'a') 
+					? $('#calc_annual_production').val() 
+					: $('#calc_employees').val();
 				if (inputToInt(user_input)) {
 					calculateImpact();
 				}
