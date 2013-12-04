@@ -82,11 +82,11 @@ function onCountySelection(county_id, reset_subsequent) {
 				}
 				if (local_industry_count > 0) {
 					industry_options.each(function () {
-						option = $(this);
-						if (option.id == 'calc_industry_id_leading_choice') {
+						var option = $(this);
+						var industry_id = option.val();
+						if (industry_id = '') {
 							return;
 						}
-						var industry_id = option.val();
 						if (industry_ids.indexOf(industry_id) == -1) {
 							option.hide();
 						} else {
@@ -94,7 +94,6 @@ function onCountySelection(county_id, reset_subsequent) {
 						}
 					});
 				}
-
 			}
 		},
 		error: function() {
