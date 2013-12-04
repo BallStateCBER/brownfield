@@ -169,12 +169,12 @@ function calculateImpact() {
 }
 
 function updateCalculatorOutput(url) {
-	var container = $('#calc_output_container');
 	$('#calc_loading_indicator').show();
 	$.ajax({
 		url: url,
 		success: function (data) {
 			$('#calc_loading_indicator').hide();
+			var container = $('#calc_output_container');
 			container.html(data);
 			container.slideDown(500);
 		}
