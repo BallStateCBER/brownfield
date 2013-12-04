@@ -7,7 +7,7 @@ function initializeTIFCalculator() {
 		onCountySelection(value, true);
 	});
 	$('#calc_input_options').change(function () {
-		onInputMethodSelection(this.selectedIndex);
+		onInputMethodSelection($(this).val());
 	});
 	$('#calc_annual_production').change(function () {
 		$(this).val(moneyFormat($(this).val()));
@@ -115,7 +115,7 @@ function onIndustrySelection(reset_subsequent) {
 	if (calc_input_options.val() == '') {
 		resetInputOptions();
 	} else {
-		onInputMethodSelection(calc_input_options.selectedIndex);
+		onInputMethodSelection(calc_input_options.val());
 	}
 }
 
@@ -127,6 +127,7 @@ function resetInputOptions() {
 }
 
 function onInputMethodSelection(method) {
+	console.log(method);
 	$('#calc_input_option_leading_choice').hide();
 	if (method == 'a') {
 		$('#option_a_input').show();
