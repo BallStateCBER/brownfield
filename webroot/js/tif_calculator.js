@@ -112,10 +112,11 @@ function onIndustrySelection(reset_subsequent) {
 	$('#calc_input_options_container').show();
 	var calc_input_options = $('#calc_input_options');
 	calc_input_options.removeAttr('disabled');
-	if (calc_input_options.val() == '') {
+	var selected_option = calc_input_options.val();
+	if (selected_option == '') {
 		resetInputOptions();
 	} else {
-		onInputMethodSelection(calc_input_options.val());
+		onInputMethodSelection(selected_option);
 	}
 }
 
