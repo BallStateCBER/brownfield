@@ -140,11 +140,11 @@ function onInputMethodSelection(selected_index) {
 function calculateImpact(animate) {
 	var county_id = $('#calc_county_id').val();
 	var industry_id = $('#calc_industry_id').val();
-	var selected_option = $('#calc_input_options').selectedIndex;
-	if (! county_id || ! industry_id) {
+	var selected_option = $('#calc_input_options').val();
+	if (! county_id || ! industry_id || ! selected_option) {
 		return;
 	}
-	if (selected_option == 1) {
+	if (selected_option == 'a') {
 		var annual_production = inputToInt($('#calc_annual_production').val());
 		if (! annual_production) {
 			return alert('Please enter the expected annual production of this company (in dollars).');
