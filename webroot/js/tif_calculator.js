@@ -72,9 +72,7 @@ function onCountySelection(county_id, reset_subsequent) {
 		success: function(data) {
 			if (data.match('Error')) {
 				alert('Error finding industries for this county: ' + data);
-				industry_select.children().each(function () {
-					$(this).show();
-				});
+				industry_select.children().show();
 			} else {
 				var industry_ids = data.split(' ');
 				var local_industry_count = industry_ids.length;
