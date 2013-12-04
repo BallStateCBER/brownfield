@@ -81,6 +81,8 @@ function onCountySelection(county_id, reset_subsequent) {
 					industry_select.selectedIndex = 0;
 				}
 				if (local_industry_count > 0) {
+					
+					// Only show industries that correspond to the selected county
 					industry_options.each(function () {
 						var option = $(this);
 						var industry_id = option.val();
