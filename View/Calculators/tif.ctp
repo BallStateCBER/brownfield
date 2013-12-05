@@ -120,5 +120,5 @@
 
 <?php $this->Js->buffer("
 	var local_industries = ".$this->Js->object($local_industries).";
-	initializeTIFCalculator(local_industries);
+	TifCalculator.initialize(local_industries);
 "); ?>
