@@ -170,7 +170,7 @@ var TifCalculator = {
 	},
 
 	addCommas: function (input) {
-		input = inputToInt(input);
+		input = this.inputToInt(input);
 		for (var i = 0; i < Math.floor((input.length-(1+i))/3); i++) {
 			input = input.substring(0,input.length-(4*i+3)) + ',' + input.substring(input.length-(4*i+3));
 		}
