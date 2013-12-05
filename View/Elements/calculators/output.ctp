@@ -14,8 +14,8 @@
 									<img 
 										src="/data_center/img/icons/question.png" 
 										class="help_toggler" 
-										onmouseover="$('calc_<?php echo $measure; ?>_<?php echo $section; ?>_help').show();" 
-										onmouseout="$('calc_<?php echo $measure; ?>_<?php echo $section; ?>_help').hide();" 
+										onmouseover="$('#calc_<?php echo $measure; ?>_<?php echo $section; ?>_help').show();" 
+										onmouseout="$('#calc_<?php echo $measure; ?>_<?php echo $section; ?>_help').hide();" 
 									/>
 								<?php else: ?>
 									&nbsp;
@@ -47,8 +47,8 @@
 				<img 
 					src="/data_center/img/icons/question.png" 
 					class="help_toggler" 
-					onmouseover="$('calc_taximpact_help').show();" 
-					onmouseout="$('calc_taximpact_help').hide();" 
+					onmouseover="$('#calc_taximpact_help').show();" 
+					onmouseout="$('#calc_taximpact_help').hide();" 
 				/>
 			</div>
 			Indirect Business Tax Impact			
@@ -74,8 +74,8 @@
 								<img 
 									src="/data_center/img/icons/question.png" 
 									class="help_toggler" 
-									onmouseover="$('calc_<?php echo $tax_type; ?>_taximpact_help').show();" 
-									onmouseout="$('calc_<?php echo $tax_type; ?>_taximpact_help').hide();" 
+									onmouseover="$('#calc_<?php echo $tax_type; ?>_taximpact_help').show();" 
+									onmouseout="$('#calc_<?php echo $tax_type; ?>_taximpact_help').hide();" 
 								/>
 							<?php else: ?>
 								&nbsp;
