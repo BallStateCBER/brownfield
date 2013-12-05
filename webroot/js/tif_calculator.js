@@ -76,8 +76,15 @@ var TifCalculator = {
 				return;
 			}
 			var industries_in_county = TifCalculator.local_industries[county_id];
-			if (industries_in_county.indexOf(industry_id) == -1) { 
-				option.hide();
+			if (industries_in_county.indexOf(industry_id) == -1) {
+				
+				// Handle case where the currently-selected industry must be hidden
+				if ($('#calc_industry_id').val() == industry_id) {
+					$('#calc_industry_id option:first-child').show();
+					$('#calc_industry_id').val('');
+				}
+				
+				option.hide();				
 			} else {
 				option.show();
 			}
