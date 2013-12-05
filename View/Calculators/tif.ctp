@@ -119,6 +119,6 @@
 <div id="calc_footer"></div>
 
 <?php $this->Js->buffer("
-	initializeTIFCalculator();
 	var local_industries = ".$this->Js->object($local_industries).";
+	initializeTIFCalculator(local_industries);
 "); ?>
