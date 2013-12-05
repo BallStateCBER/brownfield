@@ -9,7 +9,7 @@ var TifCalculator = {
 		});
 		$('#calc_county_id').change(function () {
 			var value = $(this).val();
-			TifCalculator.onCountySelection(value, true);
+			TifCalculator.onCountySelection(value);
 		});
 		$('#calc_input_options').change(function () {
 			TifCalculator.onInputMethodSelection($(this).val());
@@ -33,7 +33,7 @@ var TifCalculator = {
 		// browser history starts the calculator with some selections already made.
 		if (county_id) {
 			var industry_is_selected = (industry != ''); 
-			this.onCountySelection(county_id, ! industry_is_selected);
+			this.onCountySelection(county_id);
 			if (industry_is_selected) {
 				var input_option_is_selected = (input_option != '');
 				this.onIndustrySelection(! input_option_is_selected);
