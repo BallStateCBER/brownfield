@@ -1,5 +1,9 @@
 var TifCalculator = {
-	initialize: function () {
+	local_industries: null,
+	
+	initialize: function (local_industries) {
+		this.local_industries = local_industries;
+		
 		$('#calc_industry_id').change(function () {
 			TifCalculator.onIndustrySelection(true);
 		});
