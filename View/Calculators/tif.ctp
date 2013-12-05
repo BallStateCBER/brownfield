@@ -54,7 +54,6 @@
 			'id' => 'calc_industry_id',
 			'options' => $naics_industries,
 			'label' => 'Industrial classification',
-			'disabled' => true,
 			'empty' => 'Select an industry...',
 			'div' => array(
 				'id' => 'calc_industry_id_container'
@@ -72,7 +71,6 @@
 				'b' => 'Number of Employees'
 			),
 			'label' => 'Input method',
-			'disabled' => true,
 			'empty' => 'Choose one...',
 			'div' => array(
 				'id' => 'calc_input_options_container'
@@ -106,7 +104,6 @@
 	<?php echo $this->Form->end(array(
 		'label' => 'Calculate Impact',
 		'id' => 'calculate_button',
-		'disabled' => true,
 		'div' => array(
 			'id' => 'calculate_button_container'
 		),
