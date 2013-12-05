@@ -42,7 +42,7 @@ var TifCalculator = {
 					var user_input = (input_option == 'a') 
 						? $('#calc_annual_production').val() 
 						: $('#calc_employees').val();
-					if (inputToInt(user_input)) {
+					if (this.inputToInt(user_input)) {
 						this.calculateImpact();
 					}
 				}
