@@ -5,7 +5,7 @@ var TifCalculator = {
 		this.local_industries = local_industries;
 		
 		$('#calc_industry_id').change(function () {
-			TifCalculator.onIndustrySelection(true);
+			TifCalculator.onIndustrySelection();
 		});
 		$('#calc_county_id').change(function () {
 			var value = $(this).val();
@@ -34,8 +34,7 @@ var TifCalculator = {
 		if (county_id) { 
 			this.onCountySelection(county_id);
 			if (industry != '') {
-				var input_option_is_selected = (input_option != '');
-				this.onIndustrySelection(! input_option_is_selected);
+				this.onIndustrySelection();
 				if (input_option != '') {
 					this.onInputMethodSelection(input_option);
 					var user_input = (input_option == 'a') 
@@ -83,7 +82,7 @@ var TifCalculator = {
 		});
 	},
 
-	onIndustrySelection: function (reset_subsequent) {
+	onIndustrySelection: function () {
 		$('#calc_industry_id option:first-child').hide();
 		$('#calculate_button').attr('disabled', 'disabled');
 		$('#calc_input_options_container').show();
