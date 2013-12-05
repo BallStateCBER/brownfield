@@ -67,36 +67,19 @@ var TifCalculator = {
 			$('#calc_input_options').attr('disabled', 'disabled');
 			$('#calculate_button').attr('disabled', 'disabled');
 		}
-		var url = '/calculators/getLocalIndustries/' + county_id;
-		$.ajax({
-			url: url,
-			success: function(data) {
-				var industry_options = industry_select.children();
-				if (data.match('Error')) {
-					alert('Error finding industries for this county: ' + data);
-					industry_options.show();
-				} else {
-					var industry_ids = data.split(' ');
-					if (industry_ids.length > 0) {
-						
-						// Only show industries that correspond to the selected county
-						industry_options.each(function () {
-							var option = $(this);
-							var industry_id = option.val();
-							if (industry_id = '') {
-								return;
-							}
-							if (industry_ids.indexOf(industry_id) == -1) {
-								option.hide();
-							} else {
-								option.show();
-							}
-						});
-					}
-				}
-			},
-			error: function() {
-				$('#calc_industry_id option').show();
+		
+		// Only show industries that correspond to the selected county
+		industry_select.children().each(function () {
+			var option = $(this);
+			var industry_id = option.val();
+			if (industry_id == '') {
+				return;
+			}
+			var industries_in_county = TifCalculator.local_industries[county_id];
+			if (industries_in_county.indexOf(industry_id) == -1) { 
+				option.hide();
+			} else {
+				option.show();
 			}
 		});
 	},
