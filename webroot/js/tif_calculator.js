@@ -102,8 +102,8 @@ var TifCalculator = {
 	resetInputOptions: function () {
 		$('#option_a_input').hide();
 		$('#option_b_input').hide();
-		$('#calc_input_option_leading_choice').show();
-		$('#calc_input_options').selectedIndex = 0;
+		$('#calc_input_options option:first-child').show();
+		$('#calc_input_options').val('');
 	},
 
 	onInputMethodSelection: function (method) {
