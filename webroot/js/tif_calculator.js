@@ -31,10 +31,9 @@ var TifCalculator = {
 		
 		// Handles situations where the user reaching this page by refreshing or going back in their
 		// browser history starts the calculator with some selections already made.
-		if (county_id) {
-			var industry_is_selected = (industry != ''); 
+		if (county_id) { 
 			this.onCountySelection(county_id);
-			if (industry_is_selected) {
+			if (industry != '') {
 				var input_option_is_selected = (input_option != '');
 				this.onIndustrySelection(! input_option_is_selected);
 				if (input_option != '') {
