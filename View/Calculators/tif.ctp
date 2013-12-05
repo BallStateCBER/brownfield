@@ -110,7 +110,7 @@
 		'div' => array(
 			'id' => 'calculate_button_container'
 		),
-		'after' => '<img src="/data_center/img/loading_small.gif" id="calc_loading_indicator" />'
+		'after' => '<img src="/data_center/img/loading_small.gif" id="calc_output_loading_indicator" />'
 	)); ?>
 </div>
 
