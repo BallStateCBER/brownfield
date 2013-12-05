@@ -46,9 +46,6 @@ function initializeTIFCalculator() {
 	
 }
 	
-/* This hides industries that aren't found in the selected county 
- * (or shows all industries if there's an error looking the industries up)
- * and resets both industry selection and input-type selection if reset_subsequent is set to TRUE. */
 function onCountySelection(county_id) {
 	if (county_id == '') {
 		$('#calc_industry_id_container').hide();
