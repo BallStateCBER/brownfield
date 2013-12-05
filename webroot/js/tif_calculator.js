@@ -52,11 +52,11 @@ var TifCalculator = {
 		
 	onCountySelection: function (county_id) {
 		if (county_id == '') {
-			$('#calc_industry_id_container').hide();
-			$('#calc_input_options_container').hide();
-			$('#calculate_button_container').hide();
+			$('#calc_industry_id_container').slideUp(200);
+			$('#calc_input_options_container').slideUp(200);
+			$('#calculate_button_container').slideUp(200);
 		} else {
-			$('#calc_industry_id_container').show();
+			$('#calc_industry_id_container').slideDown(200);
 		}
 		
 		$('#calc_county_id option:first-child').hide();
@@ -80,7 +80,7 @@ var TifCalculator = {
 					$('#calc_industry_id option:first-child').show();
 					$('#calc_industry_id').val('');
 					TifCalculator.resetInputOptions();
-					$('#calc_input_options_container').hide();
+					$('#calc_input_options_container').slideUp(200);
 				}
 				
 				option.hide();				
@@ -92,7 +92,7 @@ var TifCalculator = {
 
 	onIndustrySelection: function () {
 		$('#calc_industry_id option:first-child').hide();
-		$('#calc_input_options_container').show();
+		$('#calc_input_options_container').slideDown(200);
 		var selected_option = $('#calc_input_options').val();
 		if (selected_option == '') {
 			this.resetInputOptions();
@@ -102,8 +102,8 @@ var TifCalculator = {
 	},
 
 	resetInputOptions: function () {
-		$('#option_a_input').hide();
-		$('#option_b_input').hide();
+		$('#option_a_input').slideUp(200);
+		$('#option_b_input').slideUp(200);
 		$('#calc_input_options option:first-child').show();
 		$('#calc_input_options').val('');
 	},
@@ -111,13 +111,13 @@ var TifCalculator = {
 	onInputMethodSelection: function (method) {
 		$('#calc_input_options option:first-child').hide();
 		if (method == 'a') {
-			$('#option_a_input').show();
-			$('#option_b_input').hide();
+			$('#option_a_input').slideDown(200);
+			$('#option_b_input').slideUp(200);
 		} else if (method == 'b') {
-			$('#option_a_input').hide();
-			$('#option_b_input').show();
+			$('#option_a_input').slideUp(200);
+			$('#option_b_input').slideDown(200);
 		}
-		$('#calculate_button_container').show();
+		$('#calculate_button_container').slideDown(200);
 	},
 
 	calculateImpact: function () {
@@ -143,11 +143,8 @@ var TifCalculator = {
 		var container = $('#calc_output_container');
 		var calc_loading_graphic_container = $('#calc_loading_graphic_container');
 		if (container.is(':visible')) {
-			$('.calc_section').each(function () {
-				$(this).slideUp(200, function () {
-					container.hide();
-					TifCalculator.updateCalculatorOutput(url);
-				});
+			container.slideUp(500, function () {
+				TifCalculator.updateCalculatorOutput(url);
 			});
 		} else {
 			this.updateCalculatorOutput(url);
