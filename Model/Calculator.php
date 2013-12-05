@@ -73,6 +73,16 @@ class Calculator extends AppModel {
 		return $industries;
 	}
 	
+	public function getAllLocalIndustries() {
+		$counties = $this->getCounties();
+		$retval = array();
+		foreach ($counties as $county_id => $county_name) {
+			$local_industries = $this->getLocalIndustries($county_id);
+			$retval[$county_id] = $local_industries;
+		}
+		return $retval;
+	}
+	
 	public function getMultiplier($type, $county_id, $industry_id, $option) {
 		if ($type == 'output') {
 			// "Output" multiplier = rptoutput_multipliers.type_n_multiplier
