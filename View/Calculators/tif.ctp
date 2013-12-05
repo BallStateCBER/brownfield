@@ -33,7 +33,7 @@
 
 <?php $this->Html->script('tif_calculator', array('inline' => false)); ?>
 
-<?php $this->Form->create(false); ?>
+<?php echo $this->Form->create(false); ?>
 <div id="calc_input_container">
 	
 	<?php echo $this->Form->input(
