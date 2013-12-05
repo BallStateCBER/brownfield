@@ -37,6 +37,8 @@ var TifCalculator = {
 				this.onIndustrySelection();
 				if (input_option != '') {
 					this.onInputMethodSelection(input_option);
+					
+					// Validate input here to avoid triggering calculateImpact()'s error messages
 					var user_input = (input_option == 'a') 
 						? $('#calc_annual_production').val() 
 						: $('#calc_employees').val();
