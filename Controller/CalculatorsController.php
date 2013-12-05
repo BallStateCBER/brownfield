@@ -18,7 +18,8 @@ class CalculatorsController extends AppController {
 		$this->set(array(
 			'title_for_layout' => 'TIF-in-a-Box',
 			'naics_industries' => $this->Calculator->getNaicsIndustries(),
-			'counties' => $this->Location->getCountiesFull(14)
+			'counties' => $this->Location->getCountiesFull(14),
+			'local_industries' => $this->Calculator->getAllLocalIndustries()
 		));
 	}
 
