@@ -91,8 +91,7 @@ var TifCalculator = {
 	onIndustrySelection: function () {
 		$('#calc_industry_id option:first-child').hide();
 		$('#calc_input_options_container').show();
-		var calc_input_options = $('#calc_input_options');
-		var selected_option = calc_input_options.val();
+		var selected_option = $('#calc_input_options').val();
 		if (selected_option == '') {
 			this.resetInputOptions();
 		} else {
