@@ -79,6 +79,8 @@ var TifCalculator = {
 				if ($('#calc_industry_id').val() == industry_id) {
 					$('#calc_industry_id option:first-child').show();
 					$('#calc_industry_id').val('');
+					TifCalculator.resetInputOptions();
+					$('#calc_input_options_container').hide();
 				}
 				
 				option.hide();				
