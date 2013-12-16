@@ -84,6 +84,10 @@ class Calculator extends AppModel {
 	}
 	
 	public function getMultiplier($type, $county_id, $industry_id, $option) {
+		if (! is_numeric($county_id) || ! is_numeric($industry_id)) {
+			return;
+		}
+		
 		if ($type == 'output') {
 			// "Output" multiplier = rptoutput_multipliers.type_n_multiplier
 			$result = $this->query("
@@ -179,6 +183,10 @@ class Calculator extends AppModel {
 	}
 	
 	public function getTaxShares($county_id, $move_sales_tax_into_other) {
+		if (! is_numeric($county_id)) {
+			return;
+		}
+		
 		//Indirect Business Tax Impact (Detail)
 		$tax_type_key = array(
 			15017 => 'Excise Taxes',
