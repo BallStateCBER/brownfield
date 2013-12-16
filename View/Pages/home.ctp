@@ -96,4 +96,7 @@
 			});
 		});
 	");
+	$this->Html->script('/shadowbox-3.0.3/shadowbox.js', array('inline' => false));
+	$this->Html->css('/shadowbox-3.0.3/shadowbox.css', null, array('inline' => false));
+	$this->Js->buffer('Shadowbox.init();');
 ?>
