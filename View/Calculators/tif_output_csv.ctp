@@ -25,9 +25,9 @@
 	$csv_output = array();
 	
 	// Title
-	$csv_output[] = array("EPA Brownfield Grant Writers' Tool");
+	$csv_output[] = array("Brownfield Grant Writers' Tool");
 	$csv_output[] = array("TIF-in-a-Box Economic Impact Calculator");
-	$csv_output[] = array("http://epa.cberdata.org/tif");
+	$csv_output[] = array("http://brownfield.cberdata.org/tif");
 	
 	// Blank line
 	$csv_output[] = array();
