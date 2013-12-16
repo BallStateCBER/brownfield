@@ -151,12 +151,15 @@ class CalculatorsController extends AppController {
 		$this->set(array(
 			'county_name' => $county_name,
 			'state_name' => 'Indiana',
-			'industry_name' => $industries[$industry_id],
-			'filename' => 'econ_impact_'.date('ymd_His')
+			'industry_name' => $industries[$industry_id]
 		));
 		if (isset($_GET['debug'])) {
 			$this->layout = 'ajax';
 		} else {
+			// Respond as a CSV file
+			$this->response->type('csv');
+			$filename = "Economic Impact - $county_name County, IN";
+			$this->response->download($filename.'.csv');
 			$this->layout = 'reports/csv';
 		}
 	}
