@@ -145,6 +145,7 @@ class Chart extends AppModel {
 		return $chart;	
 	}
 	
+	// TODO: Change references to 'segment' (used in County Profiles) into 'topic' (used in this site)
 	public function getChart($segment, $data, $segment_params, $structure) {
 		$this->segment = $segment;
 		$this->data = $data;
