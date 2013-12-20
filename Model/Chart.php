@@ -9,6 +9,38 @@ class Chart extends AppModel {
 	public $category_id = null;
 	public $locations = array();	// Each member is an array of [loc_type_id, loc_id]
 	
+	public $defaultOptions = array(
+		'width' => 510,
+		'height' => 300,
+		'legend' => array(
+			'position' => 'bottom',
+			'alignment' => 'center'
+		),
+		'titleTextStyle' => array(
+			'color' => 'black',
+			'fontSize' => 16
+		),
+		'vAxis' => array(
+			'textStyle' => array(
+				'fontSize' => 12
+			)
+		)
+	);
+	
+	// Supplied by getTable()'s parameters
+	public $segment = null;
+	public $data = array();
+	public $segmentParams = array();
+	public $structure = array();
+	
+	// Set by segment-specific methods
+	public $type = null;		// e.g. BarChart
+	public $rows = array();		// array(array('category' => 'Foo', 'value' => 123), ...)
+	public $columns = array();	
+	public $options = array();	// Includes 'title', etc.
+	public $footnote = "";
+	public $callbacks = array();// array('eventName' => 'functionName or anonymous function')
+	
 	/* Chart::getChartList() should be updated whenever charts are added or when their method 
 	 * names or human-readable titles are changed. This is used by the navigation sidebar and 
 	 * to test whether or not user-supplied chart names are valid. */
