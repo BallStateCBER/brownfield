@@ -133,6 +133,32 @@ class Chart extends AppModel {
 	}
 	
 	/**
+	 * Returns the appropriate label for the year(s) included in this data set
+	 */
+	public function getYears() {
+		// If 'dates' were not specified (so all available dates are collected),
+		// populate $this->segmentParams['dates'] from the collected data
+		if (empty($this->segmentParams['dates'])) {
+			foreach ($this->data as $category_id => $loc_keys) {
+				foreach ($loc_keys as $loc_key => $dates) { 
+					foreach ($dates as $date => $value) {
+						if (! in_array($date, $this->segmentParams['dates'])) {
+							$this->segmentParams['dates'][] = $date;
+						}
+					}
+				}
+			}
+		}
+		$max_year = substr(max($this->segmentParams['dates']), 0, 4);
+		$min_year = substr(min($this->segmentParams['dates']), 0, 4);
+		if ($max_year == $min_year) {
+			return $max_year;
+		} else {
+			return "$min_year-$max_year";	
+		}
+	}
+	
+	/**
 	 * Returns GoogleCharts object with default options
 	 *
 	 * @return GoogleCharts
