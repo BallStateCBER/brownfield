@@ -173,55 +173,32 @@ class Chart extends AppModel {
 			'footnote' => $this->footnote
 		);
 	}
-	
-	public function population($county = 1) {
-		// General parameters
-		$this->category_id = array('Population' => 1);
-		$this->locations = array(array(2, $county));
-		$county_name = $this->getLocName();
-		
-		// Create chart object
-		$chart = $this->getChartObject();
-		$chart->type('LineChart');
-		$chart->columns(array(
-			'year' => array(
-				'type' => 'number',
-				'label' => 'Year'
-			),
-			'values' => array(
-				'type' => 'number',
-				'label' => 'Population'
-			)
-		));
-		
-		// Get data
-		//TODO: Add dates, values to class attributes
-		$Datum = new Datum();
-		list($this->dates, $this->values) = $Datum->getSeries(
-			array_pop($this->category_id), 
-			$this->locations[0][0], 
-			$this->locations[0][1]
-		);
 
-		// Add data to chart
-		foreach ($this->values as $year => $value) {
-			$row = array(
-				'year' => substr($year, 0, 4),
-				'values' => $value
-			);
-			$chart->addRow($row);
-		}
-		
-		$chart->options(array(
-			'seriesType' => 'line',
-			'hAxis' => array(
-				'format' => '####',
-				'gridlines' => array('color' => 'transparent'),
-				'slantedText' => false
-			),
-			'title' => "Population of $county_name County, Indiana (".$this->getStartYear().' - '.$this->getEndYear().')'
-		));
-		
-		return $chart;
+	public function population() {
+		$this->type = 'LineChart';
+		$county_id = $this->segmentParams['locations'][0]['id'];
+		$county_name = $this->getCountyName();
+		$year = $this->getYears();
+		$title = "Population of $county_name County, Indiana (".$year.')';
+		$this->options = array(
+			'title' => "$county_name\n$title\n($year)",
+			'legend' => array('position' => 'none'),
+		);
+		$this->columns = array(
+	        'category' => array('label' => 'Category', 'type' => 'string'),
+	        'value' => array('label' => 'Population', 'type' => 'number')
+	    );
+	    
+		foreach ($this->data as $category_id => $loc_keys) {
+			foreach ($loc_keys as $loc_key => $dates) { 
+				foreach ($dates as $date => $value) {
+					$year = substr($date, 0, 4);
+					$this->rows[] = array(
+						'category' => $year, 
+						'value' => $value
+					);
+				}
+			}
+		}	
 	}
 }
