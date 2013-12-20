@@ -145,11 +145,32 @@ class Chart extends AppModel {
 		return $chart;	
 	}
 	
-	public function getChart($topic, $county_id) {
-		if (method_exists($this, $topic)) {
-			return $this->$topic($county_id);
+	public function getChart($segment, $data, $segment_params, $structure) {
+		$this->segment = $segment;
+		$this->data = $data;
+		$this->segmentParams = $segment_params;
+		$this->structure = $structure;
+		
+		if (! method_exists($this, $segment)) {
+			return array();
 		}
-		return false;
+		
+		$this->{$segment}();
+		
+		$this->options = array_merge($this->defaultOptions, $this->options);
+		
+		$chart = new GoogleCharts(null, null, null, null, 'chart_'.$this->segment);
+		$chart->type($this->type)
+		    ->options($this->options) 
+		    ->columns($this->columns)
+		    ->callbacks($this->callbacks);
+		foreach ($this->rows as $row) {
+			$chart->addRow($row);
+		}
+		return array(
+			'chart' => $chart,
+			'footnote' => $this->footnote
+		);
 	}
 	
 	public function population($county = 1) {
