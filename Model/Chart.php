@@ -158,19 +158,6 @@ class Chart extends AppModel {
 		}
 	}
 	
-	/**
-	 * Returns GoogleCharts object with default options
-	 *
-	 * @return GoogleCharts
-	 */
-	private function getChartObject() {
-		$chart = new GoogleCharts();
-		$chart->options(array(
-			'legend' => 'bottom'
-		));
-		return $chart;	
-	}
-	
 	// TODO: Change references to 'segment' (used in County Profiles) into 'topic' (used in this site)
 	public function getChart($segment, $data, $segment_params, $structure) {
 		$this->segment = $segment;
