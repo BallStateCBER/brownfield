@@ -158,8 +158,15 @@ class Chart extends AppModel {
 		}
 	}
 	
-	// TODO: Change references to 'segment' (used in County Profiles) into 'topic' (used in this site)
+	/**
+	 * @param string $segment Equal to the name of a chart-generating method in this class
+	 * @param array $data
+	 * @param array $segment_params Keys may include 'locations', 'categories', 'dates', and 'county_id'
+	 * @param array $structure Optional array passed to Chart to help with rearranging data
+	 * @return GoogleCharts
+	 */
 	public function getChart($segment, $data, $segment_params, $structure) {
+		// TODO: Change references to 'segment' (used in County Profiles) into 'topic' (used in this site, more intuitive)
 		$this->segment = $segment;
 		$this->data = $data;
 		$this->segmentParams = $segment_params;
