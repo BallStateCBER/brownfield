@@ -28,6 +28,13 @@
 			'topic' => $selected_topic, 
 			'state' => $state_abbreviation, 
 			'county' => $county_name_simplified, 
+			'availability' => $chart_availability,
+		));
+		
+		$svgchart = $this->element('reports/svgchart', array(
+			'topic' => $selected_topic, 
+			'state' => $state_abbreviation, 
+			'county' => $county_name_simplified, 
 			'availability' => $chart_availability
 		));
 		
@@ -60,6 +67,7 @@
 	<?php else: ?>
 		<section>
 			<?php echo $chart ?>
+			<?php echo $svgchart; ?>
 			<?php echo $description; ?>
 		</section>
 		
