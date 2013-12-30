@@ -201,6 +201,7 @@ class ReportsController extends AppController {
 				break;
 			case 'source':
 			case 'chart':
+			case 'svg_chart':
 			case 'table':
 			case 'csv':
 				$this->report_subclass = Inflector::camelize($this->type).'Report';
