@@ -48,7 +48,7 @@ Router::connect(
 	),
 	array(
 	 	'state' => '('.implode('|', $states).')',
-		'type' => '(chart|table|csv|source|excel5|excel2007)',
+		'type' => '(chart|svg_chart|table|csv|source|excel5|excel2007)',
 		'pass' => array('type', 'topic', 'state', 'county')
 	)
 );
