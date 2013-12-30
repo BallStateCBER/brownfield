@@ -246,6 +246,9 @@ class ReportsController extends AppController {
 				App::import('Vendor', 'GoogleChartTextMarker', array('file' => 'googlechartphplib'.DS.'lib'.DS.'markers'.DS.'GoogleChartTextMarker.php'));
 				App::import('Vendor', 'GoogleChartRangeMarker', array('file' => 'googlechartphplib'.DS.'lib'.DS.'markers'.DS.'GoogleChartRangeMarker.php'));
 				break;
+			case 'svg_chart':
+				App::uses('GoogleCharts', 'GoogleCharts.Lib');
+				break;
 			case 'excel2007':
 				App::import('Vendor','PHPExcel', array('file' => 'excel/PHPExcel.php'));
 				App::import('Vendor','PHPExcelWriter', array('file' => "excel/PHPExcel/Writer/Excel2007.php"));
