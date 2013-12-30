@@ -95,6 +95,10 @@ class SvgChartReport extends Report {
 		);
 	}
 	
+	public function getOutput($topic) {
+		return $this->{$topic}();
+	}
+	
 	public function isValidChart($action) {
 		$all_charts = $this->getChartList();
 		$is_chart = false;
