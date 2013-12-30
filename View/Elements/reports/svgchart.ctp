@@ -4,7 +4,7 @@
 		$chart = $this->requestAction(array(
 			'controller' => 'reports', 
 			'action' => 'switchboard',
-			'type' => 'chart', 
+			'type' => 'svgchart', 
 			'topic' => $topic, 
 			'state' => $state, 
 			'county' => $county
