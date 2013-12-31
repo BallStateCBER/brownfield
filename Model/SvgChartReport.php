@@ -31,7 +31,6 @@ class SvgChartReport extends Report {
 	// Supplied by getTable()'s parameters
 	public $segment = null;
 	public $data = array();
-	public $segmentParams = array();
 	public $structure = array();
 	
 	// Set by segment-specific methods
@@ -199,7 +198,7 @@ class SvgChartReport extends Report {
 		);
 	}
 
-	public function population() {
+	public function population() {pr($this->segmentParams);
 		$this->type = 'LineChart';
 		$county_id = $this->segmentParams['locations'][0]['id'];
 		$county_name = $this->getCountyName();
