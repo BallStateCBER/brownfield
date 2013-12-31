@@ -392,6 +392,8 @@ class ReportsController extends AppController {
 				$this->layout = 'png';
 			}
 			$this->render('/Charts/view');
+		} elseif ($type == 'svg_chart') {
+			return $this->SvgChartReport->chart;
 		} elseif ($type == 'table') {
 			// This set of values is requested in views/elements/reports/table
 			$table_vars = array(
