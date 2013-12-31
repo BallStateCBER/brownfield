@@ -141,20 +141,20 @@ class SvgChartReport extends Report {
 	 */
 	public function getYears() {
 		// If 'dates' were not specified (so all available dates are collected),
-		// populate $this->segmentParams['dates'] from the collected data
-		if (empty($this->segmentParams['dates'])) {
+		// populate $this->dates from the collected data
+		if (empty($this->dates)) {
 			foreach ($this->data as $category_id => $loc_keys) {
 				foreach ($loc_keys as $loc_key => $dates) { 
 					foreach ($dates as $date => $value) {
-						if (! in_array($date, $this->segmentParams['dates'])) {
-							$this->segmentParams['dates'][] = $date;
+						if (! in_array($date, $this->dates)) {
+							$this->dates[] = $date;
 						}
 					}
 				}
 			}
 		}
-		$max_year = substr(max($this->segmentParams['dates']), 0, 4);
-		$min_year = substr(min($this->segmentParams['dates']), 0, 4);
+		$max_year = substr(max($this->dates), 0, 4);
+		$min_year = substr(min($this->dates), 0, 4);
 		if ($max_year == $min_year) {
 			return $max_year;
 		} else {
