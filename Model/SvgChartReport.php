@@ -199,30 +199,54 @@ class SvgChartReport extends Report {
 	}
 
 	public function population() {pr($this->segmentParams);
-		$this->type = 'LineChart';
-		$county_id = $this->segmentParams['locations'][0]['id'];
-		$county_name = $this->getCountyName();
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->chart->type("LineChart");
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Category', 
+	        	'type' => 'string'
+			),
+	        'value' => array(
+	        	'label' => 'Population', 
+	        	'type' => 'number'
+			)
+	    ));
+		
+		// Gather data
+		list($this->dates, $this->values[0]) = $this->Datum->getSeries(array_pop($this->data_categories), $this->locations[0][0], $this->locations[0][1]);
+		
+		// Add line
+		foreach ($this->values[0] as $date => $value) {
+			$year = substr($date, 0, 4);
+			$this->chart->addRow(array(
+				'category' => $year, 
+				'value' => $value
+			));
+		}
+	
+		// Default prep
+		$this->prepChart();
+		$this->prepLabelAxis();
+		$this->prepDataAxis();
+		
+		// Finalize
+		$county_name = $this->locations[0][2];
 		$year = $this->getYears();
-		$title = "Population of $county_name County, Indiana (".$year.')';
-		$this->options = array(
-			'title' => "$county_name\n$title\n($year)",
-			'legend' => array('position' => 'none'),
-		);
-		$this->columns = array(
-	        'category' => array('label' => 'Category', 'type' => 'string'),
-	        'value' => array('label' => 'Population', 'type' => 'number')
-	    );
+		$this->chart->options(array(
+			'title' => "Population of $county_name, Indiana (".$year.')',
+			'legend' => array(
+				'position' => 'none'
+			)
+		));
+		
+		
+	
+	
+		// old code below
+		
+		
 	    
-		foreach ($this->data as $category_id => $loc_keys) {
-			foreach ($loc_keys as $loc_key => $dates) { 
-				foreach ($dates as $date => $value) {
-					$year = substr($date, 0, 4);
-					$this->rows[] = array(
-						'category' => $year, 
-						'value' => $value
-					);
-				}
-			}
-		}	
+			
 	}
 }
