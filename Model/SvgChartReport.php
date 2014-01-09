@@ -197,8 +197,34 @@ class SvgChartReport extends Report {
 			'footnote' => $this->footnote
 		);
 	}
-
-	public function population() {pr($this->segmentParams);
+	
+	// This is generally the Y axis, but is X for horizontal bar charts 
+	public function prepDataAxis($display_type = 'number', $display_precision = 0, $axis = 'y') {
+		switch ($display_type) {
+			case 'percent':
+				$format = '#,###';
+				if ($display_precision) {
+					$format .= '.'.str_repeat('0', $display_precision);
+				}
+				$format .= '%';
+				break;
+			case 'currency':
+				$format = '$';
+				if ($display_precision) {
+					$format .= '.'.str_repeat('0', $display_precision);
+				}
+				$format .= '#,###';
+				break;
+		}
+		$axis_key = $axis.'Axis';
+		$this->chart->options(array(
+			$axis_key => array(
+				'format' => $format
+			)
+		));
+	}
+	
+	public function population() {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->chart->type("LineChart");
