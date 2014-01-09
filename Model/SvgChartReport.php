@@ -252,8 +252,6 @@ class SvgChartReport extends Report {
 		}
 	
 		// Default prep
-		$this->prepChart();
-		$this->prepLabelAxis();
 		$this->prepDataAxis();
 		
 		// Finalize
@@ -264,15 +262,6 @@ class SvgChartReport extends Report {
 			'legend' => array(
 				'position' => 'none'
 			)
-		));
-		
-		
-	
-	
-		// old code below
-		
-		
-	    
-			
+		));	
 	}
 }
