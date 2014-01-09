@@ -215,6 +215,8 @@ class SvgChartReport extends Report {
 				}
 				$format .= '#,###';
 				break;
+			default:
+				$format = '#,###';
 		}
 		$axis_key = $axis.'Axis';
 		$this->chart->options(array(
