@@ -11,7 +11,7 @@ class SvgChartReport extends Report {
 	public $locations = array();	// Each member is an array of [loc_type_id, loc_id]
 	
 	public $defaultOptions = array(
-		'width' => 510,
+		'width' => 725,
 		'height' => 300,
 		'legend' => array(
 			'position' => 'bottom',
