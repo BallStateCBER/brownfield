@@ -217,6 +217,11 @@ class SvgChartReport extends Report {
 		));
 	}
 	
+	private function applyOptions($options) {
+		$options = array_merge($this->defaultOptions, $options);
+		$this->chart->options($options);
+	}
+	
 	public function population() {
 		// Create chart
 		$this->chart = new GoogleCharts();
@@ -250,11 +255,11 @@ class SvgChartReport extends Report {
 		// Finalize
 		$county_name = $this->locations[0][2];
 		$year = $this->getYears();
-		$this->chart->options(array(
+		$this->applyOptions(array(
 			'title' => "Population of $county_name, Indiana (".$year.')',
 			'legend' => array(
 				'position' => 'none'
 			)
-		));	
+		));
 	}
 }
