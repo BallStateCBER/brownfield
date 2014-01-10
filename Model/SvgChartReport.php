@@ -16,15 +16,6 @@ class SvgChartReport extends Report {
 		'legend' => array(
 			'position' => 'bottom',
 			'alignment' => 'center'
-		),
-		'titleTextStyle' => array(
-			'color' => 'black',
-			'fontSize' => 16
-		),
-		'vAxis' => array(
-			'textStyle' => array(
-				'fontSize' => 12
-			)
 		)
 	);
 	
