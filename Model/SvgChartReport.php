@@ -195,8 +195,8 @@ class SvgChartReport extends Report {
 		);
 	}
 	
-	// This is generally the Y axis, but is X for horizontal bar charts 
-	public function prepDataAxis($display_type = 'number', $display_precision = 0, $axis = 'y') {
+	// This is generally the Y axis ($axis == 'v'), but is X ($axis == 'h') for horizontal bar charts 
+	public function prepDataAxis($display_type = 'number', $display_precision = 0, $axis = 'v') {
 		switch ($display_type) {
 			case 'percent':
 				$format = '#,###';
