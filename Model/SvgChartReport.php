@@ -89,7 +89,10 @@ class SvgChartReport extends Report {
 	}
 	
 	public function getOutput($topic) {
-		return $this->{$topic}();
+		if (method_exists($this, $topic)) {
+			return $this->{$topic}();
+		}
+		return false;
 	}
 	
 	public function isValidChart($action) {
