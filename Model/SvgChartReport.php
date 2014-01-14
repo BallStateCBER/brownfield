@@ -266,4 +266,62 @@ class SvgChartReport extends Report {
 			)
 		));
 	}
+	
+	public function population_growth() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->chart->type("ColumnChart");
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Timespan', 
+	        	'type' => 'string'
+			),
+	        'county_value' => array(
+	        	'label' => 'County population growth', 
+	        	'type' => 'number'
+			),
+			'state_value' => array(
+	        	'label' => 'State population growth', 
+	        	'type' => 'number'
+			)
+	    ));
+		
+		// Gather data
+		$county_growth_values = $state_growth_values = array();
+		$category_id = array_pop($this->data_categories);
+		list($this->dates, $county_values) = $this->Datum->getValues($category_id, $this->locations[0][0], $this->locations[0][1], $this->dates);
+		list($this->dates, $state_values) = $this->Datum->getValues($category_id, $this->locations[1][0], $this->locations[1][1], $this->dates);
+		$date_pairs = array(
+			array(2005, 2009), 
+			array(2000, 2009), 
+			array(1995, 2009), 
+			array(1990, 2009), 
+			array(1985, 2009), 
+			array(1980, 2009), 
+			array(1975, 2009), 
+			array(1970, 2009)
+		);
+		
+		// Add line
+		foreach ($date_pairs as $date_pair) {
+			$label = substr($date_pair[0], 0,4)."-".substr($date_pair[1], 0,4);
+			$earlier = $date_pair[0].'0000';
+			$later = $date_pair[1].'0000';
+			$county_value = ($county_values[$later] - $county_values[$earlier]) / $county_values[$earlier];
+			$state_value = ($state_values[$later] - $state_values[$earlier]) / $state_values[$earlier];
+			$this->chart->addRow(array(
+				'category' => implode('-', $date_pair), 
+				'county_value' => $county_value,
+				'state_value' => $state_value
+			)); 
+		}
+		
+		// Finalize
+		$this->prepDataAxis('percent', 1);
+		$county_name = $this->locations[0][2];
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'title' => "Population Growth (".$year.')',
+		));
+	}
 }
