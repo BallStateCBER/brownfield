@@ -16,6 +16,9 @@ class SvgChartReport extends Report {
 		'legend' => array(
 			'position' => 'bottom',
 			'alignment' => 'center'
+		),
+		'titleTextStyle' => array(
+			'color' => '#000'
 		)
 	);
 	
