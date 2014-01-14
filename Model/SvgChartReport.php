@@ -322,6 +322,11 @@ class SvgChartReport extends Report {
 		$year = $this->getYears();
 		$this->applyOptions(array(
 			'title' => "Population Growth (".$year.')',
+			'hAxis' => array(
+				'textStyle' => array(
+					'fontSize' => 10
+				)
+			)
 		));
 	}
 }
