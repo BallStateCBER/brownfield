@@ -254,11 +254,9 @@ class SvgChartReport extends Report {
 				'value' => $value
 			));
 		}
-	
-		// Default prep
-		$this->prepDataAxis();
 		
 		// Finalize
+		$this->prepDataAxis();
 		$county_name = $this->locations[0][2];
 		$year = $this->getYears();
 		$this->applyOptions(array(
