@@ -456,4 +456,51 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('percent', 0, 'h');
 	}
+
+	public function female_age_breakdown() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("BarChart");		
+		$columns = array(
+	        'category' => array(
+	        	'label' => 'category', 
+	        	'type' => 'string'
+			)
+	    );
+		$category_names = array_keys($this->data_categories);
+		foreach ($category_names as $k => $category_name) {
+	        $columns["cat_$k"] = array(
+	        	'label' => $category_name, 
+	        	'type' => 'number'
+			);
+		}
+		$this->chart->columns($columns);
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
+			}
+		}
+
+		// Add bars
+		foreach ($this->locations as $loc_key => $location) {
+			$row = array(
+				'category' => $location[2]
+			);
+			foreach ($category_names as $k => $category_name) {
+				$row["cat_$k"] = $this->values[$loc_key][$category_name];
+			}
+			$this->chart->addRow($row);
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'title' => 'Female Age Breakdown ('.$year.')',
+			'isStacked' => true
+		));
+		$this->prepDataAxis('percent', 0, 'h');
+	}
 }
