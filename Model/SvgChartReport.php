@@ -227,7 +227,7 @@ class SvgChartReport extends Report {
 	}
 	
 	private function applyOptions($options) {
-		$options = array_merge_recursive($this->options, $options);
+		$options = array_replace_recursive($this->chart->options, $options);
 		$this->chart->options($options);
 	}
 	
