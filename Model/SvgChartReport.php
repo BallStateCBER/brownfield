@@ -503,4 +503,76 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('percent', 0, 'h');
 	}
+
+	public function population_by_sex() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("BarChart");
+		$county_name = $this->locations[0][2];
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Sex', 
+	        	'type' => 'string'
+			),
+	        'county_value' => array(
+	        	'label' => $county_name, 
+	        	'type' => 'number'
+			),
+			'state_value' => array(
+	        	'label' => 'Indiana', 
+	        	'type' => 'number'
+			),
+			'country_value' => array(
+	        	'label' => 'United States', 
+	        	'type' => 'number'
+			),
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
+			}
+		}
+
+		// Add bars
+		$categories = array_keys($this->data_categories);
+		$all_values = array();
+		foreach ($categories as $category) {
+			$values = array();
+			foreach ($this->locations as $key => $set) {
+				$value = $this->values[$key][$category];
+				$values[] = $value;
+				$all_values[] = $value;
+			}
+			$this->chart->addRow(array(
+				'category' => $category, 
+				'county_value' => $values[0],
+				'state_value' => $values[1],
+				'country_value' => $values[2]
+			));
+		}
+		
+		// Finalize
+		$min = min($all_values);
+		$min = floor($min * 20) / 20;
+		$max = max($all_values); 
+		$max = ceil($max * 20) / 20;
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'title' => 'Population By Sex ('.$year.')',
+			'hAxis' => array(
+				'minValue' => $min,
+				'maxValue' => $max,
+				'viewWindowMode' => 'explicit',
+				'viewWindow' => array(
+					'min' => $min,
+					'max' => $max
+				)
+			),
+			'height' => 500
+		));
+		$this->prepDataAxis('percent', 0, 'h');
+	}
 }
