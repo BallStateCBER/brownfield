@@ -386,4 +386,62 @@ class SvgChartReport extends Report {
 			'title' => 'Density Per Square Mile of Land Area ('.$year.')'
 		));
 	}
+
+
+	public function population_age_breakdown() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->chart->type("BarChart");
+		$county_name = $this->locations[0][2];
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Age Range', 
+	        	'type' => 'string'
+			),
+	        'county_value' => array(
+	        	'label' => $county_name, 
+	        	'type' => 'number'
+			),
+			'state_value' => array(
+	        	'label' => 'Indiana', 
+	        	'type' => 'number'
+			),
+			'country_value' => array(
+	        	'label' => 'United States', 
+	        	'type' => 'number'
+			),
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
+			}
+		}
+
+		// Add bars
+		$categories = array_keys($this->data_categories);
+		foreach ($categories as $category) {
+			$values = array();
+			foreach ($this->locations as $key => $set) {
+				$values[] = $this->values[$key][$category];
+			}
+			$this->chart->addRow(array(
+				'category' => $category, 
+				'county_value' => $values[0],
+				'state_value' => $values[1],
+				'country_value' => $values[2]
+			));
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'title' => 'Population By Age ('.$year.')',
+			'hAxis' => array(
+				'minValue' => 0
+			)
+		));
+		$this->prepDataAxis('percent', 0, 'h');
+	}
 }
