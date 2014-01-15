@@ -341,7 +341,7 @@ class SvgChartReport extends Report {
 		$county_name = $this->locations[0][2];
 		$this->chart->columns(array(
 	        'category' => array(
-	        	'label' => 'Timespan', 
+	        	'label' => 'Category', 
 	        	'type' => 'string'
 			),
 	        'county_value' => array(
