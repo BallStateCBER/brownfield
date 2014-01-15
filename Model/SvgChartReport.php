@@ -271,17 +271,18 @@ class SvgChartReport extends Report {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->chart->type("ColumnChart");
+		$county_name = $this->locations[0][2];
 		$this->chart->columns(array(
 	        'category' => array(
 	        	'label' => 'Timespan', 
 	        	'type' => 'string'
 			),
 	        'county_value' => array(
-	        	'label' => 'County population growth', 
+	        	'label' => $county_name, 
 	        	'type' => 'number'
 			),
 			'state_value' => array(
-	        	'label' => 'State population growth', 
+	        	'label' => 'Indiana',
 	        	'type' => 'number'
 			)
 	    ));
