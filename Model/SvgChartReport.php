@@ -271,6 +271,9 @@ class SvgChartReport extends Report {
 			'title' => "Population of $county_name, Indiana (".$year.')',
 			'legend' => array(
 				'position' => 'none'
+			),
+			'vAxis' => array(
+				'minValue' => null
 			)
 		));
 	}
