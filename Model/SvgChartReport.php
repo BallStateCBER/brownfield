@@ -19,6 +19,9 @@ class SvgChartReport extends Report {
 		),
 		'titleTextStyle' => array(
 			'color' => '#000'
+		),
+		'vAxis' => array(
+			'minValue' => 0
 		)
 	);
 	
