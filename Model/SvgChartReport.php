@@ -219,7 +219,7 @@ class SvgChartReport extends Report {
 				$format = '#,###';
 		}
 		$axis_key = $axis.'Axis';
-		$this->chart->options(array(
+		$this->applyOptions(array(
 			$axis_key => array(
 				'format' => $format
 			)
@@ -227,13 +227,18 @@ class SvgChartReport extends Report {
 	}
 	
 	private function applyOptions($options) {
-		$options = array_merge($this->defaultOptions, $options);
+		$options = array_merge_recursive($this->options, $options);
 		$this->chart->options($options);
+	}
+	
+	private function applyDefaultOptions() {
+		$this->applyOptions($this->defaultOptions);
 	}
 	
 	public function population() {
 		// Create chart
 		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
 		$this->chart->type("LineChart");
 		$this->chart->columns(array(
 	        'category' => array(
@@ -273,6 +278,7 @@ class SvgChartReport extends Report {
 	public function population_growth() {
 		// Create chart
 		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
 		$this->chart->type("ColumnChart");
 		$county_name = $this->locations[0][2];
 		$this->chart->columns(array(
@@ -337,6 +343,7 @@ class SvgChartReport extends Report {
 	public function density() {
 		// Create chart
 		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
 		$this->chart->type("ColumnChart");
 		$county_name = $this->locations[0][2];
 		$this->chart->columns(array(
@@ -391,6 +398,7 @@ class SvgChartReport extends Report {
 	public function population_age_breakdown() {
 		// Create chart
 		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
 		$this->chart->type("BarChart");
 		$county_name = $this->locations[0][2];
 		$this->chart->columns(array(
