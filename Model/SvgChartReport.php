@@ -685,4 +685,59 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('percent', 0, 'h');
 	}
+
+	public function graduation_rate() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("BarChart");
+		$county_name = $this->locations[0][2];
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'School corporation', 
+	        	'type' => 'string'
+			),
+	        'value' => array(
+	        	'label' => 'Graduation rate', 
+	        	'type' => 'number'
+			)
+	    ));
+		
+		// Gather data
+		$category_id = end($this->data_categories);
+		foreach ($this->locations as $loc_key => $location) {
+			$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
+			if ($value) {
+				$this->values[$loc_key] = $value;
+			} else {
+				unset($this->locations[$loc_key]);
+			}
+			
+			$this->chart->addRow(array(
+				'category' => $location[2],
+				'value' => $value
+			));
+		}
+
+		// Adapt to the wide range of data and location counts
+		$location_count = count($this->locations);
+		$bar_width = ($location_count <= 8) ? 20 : 15;
+		$chart_height = 70 + (($bar_width + 10) * $location_count);
+		
+		// Finalize
+		$year = $this->getYears();
+		$county_name = $this->Location->getLocationName(2, $this->county_id, true);
+		$this->applyOptions(array(
+			'title' => $county_name.' High School Graduation Rates ('.$year.')',
+			'legend' => array(
+				'position' => 'none'
+			),
+			'chartArea' => array(
+				'left' => 250,
+				'height' => $chart_height - 70
+			),
+			'height' => $chart_height
+		));
+		$this->prepDataAxis('percent', 0, 'h');
+	}
 }
