@@ -268,10 +268,10 @@ class SvgChartReport extends Report {
 		$county_name = $this->locations[0][2];
 		$year = $this->getYears();
 		$this->applyOptions(array(
-			'title' => "Population of $county_name, Indiana (".$year.')',
 			'legend' => array(
 				'position' => 'none'
 			),
+			'title' => "Population of $county_name, Indiana (".$year.')',
 			'vAxis' => array(
 				'minValue' => null
 			)
@@ -334,12 +334,12 @@ class SvgChartReport extends Report {
 		$county_name = $this->locations[0][2];
 		$year = $this->getYears();
 		$this->applyOptions(array(
-			'title' => "Population Growth (".$year.')',
 			'hAxis' => array(
 				'textStyle' => array(
 					'fontSize' => 10
 				)
-			)
+			),
+			'title' => "Population Growth (".$year.')'
 		));
 	}
 
@@ -365,7 +365,7 @@ class SvgChartReport extends Report {
 			'country_value' => array(
 	        	'label' => 'United States', 
 	        	'type' => 'number'
-			),
+			)
 	    ));
 		
 		// Gather data
@@ -397,7 +397,6 @@ class SvgChartReport extends Report {
 		));
 	}
 
-
 	public function population_age_breakdown() {
 		// Create chart
 		$this->chart = new GoogleCharts();
@@ -420,7 +419,7 @@ class SvgChartReport extends Report {
 			'country_value' => array(
 	        	'label' => 'United States', 
 	        	'type' => 'number'
-			),
+			)
 	    ));
 		
 		// Gather data
@@ -448,11 +447,11 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
-			'title' => 'Population By Age ('.$year.')',
 			'hAxis' => array(
 				'minValue' => 0
 			),
-			'height' => 500
+			'height' => 500,
+			'title' => 'Population By Age ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'h');
 	}
@@ -498,8 +497,8 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
-			'title' => 'Female Age Breakdown ('.$year.')',
-			'isStacked' => true
+			'isStacked' => true,
+			'title' => 'Female Age Breakdown ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'h');
 	}
@@ -526,7 +525,7 @@ class SvgChartReport extends Report {
 			'country_value' => array(
 	        	'label' => 'United States', 
 	        	'type' => 'number'
-			),
+			)
 	    ));
 		
 		// Gather data
@@ -598,7 +597,7 @@ class SvgChartReport extends Report {
 			'country_value' => array(
 	        	'label' => 'United States', 
 	        	'type' => 'number'
-			),
+			)
 	    ));
 		
 		// Gather data
@@ -673,15 +672,15 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
-			'title' => 'Educational Attainment, Population 25 Years and Over ('.$year.')',
+			'chartArea' => array(
+				'left' => 150,
+				'width' => 300
+			),
 			'isStacked' => true,
 			'legend' => array(
 				'position' => 'right'
 			),
-			'chartArea' => array(
-				'left' => 150,
-				'width' => 300
-			)
+			'title' => 'Educational Attainment, Population 25 Years and Over ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'h');
 	}
@@ -728,15 +727,15 @@ class SvgChartReport extends Report {
 		$year = $this->getYears();
 		$county_name = $this->Location->getLocationName(2, $this->county_id, true);
 		$this->applyOptions(array(
-			'title' => $county_name.' High School Graduation Rates ('.$year.')',
-			'legend' => array(
-				'position' => 'none'
-			),
 			'chartArea' => array(
 				'left' => 250,
 				'height' => $chart_height - 70
 			),
-			'height' => $chart_height
+			'height' => $chart_height,
+			'legend' => array(
+				'position' => 'none'
+			),
+			'title' => $county_name.' High School Graduation Rates ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'h');
 	}
