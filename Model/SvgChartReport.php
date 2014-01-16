@@ -811,21 +811,37 @@ class SvgChartReport extends Report {
 		}
 		
 		// Add bars
+		$all_values = array();
 		foreach ($this->locations as $loc_key => $location) {
 			$row = array(
 				'category' => $location[2]
 			);
 			foreach ($this->data_categories as $label => $category_id) {
-				$row['value'] = $this->values[$loc_key][$label] / 100;
+				$value = $this->values[$loc_key][$label] / 100;
+				$row['value'] = $value;
+				$all_values[] = $value;
 			}
 			$this->chart->addRow($row);
 		}
 		
 		// Finalize
 		$year = $this->getYears();
+		$min = min($all_values);
+		$min = floor($min * 10) / 10;
+		$max = max($all_values); 
+		$max = ceil($max * 10) / 10;
 		$this->applyOptions(array(
 			'chartArea' => array(
 				'left' => 150
+			),
+			'hAxis' => array(
+				'minValue' => $min,
+				'maxValue' => $max,
+				'viewWindowMode' => 'explicit',
+				'viewWindow' => array(
+					'min' => $min,
+					'max' => $max
+				)
 			),
 			'legend' => array(
 				'position' => 'none'
