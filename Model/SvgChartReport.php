@@ -786,4 +786,55 @@ class SvgChartReport extends Report {
 			)
 		));
 	}
+
+	public function households_with_minors() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("BarChart");
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Location',
+	        	'type' => 'string'
+			),
+	        'value' => array(
+	        	'label' => 'Percent of Households',
+	        	'type' => 'number'
+			)
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			}
+		}
+		
+		// Add bars
+		foreach ($this->locations as $loc_key => $location) {
+			$row = array(
+				'category' => $location[2]
+			);
+			foreach ($this->data_categories as $label => $category_id) {
+				$row['value'] = $this->values[$loc_key][$label] / 100;
+			}
+			$this->chart->addRow($row);
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'chartArea' => array(
+				'left' => 150
+			),
+			'legend' => array(
+				'position' => 'none'
+			),
+			'title' => 'Households With One or More People Under 18 Years ('.$year.')',
+			'vAxis' => array(
+				'minValue' => null
+			)
+		));
+		$this->prepDataAxis('percent', 0, 'h');
+	}
 }
