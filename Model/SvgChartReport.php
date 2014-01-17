@@ -920,4 +920,66 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('percent', 0, 'v');
 	}
+
+	public function households_with_over_65() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("ColumnChart");
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Area',
+	        	'type' => 'string'
+			),
+	        'value' => array(
+	        	'label' => 'Percent of households',
+	        	'type' => 'number'
+			)
+	    ));
+		
+		// Gather data
+		$all_values = array();
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $value / 100;
+				$this->values[$loc_key][$label] = $value;
+				$all_values[] = $value;
+			}
+		}
+		
+		// Add bars
+		foreach ($this->locations as $loc_key => $location) {
+			$row = array(
+				'category' => $location[2]
+			);
+			foreach ($this->data_categories as $label => $category_id) {
+				$row['value'] = $this->values[$loc_key][$label];
+			}
+			$this->chart->addRow($row);
+		}
+		
+		// Finalize
+		$min = min($all_values);
+		$min = floor($min * 20) / 20;
+		$max = max($all_values);
+		$max = ceil($max * 20) / 20;
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'legend' => array(
+				'position' => 'none'
+			),
+			'title' => 'Households with one or more people 65 years and over ('.$year.')',
+			'vAxis' => array(
+				'minValue' => $min,
+				'maxValue' => $max,
+				'viewWindowMode' => 'explicit',
+				'viewWindow' => array(
+					'min' => $min,
+					'max' => $max
+				)
+			)
+		));
+		$this->prepDataAxis('percent', 0, 'v');
+	}
 }
