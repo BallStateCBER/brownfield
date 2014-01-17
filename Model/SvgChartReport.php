@@ -985,26 +985,14 @@ class SvgChartReport extends Report {
 		}
 		
 		// Finalize
-		$min = min($all_values);
-		$min = floor($min * 20) / 20;
-		$max = max($all_values);
-		$max = ceil($max * 20) / 20;
 		$year = $this->getYears();
 		$this->applyOptions(array(
 			'legend' => array(
 				'position' => 'none'
 			),
-			'title' => 'Households with one or more people 65 years and over ('.$year.')',
-			'vAxis' => array(
-				'minValue' => $min,
-				'maxValue' => $max,
-				'viewWindowMode' => 'explicit',
-				'viewWindow' => array(
-					'min' => $min,
-					'max' => $max
-				)
-			)
+			'title' => 'Households with one or more people 65 years and over ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'v');
+		$this->roundDataScale($all_values);
 	}
 }
