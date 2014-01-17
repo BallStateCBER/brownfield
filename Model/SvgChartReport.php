@@ -1083,4 +1083,52 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('percent', 0, 'v');
 	}
+
+	public function disabled() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("ColumnChart");
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Location',
+	        	'type' => 'string'
+			),
+	        'value' => array(
+	        	'label' => 'Average Household Size',
+	        	'type' => 'number'
+			)
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			}
+		}
+		
+		// Add bars
+		foreach ($this->locations as $loc_key => $location) {
+			$row = array(
+				'category' => $location[2]
+			);
+			foreach ($this->data_categories as $label => $category_id) {
+				$row['value'] = $this->values[$loc_key][$label] / 100;
+			}
+			$this->chart->addRow($row);
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'legend' => array(
+				'position' => 'none'
+			),
+			'title' => 'Percent of Population Disabled ('.$year.')',
+			'vAxis' => array(
+				'minValue' => null
+			)
+		));
+		$this->prepDataAxis('percent', 0, 'v');
+	}
 }
