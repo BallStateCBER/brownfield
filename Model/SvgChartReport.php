@@ -579,25 +579,13 @@ class SvgChartReport extends Report {
 		}
 		
 		// Finalize
-		$min = min($all_values);
-		$min = floor($min * 20) / 20;
-		$max = max($all_values); 
-		$max = ceil($max * 20) / 20;
 		$year = $this->getYears();
 		$this->applyOptions(array(
 			'title' => 'Population By Sex ('.$year.')',
-			'hAxis' => array(
-				'minValue' => $min,
-				'maxValue' => $max,
-				'viewWindowMode' => 'explicit',
-				'viewWindow' => array(
-					'min' => $min,
-					'max' => $max
-				)
-			),
 			'height' => 500
 		));
 		$this->prepDataAxis('percent', 0, 'h');
+		$this->roundDataScale($all_values, 'h', 20);
 	}
 
 	public function dependency_ratios() {
@@ -851,22 +839,9 @@ class SvgChartReport extends Report {
 		
 		// Finalize
 		$year = $this->getYears();
-		$min = min($all_values);
-		$min = floor($min * 10) / 10;
-		$max = max($all_values); 
-		$max = ceil($max * 10) / 10;
 		$this->applyOptions(array(
 			'chartArea' => array(
 				'left' => 150
-			),
-			'hAxis' => array(
-				'minValue' => $min,
-				'maxValue' => $max,
-				'viewWindowMode' => 'explicit',
-				'viewWindow' => array(
-					'min' => $min,
-					'max' => $max
-				)
 			),
 			'legend' => array(
 				'position' => 'none'
@@ -877,6 +852,7 @@ class SvgChartReport extends Report {
 			)
 		));
 		$this->prepDataAxis('percent', 0, 'h');
+		$this->roundDataScale($all_values, 'h', 10);
 	}
 
 	public function household_types_with_minors() {
