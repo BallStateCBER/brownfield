@@ -243,9 +243,9 @@ class SvgChartReport extends Report {
 	 */
 	private function roundDataScale($values, $axis = 'v', $round_by = 20) {
 		$min = min($values);
-		$min = floor($min * 20) / 20;
+		$min = floor($min * $round_by) / $round_by;
 		$max = max($values);
-		$max = ceil($max * 20) / 20;
+		$max = ceil($max * $round_by) / $round_by;
 		$axis_key = $axis.'Axis';
 		$this->applyOptions(array(
 			$axis_key => array(
