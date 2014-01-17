@@ -235,6 +235,31 @@ class SvgChartReport extends Report {
 		$this->applyOptions($this->defaultOptions);
 	}
 	
+	/**
+	 * Rounds the ends of an axis so that it begins and ends on nice, round numbers
+	 * @param array $values One-dimensional array of all values
+	 * @param string $axis Either 'v' or 'h'
+	 * @param int $round_by
+	 */
+	private function roundDataScale($values, $axis = 'v', $round_by = 20) {
+		$min = min($values);
+		$min = floor($min * 20) / 20;
+		$max = max($values);
+		$max = ceil($max * 20) / 20;
+		$axis_key = $axis.'Axis';
+		$this->applyOptions(array(
+			$axis_key => array(
+				'minValue' => $min,
+				'maxValue' => $max,
+				'viewWindowMode' => 'explicit',
+				'viewWindow' => array(
+					'min' => $min,
+					'max' => $max
+				)
+			)
+		));
+	}
+	
 	public function population() {
 		// Create chart
 		$this->chart = new GoogleCharts();
