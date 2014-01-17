@@ -853,4 +853,71 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('percent', 0, 'h');
 	}
+
+	public function household_types_with_minors() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("ColumnChart");		
+		$columns = array(
+	        'category' => array(
+	        	'label' => 'category', 
+	        	'type' => 'string'
+			)
+	    );
+		$category_names = array_keys($this->data_categories);
+		foreach ($category_names as $k => $category_name) {
+			/* The fourth category, "Households with one or more people 
+			 * under 18 years" doesn't actually show up on the chart. */
+			if ($k == 4) {
+				break;	
+			}
+			
+			$category_name = str_replace('\'', '\\\'', $category_name);
+			$category_name = str_replace(', percent', '', $category_name);
+	        $columns["cat_$k"] = array(
+	        	'label' => $category_name, 
+	        	'type' => 'number'
+			);
+		}
+		$this->chart->columns($columns);
+		
+		// Gather data
+		$total_households_cat_id = array_pop($this->data_categories);
+		foreach ($this->locations as $loc_key => $location) {
+			$total_households = $this->Datum->getValue($total_households_cat_id, $location[0], $location[1], $this->year);
+			foreach ($this->data_categories as $category => $category_id) {
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / $total_households;
+				$this->values[$category][$loc_key] = $value;
+			}
+		}
+
+		// Add bars
+		foreach ($this->locations as $loc_key => $location) {
+			$row = array(
+				'category' => $location[2]
+			);
+			$k = 0;
+			foreach ($this->data_categories as $category => $category_id) {
+				$row["cat_$k"] = $this->values[$category][$loc_key];
+				$k++;
+				if ($k == 4) {
+					break;
+				}
+			}
+			$this->chart->addRow($row);
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'height' => 500,
+			'isStacked' => true,
+			'legend' => array(
+				'position' => 'right'
+			),
+			'title' => 'Households With One Or More People Under 18 Years, Breakdown of Household Types ('.$year.')'
+		));
+		$this->prepDataAxis('percent', 0, 'v');
+	}
 }
