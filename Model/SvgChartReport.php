@@ -1131,4 +1131,45 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('percent', 0, 'v');
 	}
+
+	public function disabled_ages() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("PieChart");		
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'category', 
+	        	'type' => 'string'
+			),
+			'value' => array(
+	        	'label' => 'Disabled', 
+	        	'type' => 'number'
+			),
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			}
+		}
+
+		// Add slices
+		foreach ($this->data_categories as $label => $category_id) {
+			$this->chart->addRow(array(
+				'category' => $label,
+				'value' => $this->values[$label]
+			));
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'legend' => array(
+				'position' => 'right'
+			),
+			'title' => 'Disabled Age Breakdown, '.$this->locations[0][2].', Indiana ('.$year.')'
+		));
+	}
 }
