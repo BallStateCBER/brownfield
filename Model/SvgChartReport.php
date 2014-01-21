@@ -741,9 +741,9 @@ class SvgChartReport extends Report {
 	        	'label' => 'Graduation rate', 
 	        	'type' => 'number'
 			),
-			'role' => array(
-				'label' => 'Foo', 
-	        	'type' => 'bar',
+			'colors' => array(
+				'label' => 'Colors',
+				'type' => 'string',
 				'role' => 'style'
 			)
 	    ));
@@ -763,7 +763,7 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $location[2],
 				'value' => $value,
-				'role' => "'$color'" 
+				'colors' => "$color"
 			));
 			$i++;
 		}
