@@ -716,6 +716,7 @@ class SvgChartReport extends Report {
 				'left' => 150,
 				'width' => 300
 			),
+			'colors' => array_slice($this->colors, 0, 7),
 			'isStacked' => true,
 			'legend' => array(
 				'position' => 'right'
