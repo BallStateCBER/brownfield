@@ -312,6 +312,9 @@ class SvgChartReport extends Report {
 		$county_name = $this->locations[0][2];
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'colors' => array(
+				$this->colors[0]
+			),
 			'legend' => array(
 				'position' => 'none'
 			),
