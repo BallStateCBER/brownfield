@@ -10,24 +10,24 @@ class SvgChartReport extends Report {
 	public $category_id = null;
 	public $locations = array();	// Each member is an array of [loc_type_id, loc_id]
 	public $colors = array(
-		'FFCC33',	// orangish yellow
-		'81CF5A',	// green
-		'5F8AFF',	// blue
-		'FF7F00', 	// orange
-		'FF0000', 	// red
-		'BF00FF', 	// purple
-		'3F00FF'	// blue
+		'#FFCC33',	// orangish yellow
+		'#81CF5A',	// green
+		'#5F8AFF',	// blue
+		'#FF7F00', 	// orange
+		'#FF0000', 	// red
+		'#BF00FF', 	// purple
+		'#3F00FF'	// blue
 	);
 	public $pie_colors = array(
-		'CF1920',
-		'FFB900',
-		'8219CF',
-		'195BCF',
-		'19C2CF',
-		'23BF2A',
-		'BF9523',
-		'8F6635',
-		'CFCFCF'	//gray
+		'#CF1920',
+		'#FFB900',
+		'#8219CF',
+		'#195BCF',
+		'#19C2CF',
+		'#23BF2A',
+		'#BF9523',
+		'#8F6635',
+		'#CFCFCF'	//gray
 	);
 	public $defaultOptions = array(
 		'width' => 725,
