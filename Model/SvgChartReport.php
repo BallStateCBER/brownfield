@@ -381,6 +381,7 @@ class SvgChartReport extends Report {
 		$county_name = $this->locations[0][2];
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 2),
 			'hAxis' => array(
 				'textStyle' => array(
 					'fontSize' => 10
