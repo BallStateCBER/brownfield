@@ -740,11 +740,17 @@ class SvgChartReport extends Report {
 	        'value' => array(
 	        	'label' => 'Graduation rate', 
 	        	'type' => 'number'
+			),
+			'role' => array(
+				'label' => 'Foo', 
+	        	'type' => 'bar',
+				'role' => 'style'
 			)
 	    ));
 		
 		// Gather data
 		$category_id = end($this->data_categories);
+		$i = 1;
 		foreach ($this->locations as $loc_key => $location) {
 			$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
 			if ($value) {
@@ -753,10 +759,13 @@ class SvgChartReport extends Report {
 				unset($this->locations[$loc_key]);
 			}
 			
+			$color = $i < count($this->locations) ? $this->colors[0] : $this->colors[1];
 			$this->chart->addRow(array(
 				'category' => $location[2],
-				'value' => $value
+				'value' => $value,
+				'role' => "'$color'" 
 			));
+			$i++;
 		}
 
 		// Adapt to the wide range of data and location counts
@@ -767,11 +776,14 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$county_name = $this->Location->getLocationName(2, $this->county_id, true);
+		$colors = array_fill(0, count($this->locations) - 1, $this->colors[0]);
+		$colors[] = $this->colors[1];
 		$this->applyOptions(array(
 			'chartArea' => array(
 				'left' => 250,
 				'height' => $chart_height - 70
 			),
+			'colors' => $colors,
 			'height' => $chart_height,
 			'legend' => array(
 				'position' => 'none'
