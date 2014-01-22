@@ -345,11 +345,16 @@ class SvgChartReport extends Report {
 	        	'label' => $county_name, 
 	        	'type' => 'number'
 			),
+			'county_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
 			'state_value' => array(
 	        	'label' => 'Indiana',
 	        	'type' => 'number'
 			),
-			'annotation' => array(
+			'state_annotation' => array(
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
@@ -382,8 +387,9 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => implode('-', $date_pair), 
 				'county_value' => $county_value,
+				'county_annotation' => round($county_value * 100).'%',
 				'state_value' => $state_value,
-				'annotation' => round($state_value * 100).'%'
+				'state_annotation' => round($state_value * 100).'%'
 			));
 		}
 		
