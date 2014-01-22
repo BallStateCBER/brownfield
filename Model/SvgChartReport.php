@@ -830,6 +830,11 @@ class SvgChartReport extends Report {
 	        	'label' => 'Graduation rate', 
 	        	'type' => 'number'
 			),
+			'annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
 			'colors' => array(
 				'label' => 'Colors',
 				'type' => 'string',
@@ -852,7 +857,8 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $location[2],
 				'value' => $value,
-				'colors' => "$color"
+				'annotation' => round($value * 100, 1).'%',
+				'colors' => $color
 			));
 			$i++;
 		}
