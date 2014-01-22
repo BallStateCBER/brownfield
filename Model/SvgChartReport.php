@@ -343,6 +343,11 @@ class SvgChartReport extends Report {
 			'state_value' => array(
 	        	'label' => 'Indiana',
 	        	'type' => 'number'
+			),
+			'annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
 			)
 	    ));
 		
@@ -362,7 +367,7 @@ class SvgChartReport extends Report {
 			array(1970, 2009)
 		);
 		
-		// Add line
+		// Add bars
 		foreach ($date_pairs as $date_pair) {
 			$label = substr($date_pair[0], 0,4)."-".substr($date_pair[1], 0,4);
 			$earlier = $date_pair[0].'0000';
@@ -372,8 +377,9 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => implode('-', $date_pair), 
 				'county_value' => $county_value,
-				'state_value' => $state_value
-			)); 
+				'state_value' => $state_value,
+				'annotation' => round($state_value * 100).'%'
+			));
 		}
 		
 		// Finalize
