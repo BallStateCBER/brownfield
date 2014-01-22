@@ -217,7 +217,12 @@ class SvgChartReport extends Report {
 		);
 	}
 	
-	// This is generally the Y axis ($axis == 'v'), but is X ($axis == 'h') for horizontal bar charts 
+	/**
+	 * Sets the format for labels on the data axis (generally the vertical axis, except for horizontal bar charts)
+	 * @param string $display_type 'number', 'currency', or 'percent'
+	 * @param int $display_precision How many digits after the decimal point to show
+	 * @param string $axis Either 'v' or 'h'  
+	 */ 
 	public function prepDataAxis($display_type = 'number', $display_precision = 0, $axis = 'v') {
 		switch ($display_type) {
 			case 'percent':
