@@ -1241,6 +1241,7 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'colors' => array_slice($this->pie_colors, 0, 5),
 			'legend' => array(
 				'position' => 'right'
 			),
