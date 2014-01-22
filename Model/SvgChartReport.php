@@ -589,6 +589,9 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'chartArea' => array(
+				'left' => 150
+			),
 			'colors' => array_slice($this->colors, 0, 3),
 			'isStacked' => true,
 			'title' => 'Female Age Breakdown ('.$year.')'
