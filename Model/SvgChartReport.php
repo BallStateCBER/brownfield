@@ -1145,6 +1145,7 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 2),
 			'title' => 'Percentage of Children Receiving Free and Reduced Lunches ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'v');
