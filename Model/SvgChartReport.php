@@ -1090,6 +1090,7 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 3),
 			'title' => 'Percentage of Population in Poverty ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'v');
