@@ -968,6 +968,7 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 4),
 			'height' => 500,
 			'isStacked' => true,
 			'legend' => array(
