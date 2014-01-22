@@ -383,7 +383,7 @@ class SvgChartReport extends Report {
 		}
 		
 		// Finalize
-		$this->prepDataAxis('percent', 1);
+		$this->prepDataAxis('percent', 0);
 		$county_name = $this->locations[0][2];
 		$year = $this->getYears();
 		$this->applyOptions(array(
