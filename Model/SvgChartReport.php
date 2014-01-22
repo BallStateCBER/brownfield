@@ -693,13 +693,28 @@ class SvgChartReport extends Report {
 	        	'label' => $county_name, 
 	        	'type' => 'number'
 			),
+			'county_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
 			'state_value' => array(
 	        	'label' => 'Indiana', 
 	        	'type' => 'number'
 			),
+			'state_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
 			'country_value' => array(
 	        	'label' => 'United States', 
 	        	'type' => 'number'
+			),
+			'country_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
 			)
 	    ));
 		
@@ -720,14 +735,18 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $category, 
 				'county_value' => $values[0],
+				'county_annotation' => round($values[0], 1),
 				'state_value' => $values[1],
-				'country_value' => $values[2]
+				'state_annotation' => round($values[1], 1),
+				'country_value' => $values[2],
+				'country_annotation' => round($values[2], 1)
 			));
 		}
 		
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 3),
 			'title' => 'Dependency Ratio Per 100 People ('.$year.')'
 		));
 	}
