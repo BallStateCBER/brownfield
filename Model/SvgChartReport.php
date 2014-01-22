@@ -806,6 +806,11 @@ class SvgChartReport extends Report {
 	        'value' => array(
 	        	'label' => 'Average Household Size',
 	        	'type' => 'number'
+			),
+			'colors' => array(
+				'label' => 'Colors',
+				'type' => 'string',
+				'role' => 'style'
 			)
 	    ));
 		
@@ -817,6 +822,7 @@ class SvgChartReport extends Report {
 		}
 		
 		// Add bars
+		$i = 0;
 		foreach ($this->locations as $loc_key => $location) {
 			$row = array(
 				'category' => $location[2]
@@ -824,7 +830,9 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $label => $category_id) {
 				$row['value'] = $this->values[$loc_key][$label];
 			}
+			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
+			$i++;
 		}
 		
 		// Finalize
