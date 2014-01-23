@@ -1225,7 +1225,7 @@ class SvgChartReport extends Report {
 			'title' => 'Percentage of Population in Poverty ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'v');
-		$this->roundDataScale($all_values);
+		$this->roundDataScale($all_values, 10);
 	}
 
 	public function lunches() {
