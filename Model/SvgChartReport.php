@@ -1261,9 +1261,19 @@ class SvgChartReport extends Report {
 	        	'label' => $county_name, 
 	        	'type' => 'number'
 			),
+			'county_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
 			'state_value' => array(
 	        	'label' => 'Indiana', 
 	        	'type' => 'number'
+			),
+			'state_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
 			)
 	    ));
 		
@@ -1287,7 +1297,9 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $category, 
 				'county_value' => $values[0],
-				'state_value' => $values[1]
+				'county_annotation' => round($values[0] * 100, 1).'%',
+				'state_value' => $values[1],
+				'state_annotation' => round($values[1] * 100, 1).'%'
 			));
 		}
 		
