@@ -1043,6 +1043,11 @@ class SvgChartReport extends Report {
 	        	'label' => $category_name, 
 	        	'type' => 'number'
 			);
+			$columns["annotation_$k"] = array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			);
 		}
 		$this->chart->columns($columns);
 		
@@ -1063,7 +1068,9 @@ class SvgChartReport extends Report {
 			);
 			$k = 0;
 			foreach ($this->data_categories as $category => $category_id) {
-				$row["cat_$k"] = $this->values[$category][$loc_key];
+				$value = $this->values[$category][$loc_key];
+				$row["cat_$k"] = $value;
+				$row["annotation_$k"] = round($value * 100, 1).'%';
 				$k++;
 				if ($k == 4) {
 					break;
