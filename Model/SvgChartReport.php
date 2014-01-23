@@ -1117,6 +1117,11 @@ class SvgChartReport extends Report {
 	        	'label' => 'Percent of households',
 	        	'type' => 'number'
 			),
+			'annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			), 
 			'colors' => array(
 				'label' => 'Colors',
 				'type' => 'string',
@@ -1142,7 +1147,9 @@ class SvgChartReport extends Report {
 				'category' => $location[2]
 			);
 			foreach ($this->data_categories as $label => $category_id) {
-				$row['value'] = $this->values[$loc_key][$label];
+				$value = $this->values[$loc_key][$label];
+				$row['value'] = $value;
+				$row['annotation'] = round($value * 100, 2).'%';
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
