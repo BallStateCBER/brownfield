@@ -902,6 +902,11 @@ class SvgChartReport extends Report {
 	        	'label' => 'Average Household Size',
 	        	'type' => 'number'
 			),
+			'annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
 			'colors' => array(
 				'label' => 'Colors',
 				'type' => 'string',
@@ -924,6 +929,7 @@ class SvgChartReport extends Report {
 			);
 			foreach ($this->data_categories as $label => $category_id) {
 				$row['value'] = $this->values[$loc_key][$label];
+				$row['annotation'] = $this->values[$loc_key][$label];
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
