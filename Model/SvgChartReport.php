@@ -343,7 +343,8 @@ class SvgChartReport extends Report {
 			),
 	        'county_value' => array(
 	        	'label' => $county_name, 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'county_annotation' => array(
 				'label' => 'Annotation',
@@ -352,7 +353,8 @@ class SvgChartReport extends Report {
 			),
 			'state_value' => array(
 	        	'label' => 'Indiana',
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'state_annotation' => array(
 				'label' => 'Annotation',
@@ -405,6 +407,14 @@ class SvgChartReport extends Report {
 				)
 			),
 			'title' => "Population Growth (".$year.')'
+		));
+		$this->chart->callbacks(array(
+			'ready' => "
+				function () {
+					var formatter = new google.visualization.NumberFormat({pattern: '0.00%'})
+					formatter.format(chartData, 1);
+				}
+			"
 		));
 	}
 
