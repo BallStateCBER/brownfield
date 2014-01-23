@@ -408,14 +408,6 @@ class SvgChartReport extends Report {
 			),
 			'title' => "Population Growth (".$year.')'
 		));
-		$this->chart->callbacks(array(
-			'ready' => "
-				function () {
-					var formatter = new google.visualization.NumberFormat({pattern: '0.00%'})
-					formatter.format(chartData, 1);
-				}
-			"
-		));
 	}
 
 	public function density() {
