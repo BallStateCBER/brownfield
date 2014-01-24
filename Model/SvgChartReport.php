@@ -1631,4 +1631,59 @@ class SvgChartReport extends Report {
 			)
 		));
 	}
+
+	public function unemployment_rate() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("LineChart");
+		$county_name = $this->locations[0][2];
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Category', 
+	        	'type' => 'string'
+			),
+	        'county_value' => array(
+	        	'label' => $county_name, 
+	        	'type' => 'number',
+	        	'format' => '0.00%'
+			),
+			'state_value' => array(
+	        	'label' => 'Indiana (not seasonally adjusted)', 
+	        	'type' => 'number',
+	        	'format' => '0.00%'
+			)
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				list($this->dates, $this->values[$loc_key]) = $this->Datum->getSeries($category_id, $location[0], $location[1]);
+			}
+		}
+		
+		// Add line
+		foreach ($this->values[0] as $date => $value) {
+			$year = substr($date, 0, 4);
+			$county_value = $value / 100;
+			$state_value = $this->values[1][$date] / 100;
+			$this->chart->addRow(array(
+				'category' => $year, 
+				'county_value' => $county_value,
+				'state_value' => $state_value
+			));
+		}
+		
+		// Finalize
+		$this->prepDataAxis('percent');
+		$county_name = $this->locations[0][2];
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 2),
+			'title' => "Unemployment rate (".$year.')',
+			'vAxis' => array(
+				'minValue' => null
+			)
+		));
+	}
 }
