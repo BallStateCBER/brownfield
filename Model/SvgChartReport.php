@@ -1411,8 +1411,9 @@ class SvgChartReport extends Report {
 			),
 			'value' => array(
 	        	'label' => 'Disabled', 
-	        	'type' => 'number'
-			),
+	        	'type' => 'number',
+	        	'format' => '0.00%'
+			)
 	    ));
 		
 		// Gather data
@@ -1426,7 +1427,7 @@ class SvgChartReport extends Report {
 		foreach ($this->data_categories as $label => $category_id) {
 			$this->chart->addRow(array(
 				'category' => $label,
-				'value' => $this->values[$label]
+				'value' => $this->values[$label] / 100
 			));
 		}
 		
