@@ -1686,4 +1686,80 @@ class SvgChartReport extends Report {
 			)
 		));
 	}
+
+	public function personal_and_household_income() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("ColumnChart");
+		$county_name = $this->locations[0][2];
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Category', 
+	        	'type' => 'string'
+			),
+	        'county_value' => array(
+	        	'label' => $county_name, 
+	        	'type' => 'number',
+	        	'format' => '$#,###'
+			),
+			'county_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
+			'state_value' => array(
+	        	'label' => 'Indiana', 
+	        	'type' => 'number',
+	        	'format' => '$#,###'
+			),
+			'state_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
+			'country_value' => array(
+	        	'label' => 'United States', 
+	        	'type' => 'number',
+	        	'format' => '$#,###'
+			),
+			'country_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			)
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			}
+		}
+		
+		// Add bars
+		foreach ($this->data_categories as $label => $category_id) {
+			$values = array();
+			foreach ($this->locations as $key => $set) {
+				$values[] = $this->values[$key][$label];
+			}
+			$this->chart->addRow(array(
+				'category' => $label, 
+				'county_value' => $values[0],
+				'county_annotation' => '$'.number_format($values[0]),
+				'state_value' => $values[1],
+				'state_annotation' => '$'.number_format($values[1]),
+				'country_value' => $values[2],
+				'country_annotation' => '$'.number_format($values[2])
+			));
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 3),
+			'title' => 'Personal and Household Income ('.$year.')'
+		));
+		$this->prepDataAxis('currency');
+	}
 }
