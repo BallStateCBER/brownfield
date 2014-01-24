@@ -1301,8 +1301,8 @@ class SvgChartReport extends Report {
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
-				$this->values[$loc_key][$label] = $value;
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$this->values[$loc_key][$label] = $value / 100;
 			}
 		}
 		
