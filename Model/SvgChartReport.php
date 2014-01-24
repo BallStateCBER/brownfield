@@ -1762,4 +1762,66 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('currency');
 	}
+
+	public function income_inequality() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("ColumnChart");
+		$county_name = $this->locations[0][2];
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Category', 
+	        	'type' => 'string'
+			),
+	        'county_value' => array(
+	        	'label' => $county_name, 
+	        	'type' => 'number'
+			),
+			'county_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
+			'state_value' => array(
+	        	'label' => 'Indiana', 
+	        	'type' => 'number'
+			),
+			'state_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			)
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				list($this->dates, $this->values[$loc_key]) = $this->Datum->getValues($category_id, $location[0], $location[1], $this->dates);
+			}
+		}
+		
+		// Add bars
+		foreach ($this->values[0] as $date => $value) {
+			$year = substr($date, 0, 4);
+			$county_value = $value;
+			$state_value = $this->values[1][$date];
+			$this->chart->addRow(array(
+				'category' => $year,
+				'county_value' => $county_value,
+				'county_annotation' => $county_value,
+				'state_value' => $state_value,
+				'state_annotation' => $state_value
+			));
+		}
+		
+		// Finalize
+		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 2),
+			'title' => 'Income Inequality',
+			'vAxis' => array(
+				'minValue' => null
+			)
+		));
+	}
 }
