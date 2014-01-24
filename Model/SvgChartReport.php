@@ -1523,4 +1523,67 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('percent', 0, 'v');
 	}
+
+	public function employment_growth() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("ColumnChart");
+		$county_name = $this->locations[0][2];
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Timespan', 
+	        	'type' => 'string'
+			),
+	        'county_value' => array(
+	        	'label' => $county_name, 
+	        	'type' => 'number',
+	        	'format' => '0.00%'
+			),
+			'county_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
+			'state_value' => array(
+	        	'label' => 'Indiana (not seasonally adjusted)',
+	        	'type' => 'number',
+	        	'format' => '0.00%'
+			),
+			'state_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			)
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			}
+		}
+		
+		// Add bars
+		foreach ($this->data_categories as $label => $category_id) {
+			$values = array();
+			foreach ($this->locations as $key => $set) {
+				$values[] = $this->values[$key][$label];
+			}
+			$this->chart->addRow(array(
+				'category' => $label, 
+				'county_value' => $values[0] / 100,
+				'county_annotation' => round($values[0], 1).'%',
+				'state_value' => $values[1] / 100,
+				'state_annotation' => round($values[1], 1).'%'
+			));
+		}
+		
+		// Finalize
+		$this->prepDataAxis('percent', 0);
+		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 2),
+			'title' => 'Employment Growth'
+		));
+	}
 }
