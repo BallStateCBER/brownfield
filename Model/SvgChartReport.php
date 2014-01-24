@@ -398,7 +398,6 @@ class SvgChartReport extends Report {
 		
 		// Finalize
 		$this->prepDataAxis('percent', 0);
-		$county_name = $this->locations[0][2];
 		$year = $this->getYears();
 		$this->applyOptions(array(
 			'colors' => array_slice($this->colors, 0, 2),
@@ -839,7 +838,6 @@ class SvgChartReport extends Report {
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
 		$this->chart->type("BarChart");
-		$county_name = $this->locations[0][2];
 		$this->chart->columns(array(
 	        'category' => array(
 	        	'label' => 'School corporation', 
