@@ -296,7 +296,8 @@ class SvgChartReport extends Report {
 			),
 	        'value' => array(
 	        	'label' => 'Population', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '#,###'
 			)
 	    ));
 		
@@ -423,7 +424,8 @@ class SvgChartReport extends Report {
 			),
 	        'county_value' => array(
 	        	'label' => $county_name, 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '#,###'
 			),
 			'county_annotation' => array(
 				'label' => 'Annotation',
@@ -432,7 +434,8 @@ class SvgChartReport extends Report {
 			),
 			'state_value' => array(
 	        	'label' => 'Indiana', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '#,###'
 			),
 			'state_annotation' => array(
 				'label' => 'Annotation',
@@ -441,7 +444,8 @@ class SvgChartReport extends Report {
 			),
 			'country_value' => array(
 	        	'label' => 'United States', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '#,###'
 			),
 			'country_annotation' => array(
 				'label' => 'Annotation',
@@ -467,11 +471,11 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $category, 
 				'county_value' => $values[0],
-				'county_annotation' => $values[0],
+				'county_annotation' => number_format($values[0]),
 				'state_value' => $values[1],
-				'state_annotation' => $values[1],
+				'state_annotation' => number_format($values[1]),
 				'country_value' => $values[2],
-				'country_annotation' => $values[2]
+				'country_annotation' => number_format($values[2])
 			));
 		}
 		
@@ -496,15 +500,18 @@ class SvgChartReport extends Report {
 			),
 	        'county_value' => array(
 	        	'label' => $county_name, 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'state_value' => array(
 	        	'label' => 'Indiana', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'country_value' => array(
 	        	'label' => 'United States', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			)
 	    ));
 		
@@ -558,7 +565,8 @@ class SvgChartReport extends Report {
 		foreach ($category_names as $k => $category_name) {
 	        $columns["cat_$k"] = array(
 	        	'label' => $category_name, 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			);
 			$columns["annotation_$k"] = array(
 				'label' => 'Annotation',
@@ -614,7 +622,8 @@ class SvgChartReport extends Report {
 			),
 	        'county_value' => array(
 	        	'label' => $county_name, 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'county_annotation' => array(
 				'label' => 'Annotation',
@@ -623,7 +632,8 @@ class SvgChartReport extends Report {
 			),
 			'state_value' => array(
 	        	'label' => 'Indiana', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'state_annotation' => array(
 				'label' => 'Annotation',
@@ -632,7 +642,8 @@ class SvgChartReport extends Report {
 			),
 			'country_value' => array(
 	        	'label' => 'United States', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'country_annotation' => array(
 				'label' => 'Annotation',
@@ -770,7 +781,8 @@ class SvgChartReport extends Report {
 			$category_name = str_replace(', percent', '', $category_name);
 	        $columns["cat_$k"] = array(
 	        	'label' => $category_name, 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			);
 			$columns["annotation_$k"] = array(
 				'label' => 'Annotation',
@@ -835,7 +847,8 @@ class SvgChartReport extends Report {
 			),
 	        'value' => array(
 	        	'label' => 'Graduation rate', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'annotation' => array(
 				'label' => 'Annotation',
@@ -968,7 +981,8 @@ class SvgChartReport extends Report {
 			),
 	        'value' => array(
 	        	'label' => 'Percent of Households',
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'annotation' => array(
 				'label' => 'Annotation',
@@ -1048,7 +1062,8 @@ class SvgChartReport extends Report {
 			$category_name = str_replace(', percent', '', $category_name);
 	        $columns["cat_$k"] = array(
 	        	'label' => $category_name, 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			);
 			$columns["annotation_$k"] = array(
 				'label' => 'Annotation',
@@ -1117,7 +1132,8 @@ class SvgChartReport extends Report {
 			),
 	        'value' => array(
 	        	'label' => 'Percent of households',
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'annotation' => array(
 				'label' => 'Annotation',
@@ -1183,7 +1199,8 @@ class SvgChartReport extends Report {
 			),
 	        'county_value' => array(
 	        	'label' => $county_name, 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'county_annotation' => array(
 				'label' => 'Annotation',
@@ -1192,7 +1209,8 @@ class SvgChartReport extends Report {
 			),
 			'state_value' => array(
 	        	'label' => 'Indiana', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'state_annotation' => array(
 				'label' => 'Annotation',
@@ -1201,7 +1219,8 @@ class SvgChartReport extends Report {
 			),
 			'country_value' => array(
 	        	'label' => 'United States', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'country_annotation' => array(
 				'label' => 'Annotation',
@@ -1261,7 +1280,8 @@ class SvgChartReport extends Report {
 			),
 	        'county_value' => array(
 	        	'label' => $county_name, 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'county_annotation' => array(
 				'label' => 'Annotation',
@@ -1270,7 +1290,8 @@ class SvgChartReport extends Report {
 			),
 			'state_value' => array(
 	        	'label' => 'Indiana', 
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'state_annotation' => array(
 				'label' => 'Annotation',
@@ -1326,7 +1347,8 @@ class SvgChartReport extends Report {
 			),
 	        'value' => array(
 	        	'label' => 'Average Household Size',
-	        	'type' => 'number'
+	        	'type' => 'number',
+	        	'format' => '0.00%'
 			),
 			'annotation' => array(
 				'label' => 'Annotation',
