@@ -1584,4 +1584,51 @@ class SvgChartReport extends Report {
 			'title' => 'Employment Growth'
 		));
 	}
+
+	public function employment_trend() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("LineChart");
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Category', 
+	        	'type' => 'string'
+			),
+	        'value' => array(
+	        	'label' => 'Employment', 
+	        	'type' => 'number',
+	        	'format' => '#,###'
+			)
+	    ));
+		
+		// Gather data
+		list($this->dates, $this->values[0]) = $this->Datum->getSeries(array_pop($this->data_categories), $this->locations[0][0], $this->locations[0][1]);
+		
+		// Add line
+		foreach ($this->values[0] as $date => $value) {
+			$year = substr($date, 0, 4);
+			$this->chart->addRow(array(
+				'category' => $year, 
+				'value' => $value
+			));
+		}
+		
+		// Finalize
+		$this->prepDataAxis();
+		$county_name = $this->locations[0][2];
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'colors' => array(
+				$this->colors[0]
+			),
+			'legend' => array(
+				'position' => 'none'
+			),
+			'title' => "Employment in $county_name, Indiana (".$year.')',
+			'vAxis' => array(
+				'minValue' => null
+			)
+		));
+	}
 }
