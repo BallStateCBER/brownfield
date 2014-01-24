@@ -1162,7 +1162,6 @@ class ChartReport extends Report {
 		$this->gchart = new GoogleChart('lc', $this->default_width, $this->default_height);
 		$this->gchart->setLegendPosition('b');
 		$this->gchart->setLegendLabelOrder('l');
-		$this->gchart->setTitle("Nonfarm Employment Growth");
 		
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
