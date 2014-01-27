@@ -2282,4 +2282,71 @@ class SvgChartReport extends Report {
 			)
 		));
 	}
+
+	public function infant_mortality() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("BarChart");
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Location',
+	        	'type' => 'string'
+			),
+	        'value' => array(
+	        	'label' => 'Infant Death Rate',
+	        	'type' => 'number',
+	        	'format' => '#.##'
+			),
+			'annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
+			'colors' => array(
+				'label' => 'Colors',
+				'type' => 'string',
+				'role' => 'style'
+			)
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			}
+		}
+		
+		// Add bars
+		$i = 0;
+		foreach ($this->locations as $loc_key => $location) {
+			$row = array(
+				'category' => $location[2]
+			);
+			foreach ($this->data_categories as $label => $category_id) {
+				$value = $this->values[$loc_key][$label];
+				$row['value'] = $value;
+				$row['annotation'] = round($value, 1);
+			}
+			$row['colors'] = $this->colors[$i];
+			$this->chart->addRow($row);
+			$i++;
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'chartArea' => array(
+				'left' => 150
+			),
+			'hAxis' => array(
+				'minValue' => 0
+			),
+			'legend' => array(
+				'position' => 'none'
+			),
+			'title' => "Infant Death Rate Per 1,000 Live Births ($year)"
+		));
+		$this->prepDataAxis('number', 0, 'h');
+	}
 }
