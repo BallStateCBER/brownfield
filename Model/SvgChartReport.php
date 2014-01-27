@@ -2096,7 +2096,7 @@ class SvgChartReport extends Report {
 		$category_names = array_keys($this->data_categories);
 		foreach ($category_names as $k => $category_name) {
 	        $columns["cat_$k"] = array(
-	        	'label' => $category_name, 
+	        	'label' => $category_name.' Deaths', 
 	        	'type' => 'number',
 	        	'format' => '0.00%'
 			);
