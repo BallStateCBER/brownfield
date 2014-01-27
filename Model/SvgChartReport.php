@@ -2086,7 +2086,7 @@ class SvgChartReport extends Report {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
-		$this->chart->type("ColumnChart");		
+		$this->chart->type("BarChart");		
 		$columns = array(
 	        'category' => array(
 	        	'label' => 'category', 
@@ -2134,14 +2134,14 @@ class SvgChartReport extends Report {
 		$year = $this->getYears();
 		$this->applyOptions(array(
 			'colors' => array_slice($this->colors, 0, 2),
-			'isStacked' => true,
-			'title' => 'Deaths By Sex ('.$year.')',
-			'vAxis' => array(
+			'hAxis' => array(
 				'viewWindow' => array(
 					'max' => 1
 				)
-			)
+			),
+			'isStacked' => true,
+			'title' => 'Deaths By Sex ('.$year.')'
 		));
-		$this->prepDataAxis('percent', 0, 'v');
+		$this->prepDataAxis('percent', 0, 'h');
 	}
 }
