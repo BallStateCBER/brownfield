@@ -2005,12 +2005,13 @@ class SvgChartReport extends Report {
 		
 		// Finalize
 		$this->prepDataAxis('percent', 0, 'h');
+		$years = $this->getYears();
 		$this->applyOptions(array(
 			'chartArea' => array(
 				'left' => 180
 			),
 			'colors' => array_slice($this->colors, 0, 2),
-			'title' => 'Birth Measures'
+			'title' => "Birth Measures ($years)"
 		));
 	}
 
