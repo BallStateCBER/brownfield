@@ -2081,4 +2081,67 @@ class SvgChartReport extends Report {
 			'title' => "Fertility Rates ($years)"
 		));
 	}
+
+	public function deaths_by_sex() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("ColumnChart");		
+		$columns = array(
+	        'category' => array(
+	        	'label' => 'category', 
+	        	'type' => 'string'
+			)
+	    );
+		$category_names = array_keys($this->data_categories);
+		foreach ($category_names as $k => $category_name) {
+	        $columns["cat_$k"] = array(
+	        	'label' => $category_name, 
+	        	'type' => 'number',
+	        	'format' => '0.00%'
+			);
+			$columns["annotation_$k"] = array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			);
+		}
+		$this->chart->columns($columns);
+		
+		// Gather data
+		foreach ($this->locations as $loc_key => $location) {
+			foreach ($this->data_categories as $category => $category_id) {
+				$this->values[$category][$loc_key] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			}
+		}
+
+		// Add bars
+		foreach ($this->locations as $loc_key => $location) {
+			$row = array(
+				'category' => $location[2]
+			);
+			$k = 0;
+			foreach ($this->data_categories as $category => $category_id) {
+				$value = $this->values[$category][$loc_key];
+				$row["cat_$k"] = $value / 100;
+				$row["annotation_$k"] = round($value, 1).'%';
+				$k++;
+			}
+			$this->chart->addRow($row);
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'colors' => array_slice($this->colors, 0, 2),
+			'isStacked' => true,
+			'title' => 'Deaths By Sex ('.$year.')',
+			'vAxis' => array(
+				'viewWindow' => array(
+					'max' => 1
+				)
+			)
+		));
+		$this->prepDataAxis('percent', 0, 'v');
+	}
 }
