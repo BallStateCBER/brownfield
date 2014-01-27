@@ -1942,9 +1942,10 @@ class SvgChartReport extends Report {
 		}
 		
 		// Finalize
+		$years = $this->getYears();
 		$this->applyOptions(array(
 			'colors' => array_slice($this->colors, 0, 2),
-			'title' => 'Birth Rate By Age Group'
+			'title' => "Birth Rate By Age Group ($years)"
 		));
 	}
 
