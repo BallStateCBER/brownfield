@@ -2607,7 +2607,7 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
-			'colors' => array_slice($this->colors, 0, 3),
+			'colors' => array_slice($this->colors, 0, 2),
 			'title' => 'Average Number of Unhealthy Days Per Month (2004 - '.$year.')'
 		));
 	}
