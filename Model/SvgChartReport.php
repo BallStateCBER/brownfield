@@ -2483,4 +2483,65 @@ class SvgChartReport extends Report {
 		));
 		$this->prepDataAxis('number', 0, 'h');
 	}
+
+	public function self_rated_poor_health() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("ColumnChart");
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Location',
+	        	'type' => 'string'
+			),
+	        'value' => array(
+	        	'label' => 'Percent',
+	        	'type' => 'number',
+	        	'format' => '0.00%'
+			),
+			'annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
+			'colors' => array(
+				'label' => 'Colors',
+				'type' => 'string',
+				'role' => 'style'
+			)
+	    ));
+		
+		// Gather data
+		foreach ($this->data_categories as $label => $category_id) {
+			foreach ($this->locations as $loc_key => $location) {
+				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			}
+		}
+		
+		// Add bars
+		$i = 0;
+		foreach ($this->locations as $loc_key => $location) {
+			$row = array(
+				'category' => $location[2]
+			);
+			foreach ($this->data_categories as $label => $category_id) {
+				$value = $this->values[$loc_key][$label];
+				$row['value'] = $value / 100;
+				$row['annotation'] = round($value, 2).'%';
+			}
+			$row['colors'] = $this->colors[$i];
+			$this->chart->addRow($row);
+			$i++;
+		}
+		
+		// Finalize
+		$year = $this->getYears();
+		$this->applyOptions(array(
+			'legend' => array(
+				'position' => 'none'
+			),
+			'title' => 'Self-rated Health Status: Fair/Poor ('.$year.')'
+		));
+		$this->prepDataAxis('percent', 0, 'v');
+	}
 }
