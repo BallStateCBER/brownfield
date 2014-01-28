@@ -1375,7 +1375,7 @@ class SvgChartReport extends Report {
 	        	'type' => 'string'
 			),
 	        'value' => array(
-	        	'label' => 'Average Household Size',
+	        	'label' => 'Percent of Population Disabled',
 	        	'type' => 'number',
 	        	'format' => '0.00%'
 			),
