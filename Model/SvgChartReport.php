@@ -406,7 +406,7 @@ class SvgChartReport extends Report {
 					'fontSize' => 10
 				)
 			),
-			'title' => "Population Growth (".$year.')'
+			'title' => 'Population Growth'
 		));
 	}
 
