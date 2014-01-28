@@ -561,7 +561,7 @@ class SvgChartReport extends Report {
 			'hAxis' => array(
 				'minValue' => 0
 			),
-			'height' => 500,
+			'height' => 700,
 			'title' => 'Population By Age ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'h');
