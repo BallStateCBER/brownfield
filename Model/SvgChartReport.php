@@ -1137,13 +1137,10 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
-			'colors' => array_slice($this->colors, 0, 4),
-			'hAxis' => array(
-				'viewWindow' => array(
-					'max' => 1
-				)
+			'chartArea' => array(
+				'left' => 50
 			),
-			'height' => 500,
+			'colors' => array_slice($this->colors, 0, 4),
 			'isStacked' => true,
 			'legend' => array(
 				'position' => 'right'
