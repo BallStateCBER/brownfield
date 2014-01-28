@@ -785,29 +785,44 @@ class SvgChartReport extends Report {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
-		$this->chart->type("BarChart");		
-		$columns = array(
+		$this->chart->type("BarChart");
+		$county_name = $this->locations[0][2];
+		$this->chart->columns(array(
 	        'category' => array(
-	        	'label' => 'category', 
+	        	'label' => 'Age Range', 
 	        	'type' => 'string'
-			)
-	    );
-		$category_names = array_keys($this->data_categories);
-		foreach ($category_names as $k => $category_name) {
-			$category_name = str_replace('\'', '\\\'', $category_name);
-			$category_name = str_replace(', percent', '', $category_name);
-	        $columns["cat_$k"] = array(
-	        	'label' => $category_name, 
+			),
+	        'county_value' => array(
+	        	'label' => $county_name, 
 	        	'type' => 'number',
 	        	'format' => '0.00%'
-			);
-			$columns["annotation_$k"] = array(
+			),
+			'county_annotation' => array(
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			);
-		}
-		$this->chart->columns($columns);
+			),
+			'state_value' => array(
+	        	'label' => 'Indiana', 
+	        	'type' => 'number',
+	        	'format' => '0.00%'
+			),
+			'state_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			),
+			'country_value' => array(
+	        	'label' => 'United States', 
+	        	'type' => 'number',
+	        	'format' => '0.00%'
+			),
+			'country_annotation' => array(
+				'label' => 'Annotation',
+				'type' => 'string',
+				'role' => 'annotation'
+			)
+	    ));
 		
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
@@ -817,35 +832,37 @@ class SvgChartReport extends Report {
 		}
 
 		// Add bars
-		foreach ($this->locations as $loc_key => $location) {
-			$row = array(
-				'category' => $location[2]
-			);
-			foreach ($category_names as $k => $category_name) {
-				$value = $this->values[$loc_key][$category_name];
-				$row["cat_$k"] = $value;
-				$row["annotation_$k"] = ($value >= 0.15) ? round($value * 100, 1).'%' : '';
+		$categories = array_keys($this->data_categories);
+		foreach ($categories as $category) {
+			$values = array();
+			foreach ($this->locations as $key => $set) {
+				$values[] = $this->values[$key][$category];
 			}
-			$this->chart->addRow($row);
+			$category = addslashes($category);
+			$category = str_replace(', percent', '', $category);
+			$this->chart->addRow(array(
+				'category' => $category, 
+				'county_value' => $values[0],
+				'county_annotation' => round($values[0] * 100, 1).'%',
+				'state_value' => $values[1],
+				'state_annotation' => round($values[1] * 100, 1).'%',
+				'country_value' => $values[2],
+				'country_annotation' => round($values[2] * 100, 1).'%'
+			));
 		}
 		
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
 			'chartArea' => array(
-				'left' => 150,
-				'width' => 300
+				'left' => 250,
+				
 			),
-			'colors' => array_slice($this->colors, 0, 7),
+			'colors' => array_slice($this->colors, 0, 3),
 			'hAxis' => array(
-				'viewWindow' => array(
-					'max' => 1
-				)
+				'minValue' => 0
 			),
-			'isStacked' => true,
-			'legend' => array(
-				'position' => 'right'
-			),
+			'height' => 700,
 			'title' => 'Educational Attainment, Population 25 Years and Over ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'h');
