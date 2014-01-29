@@ -24,13 +24,6 @@
 		$element_cache_key = "$selected_topic.$state_abbreviation.$county_name_simplified";
 		$description = '<p class="description">'.nl2br($this->Text->autoLink($description)).'</p>';
 		
-		$chart = $this->element('reports/chart', array(
-			'topic' => $selected_topic, 
-			'state' => $state_abbreviation, 
-			'county' => $county_name_simplified, 
-			'availability' => $chart_availability,
-		));
-		
 		$svgchart = $this->element('reports/svgchart', array(
 			'topic' => $selected_topic, 
 			'state' => $state_abbreviation, 
@@ -66,7 +59,6 @@
 		</section>
 	<?php else: ?>
 		<section>
-			<?php echo $chart ?>
 			<?php echo $svgchart; ?>
 			<?php echo $description; ?>
 		</section>
