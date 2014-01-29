@@ -16,7 +16,7 @@
 			'county' => $county
 		));
 	?>
-	<div id="chart_div">
+	<div id="<?php echo $div_id; ?>">
 		<?php if ($chart): ?>
 			<?php
 				if ($div_id != 'chart_div') {
