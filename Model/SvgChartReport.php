@@ -2789,4 +2789,67 @@ class SvgChartReport extends Report {
 			'title' => "Lung Disease Incidence Rates Per 1,000 Population ($years)"
 		));
 	}
+
+	public function grants_awarded() {
+		// Create chart
+		$this->chart = new GoogleCharts();
+		$this->applyDefaultOptions();
+		$this->chart->type("LineChart");
+		$this->chart->columns(array(
+	        'category' => array(
+	        	'label' => 'Category', 
+	        	'type' => 'string'
+			),
+	        'value' => array(
+	        	'label' => 'Grants Awarded', 
+	        	'type' => 'number',
+	        	'format' => '#,###'
+			)
+	    ));
+		
+		// Gather data
+		$this->dates = range(1995, 2011);
+		$this->values[0] = array(
+			1995 => 2,
+			1996 => 1,
+			1997 => 2,
+			1998 => 1,
+			1999 => 2,
+			2000 => 1,
+			2001 => 2,
+			2002 => 1,
+			2003 => 4,
+			2004 => 5,
+			2005 => 2,
+			2006 => 5,
+			2007 => 10,
+			2008 => 6,
+			2009 => 4,
+			2010 => 7,
+			2011 => 10
+		);
+		
+		// Add line
+		foreach ($this->values[0] as $date => $value) {
+			$this->chart->addRow(array(
+				'category' => $date, 
+				'value' => $value
+			));
+		}
+		
+		// Finalize
+		$this->prepDataAxis();
+		$this->applyOptions(array(
+			'colors' => array(
+				$this->colors[0]
+			),
+			'legend' => array(
+				'position' => 'none'
+			),
+			'title' => "Brownfield Grants Awarded in Indiana (1995-2011)",
+			'vAxis' => array(
+				'minValue' => null
+			)
+		));
+	}
 }
