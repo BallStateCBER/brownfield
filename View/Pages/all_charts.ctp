@@ -10,21 +10,13 @@
 			);
 		?>
 		<?php if ($chart_status == 0): ?>
-			<span style="border: 1px solid black; display: inline-block; margin: 5px;">
-				<a href="/<?php echo $state_abbreviation; ?>/<?php echo "$county_name_simplified/$topic"; ?>">					
-					<?php echo $this->Html->image(
-						Router::url(array(
-							'controller' => 'reports', 
-							'action' => 'switchboard',
-							'type' => 'chart', 
-							'topic' => $topic, 
-							'state' => $state_abbreviation, 
-							'county' => $county_name_simplified
-						)),
-						array('class' => 'chart')
-					); ?>
-				</a>
-			</span>
+			<?php echo $this->element('reports/svgchart', array(
+				'topic' => $topic, 
+				'state' => $state_abbreviation, 
+				'county' => $county_name_simplified, 
+				'availability' => $chart_status,
+				'div_id' => $topic.'_chart'
+			)); ?>
 		<?php endif; ?>
 	<?php endforeach; ?>
 <?php endforeach; ?>
