@@ -1,4 +1,10 @@
-<?php //Expects $topic, $state, $county, and $availability ?>
+<?php 
+	//Expects $topic, $state, $county, and $availability
+	
+	if (! isset($div_id)) {
+		$div_id = 'chart_div';
+	}
+?>
 <?php if ($availability == 0): ?>
 	<?php
 		$chart = $this->requestAction(array(
@@ -12,7 +18,12 @@
 	?>
 	<div id="chart_div">
 		<?php if ($chart): ?>
-			<?php $this->GoogleCharts->createJsChart($chart); ?>
+			<?php
+				if ($div_id != 'chart_div') {
+					$chart->div($div_id);
+				} 
+				$this->GoogleCharts->createJsChart($chart);
+			?>
 		<?php else: ?>
 			$chart is empty
 		<?php endif; ?>
