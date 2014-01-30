@@ -2315,11 +2315,15 @@ class SvgChartReport extends Report {
 		// Finalize
 		$years = $this->getYears();
 		$this->applyOptions(array(
+			'bar' => array(
+				'groupWidth' => '80%'
+			),
 			'chartArea' => array(
+				'height' => 480,
 				'left' => 270
 			),
 			'colors' => array_slice($this->colors, 0, 2),
-			'height' => 700,
+			'height' => 580,
 			'title' => "Age-Adjusted Death Rate by Cause ($years)",
 			'vAxis' => array(
 				'textStyle' => array(
