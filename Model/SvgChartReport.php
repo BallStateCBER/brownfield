@@ -2054,10 +2054,15 @@ class SvgChartReport extends Report {
 		$this->prepDataAxis('percent', 0, 'h');
 		$years = $this->getYears();
 		$this->applyOptions(array(
+			'bar' => array(
+				'groupWidth' => '80%'
+			),
 			'chartArea' => array(
+				'height' => 250,
 				'left' => 180
 			),
 			'colors' => array_slice($this->colors, 0, 2),
+			'height' => 350,
 			'title' => "Birth Measures ($years)"
 		));
 	}
