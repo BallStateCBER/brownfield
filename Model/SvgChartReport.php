@@ -1138,7 +1138,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $category => $category_id) {
 				$value = $this->values[$category][$loc_key];
 				$row["cat_$k"] = $value;
-				$annotation = ($value >= .15) ? round($value * 100, 1).'%' : '';
+				$annotation = ($value >= .15) ? round($value * 100).'%' : '';
 				$row["annotation_$k"] = $annotation;
 				$k++;
 				if ($k == 4) {
