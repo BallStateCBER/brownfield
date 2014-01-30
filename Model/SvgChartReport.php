@@ -2732,11 +2732,15 @@ class SvgChartReport extends Report {
 		// Finalize
 		$years = $this->getYears();
 		$this->applyOptions(array(
+			'bar' => array(
+				'groupWidth' => '80%'
+			),
 			'chartArea' => array(
+				'height' => 320,
 				'left' => 270
 			),
 			'colors' => array_slice($this->colors, 0, 3),
-			'height' => 500,
+			'height' => 420,
 			'title' => "Cancer Incidence and Death Rates ($years)"
 		));
 	}
