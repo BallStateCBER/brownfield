@@ -557,11 +557,17 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'bar' => array(
+				'groupWidth' => '80%'
+			),
+			'chartArea' => array(
+				'height' => 550
+			),
 			'colors' => array_slice($this->colors, 0, 3),
 			'hAxis' => array(
 				'minValue' => 0
 			),
-			'height' => 700,
+			'height' => 650,
 			'title' => 'Population By Age ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'h');
