@@ -706,9 +706,12 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$this->applyOptions(array(
+			'chartArea' => array(
+				'height' => 200
+			),
 			'colors' => array_slice($this->colors, 0, 3),
 			'title' => 'Population By Sex ('.$year.')',
-			'height' => 500
+			'height' => 300
 		));
 		$this->prepDataAxis('percent', 0, 'h');
 		$this->roundDataScale($all_values, 'h', 20);
