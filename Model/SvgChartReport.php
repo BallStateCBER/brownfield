@@ -2809,9 +2809,11 @@ class SvgChartReport extends Report {
 		$years = $this->getYears();
 		$this->applyOptions(array(
 			'chartArea' => array(
+				'height' => 320,
 				'left' => 150
 			),
 			'colors' => array_slice($this->colors, 0, 2),
+			'height' => 420,
 			'title' => "Lung Disease Incidence Rates Per 1,000 Population ($years)"
 		));
 	}
