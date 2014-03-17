@@ -30,7 +30,7 @@
 
 	<select name="county" id="select_county">
 		<?php if (! $selected_county): ?>
-			<option selected="selected"></option>
+			<option selected="selected">Select a county...</option>
 		<?php endif; ?>
 		
 		<?php foreach ($counties_full_names as $id => $name): ?>
