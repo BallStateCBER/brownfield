@@ -390,9 +390,9 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => implode('-', $date_pair), 
 				'county_value' => $county_value,
-				'county_annotation' => round($county_value * 100).'%',
+				'county_annotation' => sprintf("%.0f", $county_value * 100).'%',
 				'state_value' => $state_value,
-				'state_annotation' => round($state_value * 100).'%'
+				'state_annotation' => sprintf("%.0f", $state_value * 100).'%'
 			));
 		}
 		
@@ -546,11 +546,11 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $category, 
 				'county_value' => $values[0],
-				'county_annotation' => round($values[0] * 100, 1).'%',
+				'county_annotation' => sprintf("%.1f", ($values[0] * 100)).'%',
 				'state_value' => $values[1],
-				'state_annotation' => round($values[1] * 100, 1).'%',
+				'state_annotation' => sprintf("%.1f", ($values[1] * 100)).'%',
 				'country_value' => $values[2],
-				'country_annotation' => round($values[2] * 100, 1).'%'
+				'country_annotation' => sprintf("%.1f", ($values[2] * 100)).'%'
 			));
 		}
 		
@@ -614,7 +614,7 @@ class SvgChartReport extends Report {
 			foreach ($category_names as $k => $category_name) {
 				$value = $this->values[$loc_key][$category_name];
 				$row["cat_$k"] = $value;
-				$row["annotation_$k"] = round($value * 100).'%';
+				$row["annotation_$k"] = sprintf("%.0f", $value * 100).'%';
 			}
 			$this->chart->addRow($row);
 		}
@@ -695,11 +695,11 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $category, 
 				'county_value' => $values[0],
-				'county_annotation' => round($values[0] * 100, 2).'%',
+				'county_annotation' => sprintf("%.2f", ($values[0] * 100)).'%',
 				'state_value' => $values[1],
-				'state_annotation' => round($values[1] * 100, 2).'%',
+				'state_annotation' => sprintf("%.2f", ($values[1] * 100)).'%',
 				'country_value' => $values[2],
-				'country_annotation' => round($values[2] * 100, 2).'%'
+				'country_annotation' => sprintf("%.2f", ($values[2] * 100)).'%',
 			));
 		}
 		
@@ -774,11 +774,11 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $category, 
 				'county_value' => $values[0],
-				'county_annotation' => round($values[0], 1),
+				'county_annotation' => sprintf("%.1f", $values[0]),
 				'state_value' => $values[1],
-				'state_annotation' => round($values[1], 1),
+				'state_annotation' => sprintf("%.1f", $values[1]),
 				'country_value' => $values[2],
-				'country_annotation' => round($values[2], 1)
+				'country_annotation' => sprintf("%.1f", $values[2])
 			));
 		}
 		
@@ -852,11 +852,11 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $category, 
 				'county_value' => $values[0],
-				'county_annotation' => round($values[0] * 100, 1).'%',
+				'county_annotation' => sprintf("%.1f", ($values[0] * 100)).'%',
 				'state_value' => $values[1],
-				'state_annotation' => round($values[1] * 100, 1).'%',
+				'state_annotation' => sprintf("%.1f", ($values[1] * 100)).'%',
 				'country_value' => $values[2],
-				'country_annotation' => round($values[2] * 100, 1).'%'
+				'country_annotation' => sprintf("%.1f", ($values[2] * 100)).'%',
 			));
 		}
 		
@@ -923,7 +923,7 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $location[2],
 				'value' => $value,
-				'annotation' => round($value * 100, 1).'%',
+				'annotation' => sprintf("%.1f", ($value * 100)).'%',
 				'colors' => $color
 			));
 			$i++;
@@ -1059,7 +1059,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $label => $category_id) {
 				$value = $this->values[$loc_key][$label] / 100;
 				$row['value'] = $value;
-				$row['annotation'] = round($value * 100, 2).'%';
+				$row['annotation'] = sprintf("%.2f", ($value * 100)).'%';
 				$all_values[] = $value;
 			}
 			$row['colors'] = $this->colors[$i];
@@ -1138,7 +1138,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $category => $category_id) {
 				$value = $this->values[$category][$loc_key];
 				$row["cat_$k"] = $value;
-				$annotation = ($value >= .15) ? round($value * 100).'%' : '';
+				$annotation = ($value >= .15) ? sprintf("%.0f", $value * 100).'%' : '';
 				$row["annotation_$k"] = $annotation;
 				$k++;
 				if ($k == 4) {
@@ -1211,7 +1211,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $label => $category_id) {
 				$value = $this->values[$loc_key][$label];
 				$row['value'] = $value;
-				$row['annotation'] = round($value * 100, 2).'%';
+				$row['annotation'] = sprintf("%.2f", ($value * 100)).'%';
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
@@ -1293,11 +1293,11 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $category, 
 				'county_value' => $values[0],
-				'county_annotation' => round($values[0] * 100, 1).'%',
+				'county_annotation' => sprintf("%.1f", ($values[0] * 100)).'%',
 				'state_value' => $values[1],
-				'state_annotation' => round($values[1] * 100, 1).'%',
+				'state_annotation' => sprintf("%.1f", ($values[1] * 100)).'%',
 				'country_value' => $values[2],
-				'country_annotation' => round($values[2] * 100, 1).'%'
+				'country_annotation' => sprintf("%.1f", ($values[2] * 100)).'%',
 			));
 		}
 		
@@ -1362,9 +1362,9 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $category, 
 				'county_value' => $values[0],
-				'county_annotation' => round($values[0] * 100, 1).'%',
+				'county_annotation' => sprintf("%.1f", ($values[0] * 100)).'%',
 				'state_value' => $values[1],
-				'state_annotation' => round($values[1] * 100, 1).'%'
+				'state_annotation' => sprintf("%.1f", ($values[1] * 100)).'%'
 			));
 		}
 		
@@ -1420,7 +1420,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $label => $category_id) {
 				$value = $this->values[$loc_key][$label];
 				$row['value'] = $value / 100;
-				$row['annotation'] = round($value, 2).'%';
+				$row['annotation'] = sprintf("%.2f", $value).'%';
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
@@ -1549,11 +1549,11 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $short_label, 
 				'county_value' => $values[0] / 100,
-				'county_annotation' => round($values[0], 2).'%',
+				'county_annotation' => sprintf("%.2f", $values[0]).'%',
 				'state_value' => $values[1] / 100,
-				'state_annotation' => round($values[1], 2).'%',
+				'state_annotation' => sprintf("%.2f", $values[1]).'%',
 				'country_value' => $values[2] / 100,
-				'country_annotation' => round($values[2], 2).'%'
+				'country_annotation' => sprintf("%.2f", $values[2]).'%'
 			));
 		}
 		
@@ -1615,9 +1615,9 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $label, 
 				'county_value' => $values[0] / 100,
-				'county_annotation' => round($values[0], 1).'%',
+				'county_annotation' => sprintf("%.1f", $values[0]).'%',
 				'state_value' => $values[1] / 100,
-				'state_annotation' => round($values[1], 1).'%'
+				'state_annotation' => sprintf("%.1f", $values[1]).'%'
 			));
 		}
 		
@@ -2044,9 +2044,9 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $label, 
 				'county_value' => $values[0] / 100,
-				'county_annotation' => round($values[0], 1).'%',
+				'county_annotation' => sprintf("%.1f", $values[0]).'%',
 				'state_value' => $values[1] / 100,
-				'state_annotation' => round($values[1], 1).'%'
+				'state_annotation' => sprintf("%.1f", $values[1]).'%',
 			));
 		}
 		
@@ -2175,7 +2175,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $category => $category_id) {
 				$value = $this->values[$category][$loc_key];
 				$row["cat_$k"] = $value / 100;
-				$row["annotation_$k"] = round($value, 1).'%';
+				$row["annotation_$k"] = sprintf("%.1f", $value).'%';
 				$k++;
 			}
 			$this->chart->addRow($row);
@@ -2239,7 +2239,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $label => $category_id) {
 				$value = $this->values[$loc_key][$label];
 				$row['value'] = $value;
-				$row['annotation'] = round($value);
+				$row['annotation'] = sprintf("%.0f", $value);
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
@@ -2381,7 +2381,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $label => $category_id) {
 				$value = $this->values[$loc_key][$label];
 				$row['value'] = $value;
-				$row['annotation'] = round($value, 1);
+				$row['annotation'] = sprintf("%.1f", $value);
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
@@ -2448,7 +2448,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $label => $category_id) {
 				$value = $this->values[$loc_key][$label];
 				$row['value'] = $value;
-				$row['annotation'] = round($value, 1);
+				$row['annotation'] = sprintf("%.1f", $value);
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
@@ -2582,7 +2582,7 @@ class SvgChartReport extends Report {
 			foreach ($this->data_categories as $label => $category_id) {
 				$value = $this->values[$loc_key][$label];
 				$row['value'] = $value / 100;
-				$row['annotation'] = round($value, 2).'%';
+				$row['annotation'] = sprintf("%.2f", $value).'%';
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
@@ -2653,9 +2653,9 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $label, 
 				'county_value' => $values[0],
-				'county_annotation' => round($values[0], 1),
+				'county_annotation' => sprintf("%.1f", $values[0]),
 				'state_value' => $values[1],
-				'state_annotation' => round($values[1], 1)
+				'state_annotation' => sprintf("%.1f", $values[1])
 			));
 		}
 		
@@ -2799,9 +2799,9 @@ class SvgChartReport extends Report {
 			$this->chart->addRow(array(
 				'category' => $label, 
 				'county_value' => $values[0],
-				'county_annotation' => round($values[0], 2),
+				'county_annotation' => sprintf("%.2f", $values[0]),
 				'state_value' => $values[1],
-				'state_annotation' => round($values[1], 2)
+				'state_annotation' => sprintf("%.2f", $values[1])
 			));
 		}
 		
