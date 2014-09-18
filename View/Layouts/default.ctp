@@ -7,7 +7,9 @@
 
 <?php $this->start('subsite_title'); ?>
 	<h1 id="subsite_title" class="max_width">
-		<img src="/img/Brownfield.jpg" alt="Brownfield Grant Writers' Toolbox" />
+		<a href="/">
+			<img src="/img/Brownfield.jpg" alt="Brownfield Grant Writers' Toolbox" />
+		</a>
 	</h1>
 <?php $this->end(); ?>
 
