@@ -37,7 +37,7 @@ class ReportsController extends AppController {
 		'GoogleChart'
 	);
 	public $uses = array(
-		'Report', 
+		'Report',
 		'Location'
 	);
 
@@ -407,7 +407,7 @@ class ReportsController extends AppController {
 			if (isset($this->params['named']['table_version']) && $this->params['named']['table_version'] == 2) {
 				return $table_vars;
 			}
-			
+
 			// Deprecated. Currently being phased out
 			$this->set($table_vars);
 			$this->render('/Tables/table');
@@ -441,8 +441,9 @@ class ReportsController extends AppController {
 			}
 			$this->render('csv');
 		} elseif ($type == 'excel5' || $type == 'excel2007') {
+			$filename = $this->__getFilename();
 			$this->set(array(
-				'filename' => $this->__getFilename(),
+				'filename' => $filename,
 				'mockup' => $this->ExcelReport->mockup,
 				'output_type' => $this->ExcelReport->output_type,
 				'values' => $this->ExcelReport->values,
@@ -453,6 +454,15 @@ class ReportsController extends AppController {
 				//echo '<pre>'.print_r($this, true).'</pre>';
 			} else {
 				$this->layout = "reports/$type";
+				if ($type == 'excel5') {
+					$this->response->type(array('excel5' => 'application/vnd.ms-excel'));
+					$this->response->type('excel5');
+					$this->response->download("$filename.xls");
+				} else {
+					$this->response->type(array('excel2007' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'));
+					$this->response->type('excel2007');
+					$this->response->download("$filename.xlsx");
+				}
 			}
 			$this->render("excel");
 		}
@@ -460,7 +470,7 @@ class ReportsController extends AppController {
 
 	// Invalid report type for topic or invalid topic entirely
 	public function invalid($type, $county_id) {
-		if ($type == 'chart') { 
+		if ($type == 'chart') {
 			$this->set(array(
 				'image' => file_get_contents('../webroot/img/error_chart_not_found.png')
 			));
