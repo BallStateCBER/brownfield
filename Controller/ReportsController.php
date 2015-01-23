@@ -425,8 +425,9 @@ class ReportsController extends AppController {
 				$this->render('source');
 			}
 		} elseif ($type == 'csv') {
+			$filename = $this->__getFilename();
 			$this->set(array(
-				'filename' => $this->__getFilename(),
+				'filename' => $filename,
 				'sources' => $this->__getSources(),
 				'title' => $this->CsvReport->title,
 				'columns' => $this->CsvReport->columns,
@@ -438,6 +439,9 @@ class ReportsController extends AppController {
 				$this->layout = 'ajax';
 			} else {
 				$this->layout = 'reports/csv';
+				$this->response->type(array('csv' => 'text/csv'));
+				$this->response->type('csv');
+				$this->response->download("$filename.csv");
 			}
 			$this->render('csv');
 		} elseif ($type == 'excel5' || $type == 'excel2007') {
