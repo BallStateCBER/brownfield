@@ -1,14 +1,14 @@
 /* TOPIC PAGES */
 div.topic {
 	img.chart {
-		display: block; 
+		display: block;
 		margin: auto;
 	}
-	
+
 	p.chart_unavailable {
-		background-color: #FFCBAF; 
-		border: 1px solid #7F0000; 
-		color: #7F0000; 
+		background-color: #FFCBAF;
+		border: 1px solid #7F0000;
+		color: #7F0000;
 		padding: 5px;
 	}
 }
@@ -17,31 +17,31 @@ div.topic {
 	.description {
 		padding: 20px 0;
 	}
-	
-	.description, 
-	.topic .source, 
+
+	.description,
+	.topic .source,
 	.topic .resorting {
-		color: #333; 
+		color: #333;
 		font-size: 12px;
 	}
-	
+
 	section.collapsable {
 		h2 {
-			margin-bottom: 0;	
+			margin-bottom: 0;
 		}
 		> div {
 			display: none;
 		}
 		ul {
-			margin: 0 auto;	
+			margin: 0 auto;
 		}
 	}
-	
+
 	.download_options {
 		margin: 0;
-		
+
 		li {
-			list-style-type: none; 
+			list-style-type: none;
 			padding: 0;
 		}
 	}
@@ -49,47 +49,51 @@ div.topic {
 
 div.chart {
 	img.chart {
-		display: block; 
+		display: block;
 		margin: auto;
 	}
 }
 .chart {
 	fieldset {
-		border: 1px solid black; 
-		margin-top: 10px; 
+		border: 1px solid black;
+		margin-top: 10px;
 		padding: 10px;
-		
+
 		&.collapsible {
 			margin: 0 1px;
 		}
-		
+
 		&.collapsed {
-			border-width: 1px 0 0 0; 
-			margin: 0; 
-			padding-bottom: 0; 
+			border-width: 1px 0 0 0;
+			margin: 0;
+			padding-bottom: 0;
 			padding-top: 0;
 		}
 	}
-	
+
 	legend {
-		background-color: white; 
-		font-family: "Palatino Linotype", Palatino, Georgia, serif; 
-		font-size: 22px; 
-		font-weight: normal; 
-		margin-left: 10px; 
+		background-color: white;
+		font-family: "Palatino Linotype", Palatino, Georgia, serif;
+		font-size: 22px;
+		font-weight: normal;
+		margin-left: 10px;
 		padding: 0 5px;
 	}
-	
+
 	.description {
 		padding: 20px 0;
 	}
-	
-	.description, 
-	.topic .source, 
+
+	.description,
+	.topic .source,
 	.topic .resorting {
-		color: #333; 
+		color: #333;
 		font-size: 12px;
 	}
+}
+
+.charts-tooltip {
+	z-index: 1;
 }
 
 #all_charts {
@@ -97,18 +101,18 @@ div.chart {
 		border-bottom: 1px solid #AAAAAA;
 	    margin-bottom: 30px;
 	    padding-bottom: 30px;
-	} 	
+	}
 }
 
 
 /* DATA TABLES */
 .datatable {
 	table {
-		background-color: #fff; 
-		border-collapse:collapse; 
-		font-size: 12px; 
+		background-color: #fff;
+		border-collapse:collapse;
+		font-size: 12px;
 		margin: auto;
-		
+
 		tbody {
 			tr.no_header {
 				> td:first-child {
@@ -117,58 +121,58 @@ div.chart {
 			}
 		}
 	}
-	
+
 	thead {
 		th {
 			text-align: center;
 		}
-		
+
 		tr.sort_header {
 			th {
-				background-color: #DFEEFF; 
-				border-bottom: 1px solid #AFAFAF; 
-				border-right: 1px dotted #FFFFFF; 
-				border-top: 0 solid #FFFFFF; 
+				background-color: #DFEEFF;
+				border-bottom: 1px solid #AFAFAF;
+				border-right: 1px dotted #FFFFFF;
+				border-top: 0 solid #FFFFFF;
 				padding: 4px;
 			}
 		}
 	}
 	tbody {
 		th {
-			text-align: left; 
+			text-align: left;
 			padding: 5px;
 		}
-		
+
 		td {
-			text-align: right; 
+			text-align: right;
 			padding: 5px;
-			
+
 			&.increase {
-				color: green; 
+				color: green;
 				font-weight: bold;
 			}
-			
+
 			&.decrease {
-				color: red; 
+				color: red;
 				font-weight: bold;
 			}
 		}
 	}
-	tbody, 
+	tbody,
 	tfoot {
 		th {
 			border-top: 1px solid #AFAFAF;
 		}
-		
+
 		td {
 			border-left: 1px dotted #AFAFAF;
-			border-top: 1px dotted #AFAFAF; 
+			border-top: 1px dotted #AFAFAF;
 		}
-	} 
-	
+	}
+
 	th {
 		font-weight: bold;
-		
+
 		&.title {
 			font-size: 14px;
 		}
@@ -176,14 +180,14 @@ div.chart {
 	.resorting {
 		text-align: center;
 	}
-	
+
 	.footnotes {
-		border: 1px solid #DDD; 
-		margin: auto; 
-		padding: 5px; 
+		border: 1px solid #DDD;
+		margin: auto;
+		padding: 5px;
 		width: 400px;
 	}
-	
+
 	.sortable {
 		thead {
 			tr.sort_header {
@@ -198,16 +202,16 @@ div.chart {
 /* CALCULATOR */
 #calc_input_container {
 	padding-left: 30px;
-	
+
 	label {
 		display: block;
-		font-weight: bold;	
+		font-weight: bold;
 	}
-	
+
 	div.input {
 		margin-top: 15px;
 	}
-	
+
 	.footnote {
 		color: #333;
 		font-size: 90%;
@@ -228,7 +232,7 @@ div.chart {
 }
 
 #option_b_input {
-	display: none;	
+	display: none;
 }
 
 #calculate_button_container {
@@ -238,136 +242,136 @@ div.chart {
 
 #basic_calc_input_container {
 	div.field_name {
-		font-size: 12px; 
+		font-size: 12px;
 		font-weight: bold;
 	}
-	
+
 	.field_block {
 		margin-bottom: 20px;
-		
+
 		input {
 			text-align: left;
 		}
 	}
-	
+
 	.note {
-		font-size: 90%; 
+		font-size: 90%;
 		font-weight: normal;
 	}
-	
+
 	.choose_option {
 		th,
 		td {
-			padding: 5px; 
+			padding: 5px;
 			vertical-align: top;
 		}
 	}
 }
 
-#basic_calc_input_container input, 
+#basic_calc_input_container input,
 #calc_input_container select {
 	font-size: 12px;
 }
 
 #basic_calc_input_output_separator {
-	clear: both; 
-	margin: 20px auto 20px auto; 
+	clear: both;
+	margin: 20px auto 20px auto;
 	width: 80%;
 }
 
 #calc_industry_id {
-	position: relative; 
+	position: relative;
 	z-index: 2;
 }
 
 #calc_output_loading_indicator {
 	display: none;
 	margin-left: 10px;
-	vertical-align: text-bottom;	
+	vertical-align: text-bottom;
 }
 
 #calc_output_container {
 	display: none;
-	float: left; 
-	font-size: 13px; 
+	float: left;
+	font-size: 13px;
 	margin: 0 0 40px 25px;
-	
+
 	.row {
-		border-bottom: 1px dotted #333333; 
-		clear: both; 
-		padding: 5px 0; 
+		border-bottom: 1px dotted #333333;
+		clear: both;
+		padding: 5px 0;
 		text-align: right;
 	}
-	
+
 	.value_name {
-		float: left; 
-		margin-right: 10px; 
+		float: left;
+		margin-right: 10px;
 		text-align: left;
-		
+
 		img {
 			vertical-align: middle;
 		}
 	}
-	
+
 	.value_amount {
-		display: inline; 
+		display: inline;
 		font-weight: bold;
 	}
-	
+
 	.section_header {
-		border-bottom: 1px dotted black; 
-		clear: both; 
-		font-size: 14pt; 
-		font-weight: bold; 
+		border-bottom: 1px dotted black;
+		clear: both;
+		font-size: 14pt;
+		font-weight: bold;
 		margin-top: 30px;
 	}
-	
+
 	#tax_impact_section_header {
 		border: 0;
 	}
-	
+
 	.direct_total {
-		border-bottom: 1px dotted black; 
-		clear: both; 
-		font-size: 10pt; 
+		border-bottom: 1px dotted black;
+		clear: both;
+		font-size: 10pt;
 		text-align: right;
 	}
-	
-	.economic_multipliers, 
-	.total_impact, 
+
+	.economic_multipliers,
+	.total_impact,
 	.tax_detail {
 		padding-top: 10px;
 	}
-	
+
 	.value_amount_column {
-		float: right; 
-		font-weight: bold; 
-		margin-left: 10px; 
+		float: right;
+		font-weight: bold;
+		margin-left: 10px;
 		min-width: 85px;
 	}
-	
+
 	.output_help_toggler {
-		float: left; 
-		margin-left: -20px; 
+		float: left;
+		margin-left: -20px;
 		width: 20px;
 	}
 }
 
-#calc_input_container, 
+#calc_input_container,
 #calc_output_container {
 	.help_toggler {
 		cursor: default;
 	}
-	
+
 	.help_text {
-		background-color: #CFE5FF; 
-		border: 1px dotted #00006F; 
-		color: #00006F; 
-		font-size: 12px; 
-		font-weight: normal; 
-		max-width: 300px; 
-		padding: 2px; 
-		position: absolute; 
+		background-color: #CFE5FF;
+		border: 1px dotted #00006F;
+		color: #00006F;
+		font-size: 12px;
+		font-weight: normal;
+		max-width: 300px;
+		padding: 2px;
+		position: absolute;
 		z-index: 2;
 	}
 }
@@ -375,24 +379,24 @@ div.chart {
 
 /* GRANTS AWARDED */
 .grants_awarded {
-	border-collapse: collapsed; 
+	border-collapse: collapsed;
 	font-size: 13px;
-	
+
 	.year {
 		font-weight: bold;
 	}
-	
+
 	td {
-		border: 1px solid #bbb; 
-		padding: 5px; 
+		border: 1px solid #bbb;
+		padding: 5px;
 		vertical-align: top;
 	}
-	
+
 	ul {
-		margin: 0; 
+		margin: 0;
 		padding: 0;
 	}
-	
+
 	li {
 		list-style-type: none;
 	}
@@ -402,7 +406,7 @@ div.chart {
 /* SIDEBAR */
 #sidebar {
 	h2:first-child {
-		margin-top: 0;	
+		margin-top: 0;
 	}
 	.awards {
 		ul {
@@ -410,15 +414,15 @@ div.chart {
 			padding: 0;
 		}
 		li {
-			line-height: 150%; 
-			list-style-type: none; 
-			margin: 0 0 10px 0; 
+			line-height: 150%;
+			list-style-type: none;
+			margin: 0 0 10px 0;
 			padding: 0;
 		}
 		.awarder {
-			display: block; 
-			font-size: 80%; 
-			line-height: 150%; 
+			display: block;
+			font-size: 80%;
+			line-height: 150%;
 			margin-top: 5px;
 		}
 	}
@@ -426,9 +430,9 @@ div.chart {
 		background-color: #fff;
 		margin-bottom: 15px;
 		padding: 15px;
-		
+
 		&:last-child {
-			margin-bottom: 0;	
+			margin-bottom: 0;
 		}
 	}
 	li.selected {
@@ -445,11 +449,11 @@ div.chart {
 		text-transform: uppercase;
 	}
 	select {
-		display: block; 
+		display: block;
 		margin-bottom: 15px;
-		
+
 		&:last-child {
-			margin-bottom: 15px;	
+			margin-bottom: 15px;
 		}
 	}
 }
@@ -461,35 +465,35 @@ div.chart {
 		background-color: transparent;
 		padding: 0;
 		width: 230px;
-		
+
 		> div {
 			margin-bottom: 0;
 		}
 	}
 	#content_column {
-		background-color: #fff;	
+		background-color: #fff;
 	}
 }
 #submenus {
 	h2 {
 		margin-bottom: 0;
 		margin-top: 15px;
-		
+
 		&:first-child {
-			margin-top: 0;	
+			margin-top: 0;
 		}
 	}
 }
 .submenu {
 	ul {
 		margin: 0;
-		padding-left: 20px;	
-	}	
+		padding-left: 20px;
+	}
 }
 .other_links {
 	margin: 0;
 	padding: 0;
-	
+
 	li {
 		list-style-type: none;
 	}
@@ -504,48 +508,48 @@ div.chart {
 	h1 {
 		margin-bottom: 20px;
 	}
-	
+
 	section {
-		margin-bottom: 40px; 
+		margin-bottom: 40px;
 		text-align: right;
 	}
-	
+
 	blockquote {
 		color: #333;
 		font-size: 120%;
-		margin: 0; 
+		margin: 0;
 		text-align: justify;
 		&:before {
-			content: '"';	
+			content: '"';
 		}
 		&:after {
-			content: '"';	
+			content: '"';
 		}
 	}
-	
+
 	section {
 		> div {
-			display: inline-block; 
-			font-size: 90%; 
-			font-style: normal; 
-			font-weight: bold; 
-			text-align: left; 
+			display: inline-block;
+			font-size: 90%;
+			font-style: normal;
+			font-weight: bold;
+			text-align: left;
 			width: 50%;
 		}
 	}
-	
+
 	div.title {
-		color: #555; 
+		color: #555;
 		margin-bottom: 20px;
 	}
 }
 
 /* FRONT PAGE */
 #frontpage_panels {
-	bottom: 0; 
-	position: absolute; 
+	bottom: 0;
+	position: absolute;
 	right: 0;
-	
+
 	img {
 		margin: 0 6px;
 	}
@@ -555,25 +559,25 @@ div.chart {
 	.section {
 		margin-bottom: 40px;
 	}
-	
+
 	p {
-		font-size: 120%; 
+		font-size: 120%;
 		line-height: 140%;
 	}
-	
+
 	> p {
 		margin-bottom: 40px;
 	}
-	
+
 	.previews {
 		text-align: center;
-		
+
 		img {
-			border: 1px solid #AAA; 
+			border: 1px solid #AAA;
 			box-shadow: 2px 2px 2px #BBB;
-			cursor: pointer; 
-			height: 100px; 
-			margin-right: 20px; 
+			cursor: pointer;
+			height: 100px;
+			margin-right: 20px;
 		}
 	}
 }
@@ -581,30 +585,30 @@ div.chart {
 #preview_topics_teaser {
 	ul {
 		margin: 0;
-	}	
+	}
 }
 
 #preview_topics_full {
 	text-align: center;
-	
+
 	table {
 		display: inline-block;
 		text-align: left;
 	}
-	
+
 	td {
 		padding: 0 0 15px 15px;
 		vertical-align: top;
 	}
-	
+
 	img {
-		float: left; 
+		float: left;
 		height: 250px;
 	}
-	
+
 	ul {
 		float: left;
-		font-size: 90%; 
+		font-size: 90%;
 		margin: 0 auto;
 		padding-left: 5px;
 	}
