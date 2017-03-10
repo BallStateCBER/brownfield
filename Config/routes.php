@@ -22,9 +22,6 @@
  */
 
 Router::connect('/', 				array('controller' => 'pages', 'action' => 'home'));
-Router::connect("/demographics", 	array('controller' => 'pages', 'action' => 'demographics'));
-Router::connect("/economy", 		array('controller' => 'pages', 'action' => 'economy'));
-Router::connect("/health", 			array('controller' => 'pages', 'action' => 'health'));
 Router::connect("/grants", 			array('controller' => 'pages', 'action' => 'grants_awarded'));
 Router::connect("/resources", 		array('controller' => 'pages', 'action' => 'resources'));
 Router::connect("/contact", 		array('controller' => 'pages', 'action' => 'contact'));
