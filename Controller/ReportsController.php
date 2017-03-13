@@ -118,11 +118,13 @@ class ReportsController extends AppController {
 			2 => 'Required data not available',
 			3 => 'Error caching',
 			4 => 'Unknown topic',
-			5 => isset($this->{$this->report_subclass}->error_message) ? $this->{$this->report_subclass}->error_message : 'Unknown error'
+			5 => isset($this->{$this->report_subclass}->error_message) ?
+                $this->{$this->report_subclass}->error_message :
+                'Unknown error'
 		);
 		$error_code = $this->{$this->report_subclass}->error;
 		if ($error_code) {
-			$message = $error_code.': '.$verbose_error_codes[$error_code];
+			$message = $error_code . ': ' . $verbose_error_codes[$error_code];
 		} else {
 			$message = '0: No error';
 		}
@@ -153,7 +155,7 @@ class ReportsController extends AppController {
 			foreach ($report_attributes as $var => $val) {
 				$this->{$this->report_subclass}->$var = $val;
 				if (isset($_GET['debug'])) {
-					echo "<hr />Contents of $var:<pre>".print_r($val, true).'</pre>';
+					echo "<hr />Contents of $var:<pre>" . print_r($val, true) . '</pre>';
 				}
 			}
 		}
@@ -238,24 +240,34 @@ class ReportsController extends AppController {
 		switch ($type) {
 			case 'chart':
 				$this->helpers[] = 'GoogleChart';
-				App::import('Vendor', 'GoogleChart', array('file' => 'googlechartphplib'.DS.'lib'.DS.'GoogleChart.php'));
-				App::import('Vendor', 'GooglePieChart', array('file' => 'googlechartphplib'.DS.'lib'.DS.'GooglePieChart.php'));
-				App::import('Vendor', 'GoogleBarChart', array('file' => 'googlechartphplib'.DS.'lib'.DS.'GoogleBarChart.php'));
-				App::import('Vendor', 'GoogleChartTextMarker', array('file' => 'googlechartphplib'.DS.'lib'.DS.'markers'.DS.'GoogleChartTextMarker.php'));
-				App::import('Vendor', 'GoogleChartRangeMarker', array('file' => 'googlechartphplib'.DS.'lib'.DS.'markers'.DS.'GoogleChartRangeMarker.php'));
+				App::import('Vendor', 'GoogleChart', array(
+				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'GoogleChart.php'
+                ));
+				App::import('Vendor', 'GooglePieChart', array(
+				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'GooglePieChart.php'
+                ));
+				App::import('Vendor', 'GoogleBarChart', array(
+				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'GoogleBarChart.php'
+                ));
+				App::import('Vendor', 'GoogleChartTextMarker', array(
+				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'markers' . DS . 'GoogleChartTextMarker.php'
+                ));
+				App::import('Vendor', 'GoogleChartRangeMarker', array(
+				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'markers' . DS . 'GoogleChartRangeMarker.php'
+                ));
 				break;
 			case 'svg_chart':
 				App::uses('GoogleCharts', 'GoogleCharts.Lib');
 				break;
 			case 'excel2007':
                 App::import('Vendor', 'PHPExcel', array(
-                    'file' => 'PHPExcel-1.8/Classes/PHPExcel.php'
+                    'file' => 'PHPExcel-1.8' . DS . 'Classes' . DS . 'PHPExcel.php'
                 ));
 				App::import('Vendor', 'PHPExcelWriter', array(
-				    'file' => 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php'
+				    'file' => 'PHPExcel-1.8' . DS . 'Classes' . DS . 'PHPExcel' . DS . 'Writer' . DS . 'Excel2007.php'
                 ));
 				App::import('Vendor', 'PHPExcelAdvancedValueBinder', array(
-				    'file' => 'PHPExcel-1.8/Classes/Cell/AdvancedValueBinder.php'
+				    'file' => 'PHPExcel-1.8' . DS . 'Classes' . DS . 'Cell' . DS . 'AdvancedValueBinder.php'
                 ));
 				break;
 		}
@@ -279,7 +291,8 @@ class ReportsController extends AppController {
 						$location[1] = $this->{$this->report_subclass}->county_id;
 						break;
 					case 3:	// state
-						$location[1] = $this->Location->getStateIDFromCountyID($this->{$this->report_subclass}->county_id);
+						$countyId = $this->{$this->report_subclass}->county_id;
+                        $location[1] = $this->Location->getStateIDFromCountyID($countyId);
 						break;
 					case 4: // country
 						$location[1] = 1;
@@ -362,9 +375,11 @@ class ReportsController extends AppController {
 				$this->redirect("/reports/unknown/$type");
 				break;
 			case 5: // error generating report
-				$error_message = "<p>There was an error generating this report. Please <a href=\"/contact\">contact us</a> if you need assistance.</p>";
+				$error_message = 'There was an error generating this report. ';
+			    $error_message .= 'Please <a href="/contact">contact us</a> if you need assistance.';
+			    $error_message = "<p>$error_message</p>";
 				if ($this->{$this->report_subclass}->error_message) {
-					$error_message .= '<p>Details: '.$this->{$this->report_subclass}->error_message.'</p>';
+					$error_message .= '<p>Details: ' . $this->{$this->report_subclass}->error_message . '</p>';
 				} else {
 					$error_message .= '<p>Unfortunately, no other details are available for this error.</p>';
 				}
@@ -384,8 +399,8 @@ class ReportsController extends AppController {
 		if ($type == 'chart') {
 			$this->set(array('chart' => $this->ChartReport->gchart));
 			if (isset($_GET['debug'])) {
-				echo '<pre>Values: '.var_export($this->ChartReport->values, true).'</pre>';
-				echo '<pre>$this->chart: '.print_r($this->ChartReport->gchart, true).'</pre>';
+				echo '<pre>Values: ' . var_export($this->ChartReport->values, true) . '</pre>';
+				echo '<pre>$this->chart: ' . print_r($this->ChartReport->gchart, true) . '</pre>';
 				$this->layout = 'default';
 			} else {
 				$this->layout = 'png';
@@ -454,7 +469,6 @@ class ReportsController extends AppController {
 			));
 			if (isset($_GET['debug'])) {
 				$this->layout = 'ajax';
-				//echo '<pre>'.print_r($this, true).'</pre>';
 			} else {
 				$this->layout = "reports/$type";
                 $this->response->type(array(
@@ -532,7 +546,6 @@ class ReportsController extends AppController {
 			$county_id =  $this->Location->getCountyID($county, $state_id);
 			$county = $this->Location->simplify($county);
 		}
-		$full_county_name = $this->Location->getCountyFullName($county_id, $state_id);
 		$title_for_layout = $this->Location->getCountyFullName($county_id, $state_id, true);
 		$this->set(compact('county_id', 'state_id', 'county', 'state', 'title_for_layout'));
 	}
