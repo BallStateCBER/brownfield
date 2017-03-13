@@ -250,14 +250,26 @@ class ReportsController extends AppController {
 				App::uses('GoogleCharts', 'GoogleCharts.Lib');
 				break;
 			case 'excel2007':
-				App::import('Vendor','PHPExcel', array('file' => 'excel/PHPExcel.php'));
-				App::import('Vendor','PHPExcelWriter', array('file' => "excel/PHPExcel/Writer/Excel2007.php"));
-				App::import('Vendor','PHPExcelAdvancedValueBinder',array('file' => 'excel/PHPExcel/Cell/AdvancedValueBinder.php'));
+                App::import('Vendor', 'PHPExcel', array(
+                    'file' => 'PHPExcel-1.8/Classes/PHPExcel.php'
+                ));
+				App::import('Vendor', 'PHPExcelWriter', array(
+				    'file' => 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php'
+                ));
+				App::import('Vendor', 'PHPExcelAdvancedValueBinder', array(
+				    'file' => 'PHPExcel-1.8/Classes/Cell/AdvancedValueBinder.php'
+                ));
 				break;
 			case 'excel5':
-				App::import('Vendor','PHPExcel', array('file' => 'excel/PHPExcel.php'));
-				App::import('Vendor','PHPExcelWriter', array('file' => "excel/PHPExcel/Writer/Excel5.php"));
-				App::import('Vendor','PHPExcelAdvancedValueBinder',array('file' => 'excel/PHPExcel/Cell/AdvancedValueBinder.php'));
+                App::import('Vendor', 'PHPExcel', array(
+                    'file' => 'PHPExcel-1.8/Classes/PHPExcel.php'
+                ));
+                App::import('Vendor', 'PHPExcelWriter', array(
+                    'file' => 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel5.php'
+                ));
+                App::import('Vendor', 'PHPExcelAdvancedValueBinder', array(
+                    'file' => 'PHPExcel-1.8/Classes/Cell/AdvancedValueBinder.php'
+                ));
 				break;
 		}
 	}
