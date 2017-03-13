@@ -8,7 +8,7 @@
  *  5: Error generating report
  *
  *  Note:
- *  	routes.php needs to be kept aware of the valid report types (chart|table|csv|source|excel5|excel2007)
+ *  	routes.php needs to be kept aware of the valid report types (chart|table|csv|source|excel2007)
  *  	so that /:type/:topic/:state/:county paths can be properly routed to ReportsController::switchboard()
  *
  *  How this works:
@@ -195,7 +195,6 @@ class ReportsController extends AppController {
 
 		// Determine the name of the type-specific model used for this report
 		switch ($this->type) {
-			case 'excel5':		// Two types of Excel reports are
 			case 'excel2007':	// derived from the ExcelReport model
 				$this->report_subclass = 'ExcelReport';
 				break;
@@ -228,7 +227,6 @@ class ReportsController extends AppController {
 
 		// Special preparation
 		switch ($this->type) {
-			case 'excel5':
 			case 'excel2007':
 				// Make sure ExcelReport knows what variety of Excel is being requested
 				$this->ExcelReport->excel_type = $this->type;
@@ -258,17 +256,6 @@ class ReportsController extends AppController {
                 ));
 				App::import('Vendor', 'PHPExcelAdvancedValueBinder', array(
 				    'file' => 'PHPExcel-1.8/Classes/Cell/AdvancedValueBinder.php'
-                ));
-				break;
-			case 'excel5':
-                App::import('Vendor', 'PHPExcel', array(
-                    'file' => 'PHPExcel-1.8/Classes/PHPExcel.php'
-                ));
-                App::import('Vendor', 'PHPExcelWriter', array(
-                    'file' => 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel5.php'
-                ));
-                App::import('Vendor', 'PHPExcelAdvancedValueBinder', array(
-                    'file' => 'PHPExcel-1.8/Classes/Cell/AdvancedValueBinder.php'
                 ));
 				break;
 		}
@@ -456,7 +443,7 @@ class ReportsController extends AppController {
 				$this->response->download("$filename.csv");
 			}
 			$this->render('csv');
-		} elseif ($type == 'excel5' || $type == 'excel2007') {
+		} elseif ($type == 'excel2007') {
 			$filename = $this->__getFilename();
 			$this->set(array(
 				'filename' => $filename,
@@ -470,15 +457,11 @@ class ReportsController extends AppController {
 				//echo '<pre>'.print_r($this, true).'</pre>';
 			} else {
 				$this->layout = "reports/$type";
-				if ($type == 'excel5') {
-					$this->response->type(array('excel5' => 'application/vnd.ms-excel'));
-					$this->response->type('excel5');
-					$this->response->download("$filename.xls");
-				} else {
-					$this->response->type(array('excel2007' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'));
-					$this->response->type('excel2007');
-					$this->response->download("$filename.xlsx");
-				}
+                $this->response->type(array(
+                    'excel2007' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                ));
+                $this->response->type('excel2007');
+                $this->response->download("$filename.xlsx");
 			}
 			$this->render("excel");
 		}

@@ -140,10 +140,6 @@ class PagesController extends AppController {
 				array('controller' => 'reports', 'action' => 'getStatus'),
 				array('pass' => array('csv', $topic, $state_id, $county_id))
 			),
-			'excel5_availability' => $this->requestAction(
-				array('controller' => 'reports', 'action' => 'getStatus'),
-				array('pass' => array('excel5', $topic, $state_id, $county_id))
-			),
 			'excel2007_availability' => $this->requestAction(
 				array('controller' => 'reports', 'action' => 'getStatus'),
 				array('pass' => array('excel2007', $topic, $state_id, $county_id))

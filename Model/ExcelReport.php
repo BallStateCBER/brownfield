@@ -10,8 +10,8 @@ class ExcelReport extends Report {
 	public $first_col_format = 'year';
 	public $data_format = 'number';
 	public $data_precision = 0;
-	public $excel_type; 		//excel5 or excel2007
-	public $output_type; 		//Excel5 or Excel2007
+	public $excel_type;
+	public $output_type;
 	public $objPHPExcel;
 	public $current_row = 1; 	//Row iterator (first row is 1, not 0)
 	public $col_labels;		//Set by setColumnLabels() and referenced by setValues 
@@ -53,14 +53,11 @@ class ExcelReport extends Report {
 	public function getOutput($topic) {
 		// Run the topic-specific report-preparation method
 		$this->{$topic}();
-		
+
 		// Translate the 'report type' value to a PHPExcel output type
 		switch ($this->excel_type) {
 			case 'excel2007':
 				$this->output_type = 'Excel2007';
-				break;
-			case 'excel5':
-				$this->output_type = 'Excel5';
 				break;
 		}
 		

@@ -11,7 +11,6 @@
 		topic_full_name
 		chart_availability
 		csv_availability
-		excel5_availability
 		excel2007_availability
 		source_availability
 		sources
@@ -75,7 +74,7 @@
 		</section>
 	<?php endif; ?>
 	
-	<?php if ($csv_availability == 0 || $excel5_availability == 0 || $excel2007_availability == 0): ?>
+	<?php if ($csv_availability == 0 || $excel2007_availability == 0): ?>
 		<section class="collapsable">
 			<h2>
 				<a href="#">
@@ -87,7 +86,7 @@
 					<?php if ($excel2007_availability == 0): ?>
 						<li>
 							<?php echo $this->Html->link(
-								$this->Html->image('/data_center/img/icons/document-excel-table.png').' Excel 2007',
+								$this->Html->image('/data_center/img/icons/document-excel-table.png') . ' Office Open XML Workbook (Microsoft Excel)',
 								array(
 									'controller' => 'reports', 
 									'action' => 'switchboard', 
@@ -98,27 +97,7 @@
 								),
 								array(
 									'escape' => false, 
-									'title' => 'Download Excel 2007 spreadsheet'
-								)
-							); ?>
-						</li>
-					<?php endif; ?>
-					
-					<?php if ($excel5_availability == 0): ?>
-						<li>
-							<?php echo $this->Html->link(
-								$this->Html->image('/data_center/img/icons/document-excel-table.png').' Excel 5.0',
-								array(
-									'controller' => 'reports', 
-									'action' => 'switchboard', 
-									'type' => 'excel5', 
-									'topic' => $selected_topic, 
-									'state' => $state_abbreviation, 
-									'county' => $county_name_simplified
-								),
-								array(
-									'escape' => false, 
-									'title' => 'Download Excel 5.0 spreadsheet'
+									'title' => 'Download OOXML spreadsheet'
 								)
 							); ?>
 						</li>

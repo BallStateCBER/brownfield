@@ -70,9 +70,6 @@ class Report extends AppModel {
 				'csv' => array(
 					'title', 'columns', 'table', 'footnote', 'options'
 				),
-				'excel5' => array(
-					'mockup', 'output_type', 'values', 'objPHPExcel'
-				),
 				'excel2007' => array(
 					'mockup', 'output_type', 'values', 'objPHPExcel'
 				)
