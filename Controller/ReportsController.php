@@ -774,16 +774,16 @@ class ReportsController extends AppController {
 
 	public function disabled_ages() {
 		$this->__setDataCategories(array(
-			'5 to 15 years' => 5800,
-			'16 to 20 years' => 5801,
-			'21 to 64 years' => 5802,
+			'5 to 17 years' => 6014,
+			'18 to 34 years' => 6015,
+			'35 to 64 years' => 6016,
 			'65 to 74 years' => 5803,
 			'75+ years' => 5804
 		));
 		$this->__setLocations(array(
 			array(2)
 		));
-		$this->__setDates(2000);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

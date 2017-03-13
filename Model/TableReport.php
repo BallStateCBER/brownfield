@@ -348,7 +348,8 @@ class TableReport extends Report {
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $this->values[$loc_key][$label] = $value;
 			}
 		}
 		
@@ -356,7 +357,7 @@ class TableReport extends Report {
 		$location_names = $this->getLocationNames();
 		$this->columns = array_merge(array('Age Range'), $location_names);
 		$this->title = "Disabled Age Breakdown For $location_names[0] ($this->year)";
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
+		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string');
 	}
 	
 	public function share_of_establishments($county = 1) {

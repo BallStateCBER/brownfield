@@ -1473,7 +1473,6 @@ class SvgChartReport extends Report {
 			'value' => array(
 	        	'label' => 'Disabled', 
 	        	'type' => 'number',
-	        	'format' => '0.00%'
 			)
 	    ));
 		
@@ -1488,7 +1487,7 @@ class SvgChartReport extends Report {
 		foreach ($this->data_categories as $label => $category_id) {
 			$this->chart->addRow(array(
 				'category' => $label,
-				'value' => $this->values[$label] / 100
+				'value' => $this->values[$label]
 			));
 		}
 		
@@ -1499,7 +1498,7 @@ class SvgChartReport extends Report {
 			'legend' => array(
 				'position' => 'right'
 			),
-			'title' => 'Disabled Age Breakdown, '.$this->locations[0][2].', Indiana ('.$year.')'
+			'title' => 'Disabled Age Breakdown, ' . $this->locations[0][2] . ', Indiana (' . $year . ')'
 		));
 	}
 
