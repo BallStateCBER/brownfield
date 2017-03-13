@@ -119,16 +119,28 @@ class TableReport extends Report {
 	
 	public function population_age_breakdown($county = 1) {
 		// Gather data
+        $totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$totals[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
 			}
 		}
+
+		// Generate percent values
+        $categories = array_keys($this->data_categories);
+        array_shift($categories); // Remove 'total population'
+        foreach ($categories as $label) {
+            foreach ($this->locations as $loc_key => $location) {
+                $percent = ($totals[$loc_key][$label] / $totals[$loc_key]['Total']);
+                $percent = round($percent * 100, 1);
+                $this->values[$loc_key][$label] = $percent;
+            }
+        }
 		
 		// Finalize
 		$this->columns = array_merge(array('Age Range'), $this->getLocationNames());
 		$this->title = "Population By Age ($this->year)";
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 1);
+		$this->table = $this->getFormattedTableArray($categories, $this->values, 'string', 'percent', 1);
 	}
 	
 	public function female_age_breakdown($county = 1) {

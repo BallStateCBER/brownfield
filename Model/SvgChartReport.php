@@ -530,18 +530,20 @@ class SvgChartReport extends Report {
 	    ));
 		
 		// Gather data
+        $totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
+                $totals[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
 			}
 		}
 
 		// Add bars
 		$categories = array_keys($this->data_categories);
+		unset($categories[array_search('Total', $categories)]);
 		foreach ($categories as $category) {
 			$values = array();
 			foreach ($this->locations as $key => $set) {
-				$values[] = $this->values[$key][$category];
+				$values[] = $totals[$key][$category] / $totals[$key]['Total'];
 			}
 			$this->chart->addRow(array(
 				'category' => $category, 

@@ -594,18 +594,20 @@ class ReportsController extends AppController {
 
 	public function population_age_breakdown() {
 		$this->__setDataCategories(array(
-			'75 years and older' => 5734,
-			'60 to 74 years' => 5733,
-			'45 to 59 years' => 5732,
-			'25 to 44 years' => 5731,
-			'15 to 24 years' => 5730,
-			'5 to 14 years' => 5729,
-			'Under 5 years' => 363
+            'Total' => 1,
+            'Total Under 5 years old' => 6010,
+            'Total 5 to 14' => 5723,
+            'Total 15 to 24' => 5724,
+            'Total  25 to 44' => 5725,
+            'Total 45 to 59' => 5726,
+            'Total 60 to 74' => 5727,
+            'Total 75 and older' => 5728,
+            'Total Under 18 years old' => 6011
 		));
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2010);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

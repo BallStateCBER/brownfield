@@ -405,17 +405,28 @@ class ExcelReport extends Report {
 	public function population_age_breakdown($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
+		$totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year) / 100;
+                $totals[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
 				$this->individual_value_formats[$loc_key][] = '0.00%';
 			}
 		}
+
+        // Generate percent values
+        $categories = array_keys($this->data_categories);
+        array_shift($categories); // Remove 'total population'
+        foreach ($categories as $label) {
+            foreach ($this->locations as $loc_key => $location) {
+                $percent = ($totals[$loc_key][$label] / $totals[$loc_key]['Total']);
+                $this->values[$loc_key][$label] = $percent;
+            }
+        }
 		
 		// Finalize
 		$this->columns = array_merge(array('Age Range'), $this->getLocationNames());
 		$this->title = "Population By Age ($year)";
-		$this->row_labels = array_keys($this->data_categories);
+		$this->row_labels = $categories;
 		$this->first_col_format = 'string';
 		$this->data_format = 'percent';
 		$this->data_precision = 1;
