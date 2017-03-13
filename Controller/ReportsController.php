@@ -640,14 +640,14 @@ class ReportsController extends AppController {
 
 	public function dependency_ratios() {
 		$this->__setDataCategories(array(
-			'Total (< 15 and 65+)' => 5741,
-	 		'Child (< age 15)' => 5742,
-			'Elderly (65+)' => 5743
+            'Total Population' => 1,
+            'Total 0 to 14 years old' => 6012,
+            'Total Over 65 years old' => 6013
 		));
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2010);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

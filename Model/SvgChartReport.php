@@ -758,14 +758,31 @@ class SvgChartReport extends Report {
 	    ));
 		
 		// Gather data
+        $totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$totals[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
 			}
 		}
+
+        // Create "per 100 people" values
+        foreach ($this->locations as $loc_key => $location) {
+            $youngTotal = $totals[$loc_key]['Total 0 to 14 years old'];
+            $oldTotal = $totals[$loc_key]['Total Over 65 years old'];
+            $totalPopulation = $totals[$loc_key]['Total Population'];
+            $youngPercent = round(($youngTotal / $totalPopulation) * 100, 1);
+            $oldPercent = round(($oldTotal / $totalPopulation) * 100, 1);
+            $this->values[$loc_key]['Child (< age 15)'] = $youngPercent;
+            $this->values[$loc_key]['Elderly (65+)'] = $oldPercent;
+            $this->values[$loc_key]['Total (< 15 and 65+)'] = $youngPercent + $oldPercent;
+        }
 		
 		// Add bars
-		$categories = array_keys($this->data_categories);
+		$categories = [
+            'Child (< age 15)',
+            'Elderly (65+)',
+            'Total (< 15 and 65+)'
+        ];
 		foreach ($categories as $category) {
 			$values = array();
 			foreach ($this->locations as $key => $set) {
