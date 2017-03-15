@@ -331,17 +331,25 @@ class TableReport extends Report {
 	
 	public function disabled($county = 1) {
 		// Gather data
+        $totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$totals[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
 			}
 		}
+
+		// Calculate percent values
+        $category_name = 'Percent of population with a disability';
+        foreach ($this->locations as $loc_key => $location) {
+            $percent = $totals[$loc_key]['Total population with a disability'] / $totals[$loc_key]['Population'];
+            $this->values[$loc_key][$category_name] = $percent * 100;
+        }
 		
 		// Finalize
 		$this->columns = array_merge(array(''), $this->getLocationNames());
 		$this->title = "Percent of Population Disabled ($this->year)";
 		$this->options[] = 'hide_first_col';
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
+		$this->table = $this->getFormattedTableArray([$category_name], $this->values, 'string', 'percent', 2);
 	}
 	
 	public function disabled_ages($county = 1) {

@@ -674,18 +674,26 @@ class ExcelReport extends Report {
 	public function disabled($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
+		$totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year) / 100;
-				$this->individual_value_formats[$loc_key][] = '0.00%';
+				$totals[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year) / 100;
 			}
 		}
+
+        // Calculate percent values
+        $category_name = 'Percent of population with a disability';
+        foreach ($this->locations as $loc_key => $location) {
+            $percent = $totals[$loc_key]['Total population with a disability'] / $totals[$loc_key]['Population'];
+            $this->values[$loc_key][$category_name] = $percent;
+            $this->individual_value_formats[$loc_key][] = '0.00%';
+        }
 		
 		// Finalize
 		$this->columns = array_merge(array(''), $this->getLocationNames());
 		$this->title = "Percent of Population Disabled ($year)";
 		$this->options[] = 'hide_first_col';
-		$this->row_labels = array_keys($this->data_categories);
+		$this->row_labels = [$category_name];
 		$this->first_col_format = 'string';
 		$this->data_format = 'percent';
 		$this->data_precision = 2;

@@ -763,12 +763,13 @@ class ReportsController extends AppController {
 
 	public function disabled() {
 		$this->__setDataCategories(array(
-			'Percent of population disabled' => 5792
+		    'Population' => 1,
+			'Total population with a disability' => 5794
 		));
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2000);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

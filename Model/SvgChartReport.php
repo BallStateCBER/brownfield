@@ -1424,9 +1424,10 @@ class SvgChartReport extends Report {
 	    ));
 		
 		// Gather data
+        $totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$totals[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
 			}
 		}
 		
@@ -1437,9 +1438,9 @@ class SvgChartReport extends Report {
 				'category' => $location[2]
 			);
 			foreach ($this->data_categories as $label => $category_id) {
-				$value = $this->values[$loc_key][$label];
-				$row['value'] = $value / 100;
-				$row['annotation'] = sprintf("%.2f", $value).'%';
+				$value = $totals[$loc_key]['Total population with a disability'] / $totals[$loc_key]['Population'];
+				$row['value'] = $value;
+				$row['annotation'] = sprintf("%.2f", $value * 100).'%';
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
