@@ -651,18 +651,19 @@ class ReportsController extends AppController {
 
 	public function educational_attainment() {
 		$this->__setDataCategories(array(
-			'Less than 9th grade, percent' => 5748,
-			'9th to 12th grade, no diploma, percent' => 468,
-			'High school graduate or equivalent, percent' => 469,
-			'Some college, no degree, percent' => 5750,
-			'Associate degree, percent' => 472,
-			'Bachelor\'s degree, percent' => 473,
-			'Graduate or professional degree, percent' => 5752
+		    'Population 25 years and over' => 453,
+            'Less than 9th grade' => 6017,
+            '9th to 12th grade, no diploma' => 456,
+            'High school graduate (includes equivalency)' => 457,
+            'Some college, no degree' => 6018,
+            'Associate\'s degree' => 460,
+            'Bachelor\'s degree' => 461,
+            'Graduate or professional degree' => 6019
 		));
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2010);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

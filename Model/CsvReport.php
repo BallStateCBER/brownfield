@@ -217,11 +217,22 @@ class CsvReport extends Report {
 	public function educational_attainment($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
+        $totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+				$totals[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
 			}
 		}
+
+        // Calculate percentages
+        $totalPopulationCategory = array_keys($this->data_categories)[0];
+        array_shift($this->data_categories);
+        foreach ($this->data_categories as $label => $category_id) {
+            foreach ($this->locations as $loc_key => $location) {
+                $percent = $totals[$loc_key][$label] / $totals[$loc_key][$totalPopulationCategory];
+                $this->values[$loc_key][$label] = $percent * 100;
+            }
+        }
 		
 		// Finalize
 		$this->columns = array_merge(array('Education Level'), $this->getLocationNames());
