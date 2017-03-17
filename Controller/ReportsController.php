@@ -613,14 +613,15 @@ class ReportsController extends AppController {
 
 	public function female_age_breakdown() {
 		$this->__setDataCategories(array(
-			'Young Women (< 15)' => 5738,
-			'Women child bearing age (15 to 44)' => 5739,
-			'Women (> 44)' => 5740
+            'Total Females' => 271,
+			'Young Women (< 15)' => 5735,
+			'Women of child bearing age (15 to 44)' => 5736,
+			'Women (> 44)' => 5737
 		));
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2010);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

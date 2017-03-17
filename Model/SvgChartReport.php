@@ -576,37 +576,49 @@ class SvgChartReport extends Report {
 	}
 
 	public function female_age_breakdown() {
-		// Create chart
-		$this->chart = new GoogleCharts();
-		$this->applyDefaultOptions();
-		$this->chart->type("BarChart");		
-		$columns = array(
-	        'category' => array(
-	        	'label' => 'category', 
-	        	'type' => 'string'
-			)
-	    );
-		$category_names = array_keys($this->data_categories);
-		foreach ($category_names as $k => $category_name) {
-	        $columns["cat_$k"] = array(
-	        	'label' => $category_name, 
-	        	'type' => 'number',
-	        	'format' => '0.00%'
-			);
-			$columns["annotation_$k"] = array(
-				'label' => 'Annotation',
-				'type' => 'string',
-				'role' => 'annotation'
-			);
-		}
-		$this->chart->columns($columns);
-		
 		// Gather data
+        $totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $totals[$loc_key][$label] = $value;
 			}
 		}
+
+		// Calculate percentages
+        $totalPopulationCategory = array_keys($this->data_categories)[0];
+        array_shift($this->data_categories);
+        foreach ($this->data_categories as $label => $category_id) {
+            foreach ($this->locations as $loc_key => $location) {
+                $percent = $totals[$loc_key][$label] / $totals[$loc_key][$totalPopulationCategory];
+                $this->values[$loc_key][$label] = $percent;
+            }
+        }
+
+        // Create chart
+        $this->chart = new GoogleCharts();
+        $this->applyDefaultOptions();
+        $this->chart->type("BarChart");
+        $columns = array(
+            'category' => array(
+                'label' => 'category',
+                'type' => 'string'
+            )
+        );
+        $category_names = array_keys($this->data_categories);
+        foreach ($category_names as $k => $category_name) {
+            $columns["cat_$k"] = array(
+                'label' => $category_name,
+                'type' => 'number',
+                'format' => '0.00%'
+            );
+            $columns["annotation_$k"] = array(
+                'label' => 'Annotation',
+                'type' => 'string',
+                'role' => 'annotation'
+            );
+        }
+        $this->chart->columns($columns);
 
 		// Add bars
 		foreach ($this->locations as $loc_key => $location) {
