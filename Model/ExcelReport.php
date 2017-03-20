@@ -555,12 +555,12 @@ class ExcelReport extends Report {
 				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $year) / 100;
 				
 				if ($value) {
-					$this->values[$label][$location[2]] = $value;
+					$this->values[0][$location[2]] = $value;
 				} else {
 					unset($this->locations[$loc_key]);
 				}
 				
-				$this->individual_value_formats[$label][$loc_key] = '0.0%';
+				$this->individual_value_formats[0][$loc_key] = '0.0%';
 			}
 		}
 		
