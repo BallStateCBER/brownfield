@@ -686,7 +686,7 @@ class ReportsController extends AppController {
 		$state_name = $locations[$location_count - 1][2];
 		$this->{$this->report_subclass}->locations[$location_count - 1][2] = "($state_name average)";
 
-		$this->__setDates(2011);
+		$this->__setDates(2016);
 		return $this->__getOutput();
 	}
 
