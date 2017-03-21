@@ -182,17 +182,30 @@ class TableReport extends Report {
         );
 	}
 	
-	public function population_by_sex($county = 1) {		
-		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
-			}
-		}
+	public function population_by_sex($county = 1) {
+        // Gather data
+        $totals = [];
+        foreach ($this->data_categories as $label => $category_id) {
+            foreach ($this->locations as $loc_key => $location) {
+                $value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+                $totals[$loc_key][$label] = $value;
+            }
+        }
+
+        // Calculate percent values
+        foreach ($this->data_categories as $label => $category_id) {
+            if ($label == 'Total') {
+                continue;
+            }
+            foreach ($this->locations as $loc_key => $location) {
+                $this->values[$loc_key][$label] = ($totals[$loc_key][$label] / $totals[$loc_key]['Total']) * 100;
+            }
+        }
 		
 		// Finalize
 		$this->columns = array_merge(array(''), $this->getLocationNames());
 		$this->title = "Population By Sex ($this->year)";
+		array_shift($this->data_categories);
 		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
 	}
 	

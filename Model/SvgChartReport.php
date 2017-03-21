@@ -697,14 +697,27 @@ class SvgChartReport extends Report {
 	    ));
 		
 		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
+		$totals = [];
+        foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
+                $value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $totals[$loc_key][$label] = $value;
 			}
 		}
 
+		// Calculate percent values
+        foreach ($this->data_categories as $label => $category_id) {
+            if ($label == 'Total') {
+                continue;
+            }
+            foreach ($this->locations as $loc_key => $location) {
+                $this->values[$loc_key][$label] = ($totals[$loc_key][$label] / $totals[$loc_key]['Total']);
+            }
+        }
+
 		// Add bars
-		$categories = array_keys($this->data_categories);
+        array_shift($this->data_categories);
+        $categories = array_keys($this->data_categories);
 		$all_values = array();
 		foreach ($categories as $category) {
 			$values = array();

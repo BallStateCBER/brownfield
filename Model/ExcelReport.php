@@ -469,19 +469,33 @@ class ExcelReport extends Report {
 		$this->data_precision = 2;
 	}
 	
-	public function population_by_sex($county = 1) {		
-		// Gather data
-		$year = reset($this->dates);
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year) / 100;
-				$this->individual_value_formats[$loc_key][] = '0.00%';
-			}
-		}
+	public function population_by_sex($county = 1) {
+        // Gather data
+        $year = reset($this->dates);
+        $totals = [];
+        foreach ($this->data_categories as $label => $category_id) {
+            foreach ($this->locations as $loc_key => $location) {
+                $value = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+                $totals[$loc_key][$label] = $value;
+                $this->individual_value_formats[$loc_key][] = '0.00%';
+            }
+        }
+
+        // Calculate percent values
+        foreach ($this->data_categories as $label => $category_id) {
+            if ($label == 'Total') {
+                continue;
+            }
+            foreach ($this->locations as $loc_key => $location) {
+                $this->values[$loc_key][$label] = ($totals[$loc_key][$label] / $totals[$loc_key]['Total']);
+            }
+        }
+
 		
 		// Finalize
 		$this->columns = array_merge(array(''), $this->getLocationNames());
 		$this->title = "Population By Sex ($year)";
+		array_shift($this->data_categories);
 		$this->row_labels = array_keys($this->data_categories);
 		$this->first_col_format = 'string';
 		$this->data_format = 'percent';

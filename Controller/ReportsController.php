@@ -627,13 +627,14 @@ class ReportsController extends AppController {
 
 	public function population_by_sex() {
 		$this->__setDataCategories(array(
-			'Male' => 361,
-	 		'Female' => 362
+		    'Total' => 1,
+			'Male' => 270,
+	 		'Female' => 271
 		));
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2010);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
