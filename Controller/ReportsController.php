@@ -727,14 +727,14 @@ class ReportsController extends AppController {
 		return $this->__getOutput();
 	}
 
-	public function households_with_over_65() {
+	public function households_with_over_60() {
 		$this->__setDataCategories(array(
-			'Percent of households with one or more people 65 years and over' => 439
+			'Percent of households with one or more people 60 years and over' => 6025
 		));
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2000);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

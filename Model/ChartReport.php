@@ -68,7 +68,7 @@ class ChartReport extends Report {
 				'household_size' => 'Average Household Size',
 				'households_with_minors' => 'Households With People Under 18',
 				'household_types_with_minors' => 'Households With People Under 18, Breakdown By Type',
-				'households_with_over_65' => 'Households With People Over 65',
+				'households_with_over_60' => 'Households With People Over 60',
 				'poverty' => 'Poverty',
 				'lunches' => 'Free and Reduced Lunches',
 				'disabled' => 'Disabled Population',
@@ -851,14 +851,14 @@ class ChartReport extends Report {
 		$this->y_axis->setRange(0, 1);
 	}
 	
-	public function households_with_over_65() {
+	public function households_with_over_60() {
 		App::import('Vendor', 'GoogleBarChart', array('file' => 'googlechartphplib'.DS.'lib'.DS.'GoogleBarChart.php'));
 		App::import('Vendor', 'GoogleChartTextMarker', array('file' => 'googlechartphplib'.DS.'lib'.DS.'markers'.DS.'GoogleChartTextMarker.php'));
 		
 		// Create chart
 		$this->gchart = new GoogleBarChart('bhs', $this->default_width, $this->default_height);
 		$this->gchart->setBarSpacing(30)->setGroupSpacing(0)->setBarWidth(30);
-		$this->gchart->setTitle("Households with one or more people 65 years and over ($this->year)");
+		$this->gchart->setTitle("Households with one or more people 60 years and over ($this->year)");
 		
 		// Gather data
 		$category_id = end($this->data_categories);

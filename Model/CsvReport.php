@@ -324,7 +324,7 @@ class CsvReport extends Report {
 		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
 	}
 	
-	public function households_with_over_65($county = 1) {
+	public function households_with_over_60($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
 		foreach ($this->data_categories as $label => $category_id) {
@@ -335,7 +335,7 @@ class CsvReport extends Report {
 		
 		// Finalize
 		$this->columns = array_merge(array(''), $this->getLocationNames());
-		$this->title = "Households With One or More People Under 18 Years ($year)";
+		$this->title = "Households With One or More People Over 60 Years ($year)";
 		$this->options[] = 'hide_first_col';
 		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
 	}

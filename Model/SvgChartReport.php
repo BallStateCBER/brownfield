@@ -75,7 +75,7 @@ class SvgChartReport extends Report {
 				'household_size' => 'Average Household Size',
 				'households_with_minors' => 'Households With People Under 18',
 				'household_types_with_minors' => 'Households With People Under 18, Breakdown By Type',
-				'households_with_over_65' => 'Households With People Over 65',
+				'households_with_over_60' => 'Households With People Over 60',
 				'poverty' => 'Poverty',
 				'lunches' => 'Free and Reduced Lunches',
 				'disabled' => 'Disabled Population',
@@ -1207,7 +1207,7 @@ class SvgChartReport extends Report {
 		$this->prepDataAxis('percent', 0, 'v');
 	}
 
-	public function households_with_over_65() {
+	public function households_with_over_60() {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
@@ -1267,7 +1267,7 @@ class SvgChartReport extends Report {
 			'legend' => array(
 				'position' => 'none'
 			),
-			'title' => 'Households with one or more people 65 years and over ('.$year.')'
+			'title' => 'Households with one or more people 60 years and over ('.$year.')'
 		));
 		$this->prepDataAxis('percent', 0, 'v');
 		$this->roundDataScale($all_values);

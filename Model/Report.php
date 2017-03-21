@@ -238,7 +238,7 @@ class Report extends AppModel {
 				'household_size' => 'Average Household Size',
 				'households_with_minors' => 'Households With People Under 18',
 				'household_types_with_minors' => 'Households With People Under 18, Breakdown By Type',
-				'households_with_over_65' => 'Households With People Over 65',
+				'households_with_over_60' => 'Households With People Over 60',
 				'poverty' => 'Poverty',
 				'lunches' => 'Free and Reduced Lunches',
 				'disabled' => 'Disabled Population',
