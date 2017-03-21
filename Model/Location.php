@@ -561,4 +561,38 @@ class Location extends AppModel {
 		}
 		return $result;		
 	}
+
+	public function getArea($locTypeId, $locId) {
+        if ($cache = Configure::read('cache_location_queries')) {
+            $cacheKey = "getArea($locTypeId, $locId)";
+            if ($cached = Cache::read($cacheKey)) {
+                return $cached;
+            }
+        }
+
+        $locationTypeTables = [
+            1 => 'cities',
+            2 => 'counties',
+            3 => 'states',
+            4 => 'countries',
+            5 => 'tax_districts',
+            6 => 'school_corps',
+            7 => 'townships'
+        ];
+        $retval = false;
+        if (isset($locationTypeTables[$locTypeId])) {
+            $this->setSource($locationTypeTables[$locTypeId]);
+            $result = $this->find('first', [
+                'fields' => ['square_miles'],
+                'conditions' => ['id' => $locId],
+                'contain' => false
+            ]);
+            $retval = $result['Location']['square_miles'];
+        }
+
+        if ($cache) {
+            Cache::write($cacheKey, $retval);
+        }
+        return $retval;
+    }
 }

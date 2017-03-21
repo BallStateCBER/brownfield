@@ -582,13 +582,13 @@ class ReportsController extends AppController {
 
 	public function density() {
 		$this->__setDataCategories(array(
-			'Population density' => 5721,
-			'Housing units density' => 5722
+			'Population' => 1,
+			'Housing units' => 350
 		));
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2010);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

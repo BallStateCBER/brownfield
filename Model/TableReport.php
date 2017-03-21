@@ -105,11 +105,18 @@ class TableReport extends Report {
 	
 	public function density($county = 1) {
 		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
-			}
-		}
+        $areas = [];
+        $Location = ClassRegistry::init('Location');
+        foreach ($this->locations as $loc_key => $location) {
+            $areas[$loc_key] = $Location->getArea($location[0], $location[1]);
+        }
+        foreach ($this->data_categories as $label => $category_id) {
+            foreach ($this->locations as $loc_key => $location) {
+                $value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+                $density = $value / $areas[$loc_key];
+                $this->values[$loc_key][$label] = $density;
+            }
+        }
 		
 		// Finalize
 		$this->columns = array_merge(array(''), $this->getLocationNames());

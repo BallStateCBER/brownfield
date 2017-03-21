@@ -292,11 +292,18 @@ class CsvReport extends Report {
 	public function households_with_minors($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
-			}
-		}
+        $areas = [];
+        $Location = ClassRegistry::init('Location');
+        foreach ($this->locations as $loc_key => $location) {
+            $areas[$loc_key] = $Location->getArea($location[0], $location[1]);
+        }
+        foreach ($this->data_categories as $label => $category_id) {
+            foreach ($this->locations as $loc_key => $location) {
+                $value = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+                $density = $value / $areas[$loc_key];
+                $this->values[$loc_key][$label] = $density;
+            }
+        }
 		
 		// Finalize
 		$this->columns = array_merge(array(''), $this->getLocationNames());

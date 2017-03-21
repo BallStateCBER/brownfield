@@ -454,21 +454,28 @@ class SvgChartReport extends Report {
 	    ));
 		
 		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
-			}
-		}
+        $areas = [];
+        $Location = ClassRegistry::init('Location');
+        foreach ($this->locations as $loc_key => $location) {
+            $areas[$loc_key] = $Location->getArea($location[0], $location[1]);
+        }
+        foreach ($this->data_categories as $label => $category_id) {
+            foreach ($this->locations as $loc_key => $location) {
+                $value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+                $density = $value / $areas[$loc_key];
+                $this->values[$loc_key][$label] = $density;
+            }
+        }
 		
 		// Add bars
-		$categories = array('Population density', 'Housing units density');
+		$categories = array('Population', 'Housing units');
 		foreach ($categories as $category) {
 			$values = array();
 			foreach ($this->locations as $key => $set) {
 				$values[] = $this->values[$key][$category];
 			}
 			$this->chart->addRow(array(
-				'category' => $category, 
+				'category' => $category . ' density',
 				'county_value' => $values[0],
 				'county_annotation' => number_format($values[0]),
 				'state_value' => $values[1],
