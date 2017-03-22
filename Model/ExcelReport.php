@@ -1223,8 +1223,10 @@ class ExcelReport extends Report {
 			$county_value = $this->values[0][$row_title];
 			$state_value = $this->values[1][$row_title];
 			$percent = ($county_value / $state_value) * 100;
+			$county_id = $this->locations[0][1];
+			$category_id = $this->data_categories[$row_title];
 			$rearranged_values[0][$row_title] = $county_value;
-			$rearranged_values[1][$row_title] = $this->values[0]["$row_title Rank"];
+			$rearranged_values[1][$row_title] = $this->getCountyRank($category_id, $county_id, $this->year);
 			$rearranged_values[2][$row_title] = $percent / 100;
 			$rearranged_values[3][$row_title] = $state_value;
 

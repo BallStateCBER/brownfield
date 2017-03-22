@@ -760,7 +760,8 @@ class TableReport extends Report {
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $this->values[$loc_key][$label] = $value;
 			}
 		}
 		
@@ -783,13 +784,16 @@ class TableReport extends Report {
 			'Monthly Average of Families Receiving TANF',
 			'Monthly Average of Persons Issued Food Stamps (FY)'
 		);
+
 		foreach ($row_titles as $row_title) {
 			$county_value = $this->values[0][$row_title];
 			$state_value = $this->values[1][$row_title];
 			$percent = ($county_value / $state_value) * 100;
+            $rank = null;
+            $category_id = $this->data_categories[$row_title];
 			$this->table[$row_title] = array(
 				$this->formatCell($county_value),
-				$this->values[0]["$row_title Rank"],
+                $this->getCountyRank($category_id, $county_id, $this->year),
 				$this->formatCell($percent, 'percent', 2),
 				$this->formatCell($state_value)
 			);

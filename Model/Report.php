@@ -296,4 +296,34 @@ class Report extends AppModel {
 		$all_topics = $this->getTopicList(false);
 		return $all_topics[$topic];
 	}
+
+	public function getCountyRank($categoryId, $countyId, $year) {
+        $allCountyValues = $this->Datum->find('all', [
+            'fields' => ['loc_id', 'value'],
+            'conditions' => [
+                'category_id' => $categoryId,
+                'survey_date' => $year . '0000',
+                'loc_type_id' => 2
+            ],
+            'order' => ['value ASC']
+        ]);
+        $rank = 0;
+        $skipped = 0;
+        $previousValue = null;
+        foreach ($allCountyValues as $result) {
+            if ($result['Datum']['value'] == $previousValue) {
+                $skipped++;
+            } else {
+                $rank++;
+                $rank += $skipped;
+                $skipped = 0;
+            }
+            if ($result['Datum']['loc_id'] == $countyId) {
+                return $rank;
+            }
+            $previousValue = $result['Datum']['value'];
+        }
+
+        return null;
+    }
 }

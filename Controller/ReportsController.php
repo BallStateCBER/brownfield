@@ -1066,16 +1066,13 @@ class ReportsController extends AppController {
 	public function public_assistance() {
 		$this->__setDataCategories(array(
 			'Women, Infants, and Children (WIC) Participants' => 5783,
-		 	'Women, Infants, and Children (WIC) Participants Rank' => 5784,
 		 	'Monthly Average of Families Receiving TANF' => 5785,
-		 	'Monthly Average of Families Receiving TANF Rank' => 5786,
-		 	'Monthly Average of Persons Issued Food Stamps (FY)' => 5787,
-		 	'Monthly Average of Persons Issued Food Stamps (FY) Rank' => 5788
+		 	'Monthly Average of Persons Issued Food Stamps (FY)' => 5787
 		));
 		$this->__setLocations(array(
 			array(2), array(3)
 		));
-		$this->__setDates(2008);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

@@ -809,9 +809,11 @@ class CsvReport extends Report {
 			$county_value = $this->values[0][$row_title];
 			$state_value = $this->values[1][$row_title];
 			$percent = ($county_value / $state_value) * 100;
+            $county_id = $this->locations[0][1];
+            $category_id = $this->data_categories[$row_title];
 			$this->table[$row_title] = array(
 				$this->formatCell($county_value),
-				$this->values[0]["$row_title Rank"],
+                $this->getCountyRank($category_id, $county_id, $this->year),
 				$this->formatCell($percent, 'percent', 2),
 				$this->formatCell($state_value)
 			);
