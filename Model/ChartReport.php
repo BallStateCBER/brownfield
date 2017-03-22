@@ -378,14 +378,15 @@ class ChartReport extends Report {
 		list($this->dates, $county_values) = $this->Datum->getValues($category_id, $this->locations[0][0], $this->locations[0][1], $this->dates);
 		list($this->dates, $state_values) = $this->Datum->getValues($category_id, $this->locations[1][0], $this->locations[1][1], $this->dates);
 		$date_pairs = array(
-			array(2005, 2009), 
-			array(2000, 2009), 
-			array(1995, 2009), 
-			array(1990, 2009), 
-			array(1985, 2009), 
-			array(1980, 2009), 
-			array(1975, 2009), 
-			array(1970, 2009)
+            array(2010, 2015),
+		    array(2005, 2015),
+			array(2000, 2015),
+			array(1995, 2015),
+			array(1990, 2015),
+			array(1985, 2015),
+			array(1980, 2015),
+			array(1975, 2015),
+			array(1970, 2015)
 		);
 		foreach ($date_pairs as $date_pair) {
 			$label = substr($date_pair[0], 0,4)."-".substr($date_pair[1], 0,4);
