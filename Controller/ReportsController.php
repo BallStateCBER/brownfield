@@ -805,15 +805,12 @@ class ReportsController extends AppController {
 
 	public function employment_growth() {
 		$this->__setDataCategories(array(
-			'2007-2011' => 5991,
-			'2002-2011' => 5992,
-			'1997-2011' => 5993,
-			'1992-2011' => 5994
+			'Employment' => 5815
 		));
 		$this->__setLocations(array(
 			array(2), array(3)
 		));
-		$this->__setDates(2011);
+		$this->__setDates(range(1995, 2015, 5));
 		return $this->__getOutput();
 	}
 

@@ -447,20 +447,43 @@ class CsvReport extends Report {
 	}
 	
 	public function employment_growth($county = 1) {
-		// Gather data
-		$year = reset($this->dates);
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
-			}
-		}
+        // Gather data
+        $employmentValues = array();
+        $categoryId = array_pop($this->data_categories);
+        foreach ($this->locations as $locKey => $location) {
+            $values = $this->Datum->getValues($categoryId, $location[0], $location[1], $this->dates);
+            list($this->dates, $employmentValues[$locKey]) = $values;
+        }
+
+        // Get growth values
+        $rowLabels = [];
+        $lastDate = end($this->dates);
+        $this->dates = array_reverse($this->dates);
+        foreach ($this->dates as $date) {
+            if ($date == $lastDate) {
+                continue;
+            }
+            $rowLabels[] = $rowLabel = substr($date, 0, 4) . '-' . substr($lastDate, 0, 4);
+            foreach ($this->locations as $locKey => $location) {
+                $earlierEmployment = $employmentValues[$locKey][$date];
+                $laterEmployment = $employmentValues[$locKey][$lastDate];
+                $growth = (($laterEmployment - $earlierEmployment) / $earlierEmployment) * 100;
+                $this->values[$locKey][$rowLabel] = $growth;
+            }
+        }
 		
 		// Finalize
 		$this->locations[1][2] .= '*';
-		$this->columns = array_merge(array('Period'), $this->getLocationNames());
+		$this->columns = array_merge(['Period'], $this->getLocationNames());
 		$this->title = "Employment Growth";
 		$this->footnote = '* Not seasonally adjusted';
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
+		$this->table = $this->getFormattedTableArray(
+		    $rowLabels,
+            $this->values,
+            'string',
+            'percent',
+            2
+        );
 	}
 	
 	// Variation: Array of dates instead of a year

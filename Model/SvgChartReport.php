@@ -1662,28 +1662,32 @@ class SvgChartReport extends Report {
 				'role' => 'annotation'
 			)
 	    ));
-		
-		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
-			}
-		}
-		
-		// Add bars
-		foreach ($this->data_categories as $label => $category_id) {
-			$values = array();
-			foreach ($this->locations as $key => $set) {
-				$values[] = $this->values[$key][$label];
-			}
-			$this->chart->addRow(array(
-				'category' => $label, 
-				'county_value' => $values[0] / 100,
-				'county_annotation' => sprintf("%.1f", $values[0]).'%',
-				'state_value' => $values[1] / 100,
-				'state_annotation' => sprintf("%.1f", $values[1]).'%'
-			));
-		}
+
+        // Gather data
+        $category_id = array_pop($this->data_categories);
+        list($this->dates, $county_values) = $this->Datum->getValues($category_id, $this->locations[0][0], $this->locations[0][1], $this->dates);
+        list($this->dates, $state_values) = $this->Datum->getValues($category_id, $this->locations[1][0], $this->locations[1][1], $this->dates);
+        $date_pairs = array(
+            array(2010, 2015),
+            array(2005, 2015),
+            array(2000, 2015),
+            array(1995, 2015)
+        );
+
+        // Add bars
+        foreach ($date_pairs as $date_pair) {
+            $earlier = $date_pair[0].'0000';
+            $later = $date_pair[1].'0000';
+            $county_value = ($county_values[$later] - $county_values[$earlier]) / $county_values[$earlier];
+            $state_value = ($state_values[$later] - $state_values[$earlier]) / $state_values[$earlier];
+            $this->chart->addRow(array(
+                'category' => implode('-', $date_pair),
+                'county_value' => $county_value,
+                'county_annotation' => sprintf("%.0f", $county_value * 100).'%',
+                'state_value' => $state_value,
+                'state_annotation' => sprintf("%.0f", $state_value * 100).'%'
+            ));
+        }
 		
 		// Finalize
 		$this->prepDataAxis('percent', 0);

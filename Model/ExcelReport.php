@@ -780,14 +780,41 @@ class ExcelReport extends Report {
 	}
 	
 	public function employment_growth($county = 1) {
-		// Gather data
+		/* // Gather data
 		$year = reset($this->dates);
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
 				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year) / 100;
 				$this->individual_value_formats[$loc_key][] = '0.00%';
 			}
-		}
+		}*/
+
+        // Gather data
+        $employmentValues = array();
+        $categoryId = array_pop($this->data_categories);
+        foreach ($this->locations as $locKey => $location) {
+            $values = $this->Datum->getValues($categoryId, $location[0], $location[1], $this->dates);
+            list($this->dates, $employmentValues[$locKey]) = $values;
+        }
+
+        // Get growth values
+        $this->row_labels = array();
+        $lastDate = end($this->dates);
+        $this->dates = array_reverse($this->dates);
+        foreach ($this->dates as $date) {
+            if ($date == $lastDate) {
+                continue;
+            }
+            $this->row_labels[] = $rowLabel = substr($date, 0,4)."-".substr($lastDate, 0,4);
+            foreach ($this->locations as $locKey => $location) {
+                $earlierEmployment = $employmentValues[$locKey][$date];
+                $laterEmployment = $employmentValues[$locKey][$lastDate];
+                $this->values[$locKey][$rowLabel] = (($laterEmployment - $earlierEmployment) / $earlierEmployment);
+
+                // Give percentage value proper formatting
+                $this->individual_value_formats[$locKey][] = '0.00%';
+            }
+        }
 		
 		// Finalize
 		$this->locations[1][2] .= '*';
@@ -795,7 +822,6 @@ class ExcelReport extends Report {
 		$this->title = "Employment Growth";
 		$this->footnote = '* Not seasonally adjusted';
 		$this->options[] = 'colorcode';
-		$this->row_labels = array_keys($this->data_categories);
 		$this->first_col_format = 'string';
 		$this->data_format = 'percent';
 		$this->data_precision = 2;
