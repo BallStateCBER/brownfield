@@ -1046,17 +1046,12 @@ class ReportsController extends AppController {
 
 	public function federal_spending() {
 		$this->__setLocations(array(
-			array(2), array(3), array(4)
+			array(2), array(3)
 		));
-		$county_id = $this->{$this->report_subclass}->locations[0][1];
-		$state_id = $this->Location->getStateIDFromCountyID($county_id);
-		$total_counties = $this->Location->getCountyCount($state_id);
 		$this->__setDataCategories(array(
-			'Total Federal Goverment Expenditure' => 5822,
- 	 		'% WRT state' => 5823,
- 	 		"County Rank out of $total_counties*" => 5824
+			'Total Federal Government Expenditure' => 5822
 		));
-		$this->__setDates(2008);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

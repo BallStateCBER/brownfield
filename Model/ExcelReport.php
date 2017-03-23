@@ -1191,29 +1191,46 @@ class ExcelReport extends Report {
 	public function federal_spending($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+		foreach ($this->data_categories as $label => $categoryId) {
+			foreach ($this->locations as $locKey => $location) {
+				$value = $this->Datum->getValue($categoryId, $location[0], $location[1], $year);
+			    $this->values[$locKey][$label] = $value;
 			}
 		}
 		
 		// Finalize ($this->table is being created manually because of each row having different formatting)
-		$this->columns = array_merge(array(' '), $this->getLocationNames());
+		$this->columns = array_merge([' '], $this->getLocationNames());
 		$this->title = "Federal Spending ($year)";
-		$this->footnote = "Dollar amounts are in thousands of dollars.\n* A rank of 1 corresponds to the highest-spending county in this state.";
+        $this->footnote = "Dollar amounts are in thousands of dollars.\n";
+        $this->footnote .= '* A rank of 1 corresponds to the highest-spending county in this state.';
 		$this->first_col_format = 'string';
-		$this->row_labels = array_keys($this->data_categories);
+		$this->row_labels = [
+            $label,
+            '% WRT state',
+            'County Rank out of 92*'
+        ];
+        $countyId = $this->locations[0][1];
+        $countyValue = $this->values[0][$label];
+        $stateValue = $this->values[1][$label];
+        $percent = ($countyValue / $stateValue) * 100;
 
 		// $this->values is being manipulated because of each column having different formatting
-		$rearranged_values = array();
-		foreach ($this->locations as $loc_key => $location) {
-			$rearranged_values[$loc_key][$this->row_labels[0]] = $this->formatCell($this->values[$loc_key][$this->row_labels[0]], 'currency');
-			$rearranged_values[$loc_key][$this->row_labels[1]] = $this->formatCell($this->values[$loc_key][$this->row_labels[1]], 'percent', 2);
-			$rearranged_values[$loc_key][$this->row_labels[2]] = $this->values[$loc_key][$this->row_labels[2]];
+		$rearrangedValues = [];
+		foreach ($this->locations as $locKey => $location) {
+			$total = $this->values[$locKey][$this->row_labels[0]];
+		    $rearrangedValues[$locKey][$this->row_labels[0]] = $this->formatCell($total, 'currency');
+
+            // For the state column, only add the 'total expenditure' row and skip the others
+            if ($locKey == 1) {
+                break;
+            }
+
+			$rearrangedValues[$locKey][$this->row_labels[1]] = $this->formatCell($percent, 'percent', 2);
+			$rearrangedValues[$locKey][$this->row_labels[2]] = $this->getCountyRank($categoryId, $countyId, $this->year, true);
 		}
 		// Give percentage value proper formatting
 		$this->individual_value_formats[0][1] = '0.00%';
-		$this->values = $rearranged_values;
+		$this->values = $rearrangedValues;
 	}
 	
 	public function public_assistance($county = 1) {

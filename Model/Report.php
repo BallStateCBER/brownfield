@@ -297,7 +297,7 @@ class Report extends AppModel {
 		return $all_topics[$topic];
 	}
 
-	public function getCountyRank($categoryId, $countyId, $year) {
+	public function getCountyRank($categoryId, $countyId, $year, $reverse = false) {
         $allCountyValues = $this->Datum->find('all', [
             'fields' => ['loc_id', 'value'],
             'conditions' => [
@@ -305,7 +305,9 @@ class Report extends AppModel {
                 'survey_date' => $year . '0000',
                 'loc_type_id' => 2
             ],
-            'order' => ['value ASC']
+            'order' => [
+                $reverse ? 'value DESC' : 'value ASC'
+            ]
         ]);
         $rank = 0;
         $skipped = 0;

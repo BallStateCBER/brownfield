@@ -762,21 +762,41 @@ class TableReport extends Report {
 	
 	public function federal_spending($county = 1) {		
 		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+		foreach ($this->data_categories as $label => $categoryId) {
+			foreach ($this->locations as $locKey => $location) {
+				$value = $this->Datum->getValue($categoryId, $location[0], $location[1], $this->year);
+			    $this->values[$locKey][$label] = $value;
 			}
 		}
 		
 		// Finalize ($this->table is being created manually because of each row having different formatting)
-		$this->columns = array_merge(array(' '), $this->getLocationNames());
+		$this->columns = array_merge([' '], $this->getLocationNames());
 		$this->title = "Federal Spending ($this->year)";
-		$this->footnote = "Dollar amounts are in thousands of dollars.\n* A rank of 1 corresponds to the highest-spending county in this state.";
-		$row_titles = array_keys($this->data_categories);
-		foreach ($this->locations as $loc_key => $location) {
-			$this->table[$row_titles[0]][$loc_key] = $this->formatCell($this->values[$loc_key][$row_titles[0]], 'currency');
-			$this->table[$row_titles[1]][$loc_key] = $this->formatCell($this->values[$loc_key][$row_titles[1]], 'percent', 2);
-			$this->table[$row_titles[2]][$loc_key] = $this->values[$loc_key][$row_titles[2]];
+		$this->footnote = "Dollar amounts are in thousands of dollars.\n";
+		$this->footnote .= '* A rank of 1 corresponds to the highest-spending county in this state.';
+		$rowTitles = [
+		    $label,
+            '% WRT state',
+            'County Rank out of 92*'
+        ];
+        $countyId = $this->locations[0][1];
+        $countyValue = $this->values[0][$label];
+        $stateValue = $this->values[1][$label];
+        $percent = ($countyValue / $stateValue) * 100;
+		foreach ($this->locations as $locKey => $location) {
+		    $total = $this->values[$locKey][$rowTitles[0]];
+			$this->table[$rowTitles[0]][$locKey] = $this->formatCell($total, 'currency');
+
+            // For the state column, only add the 'total expenditure' row and skip the others
+            if ($locKey == 1) {
+                $this->table[$rowTitles[1]][$locKey] = null;
+                $this->table[$rowTitles[2]][$locKey] = null;
+            } else {
+                $percent = $this->formatCell($percent, 'percent', 2);
+                $rank = $this->getCountyRank($categoryId, $countyId, $this->year, true);
+                $this->table[$rowTitles[1]][$locKey] = $percent;
+                $this->table[$rowTitles[2]][$locKey] = $rank;
+            }
 		}
 	}
 	
