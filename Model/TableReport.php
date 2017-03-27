@@ -594,14 +594,21 @@ class TableReport extends Report {
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $this->values[$loc_key][$label] = $value;
 			}
 		}
 		
 		// Finalize
-		$this->columns = array_merge(array(''), $this->getLocationNames());
+		$this->columns = array_merge([''], $this->getLocationNames());
 		$this->title = "Birth Measures ($this->year)";
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
+		$this->table = $this->getFormattedTableArray(
+		    array_keys($this->data_categories),
+            $this->values,
+            'string',
+            'percent',
+            2
+        );
 	}
 	
 	public function fertility_rates($county = 1) {

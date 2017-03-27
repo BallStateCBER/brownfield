@@ -2075,70 +2075,76 @@ class SvgChartReport extends Report {
 		$this->applyDefaultOptions();
 		$this->chart->type("BarChart");
 		$county_name = $this->locations[0][2];
-		$this->chart->columns(array(
-	        'category' => array(
+		$this->chart->columns([
+	        'category' => [
 	        	'label' => 'Timespan', 
 	        	'type' => 'string'
-			),
-	        'county_value' => array(
+			],
+	        'county_value' => [
 	        	'label' => $county_name, 
 	        	'type' => 'number',
 	        	'format' => '0.0%'
-			),
-			'county_annotation' => array(
+			],
+			'county_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			),
-			'state_value' => array(
+			],
+			'state_value' => [
 	        	'label' => 'Indiana',
 	        	'type' => 'number',
 	        	'format' => '0.0%'
-			),
-			'state_annotation' => array(
+			],
+			'state_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			)
-	    ));
+			]
+	    ]);
 		
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $this->values[$loc_key][$label] = $value;
 			}
 		}
 		
 		// Add bars
 		foreach ($this->data_categories as $label => $category_id) {
-			$values = array();
+			$values = [];
 			foreach ($this->locations as $key => $set) {
 				$values[] = $this->values[$key][$label];
 			}
-			$this->chart->addRow(array(
-				'category' => $label, 
+			if ($values[0] === false) {
+                $countyAnnotation = 'Data unavailable';
+            } else {
+                $countyAnnotation = sprintf('%.1f', $values[0]) . '%';
+			}
+			$this->chart->addRow([
+				'category' => $label,
 				'county_value' => $values[0] / 100,
-				'county_annotation' => sprintf("%.1f", $values[0]).'%',
+				'county_annotation' => $countyAnnotation,
 				'state_value' => $values[1] / 100,
-				'state_annotation' => sprintf("%.1f", $values[1]).'%',
-			));
+				'state_annotation' => sprintf('%.1f', $values[1]) . '%'
+			]);
 		}
 		
 		// Finalize
 		$this->prepDataAxis('percent', 0, 'h');
 		$years = $this->getYears();
-		$this->applyOptions(array(
-			'bar' => array(
+		$this->applyOptions([
+			'bar' => [
 				'groupWidth' => '80%'
-			),
-			'chartArea' => array(
+			],
+			'chartArea' => [
 				'height' => 250,
 				'left' => 180
-			),
+			],
 			'colors' => array_slice($this->colors, 0, 2),
 			'height' => 350,
 			'title' => "Birth Measures ($years)"
-		));
+		]);
 	}
 
 	public function fertility_rates() {

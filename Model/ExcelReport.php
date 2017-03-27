@@ -966,13 +966,18 @@ class ExcelReport extends Report {
 		$year = reset($this->dates);
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year) / 100;
-				$this->individual_value_formats[$loc_key][] = '0.0%';
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+				if ($value === false) {
+                    $this->values[$loc_key][$label] = null;
+                } else {
+                    $this->values[$loc_key][$label] = $value / 100;
+                    $this->individual_value_formats[$loc_key][] = '0.0%';
+                }
 			}
 		}
 		
 		// Finalize
-		$this->columns = array_merge(array(''), $this->getLocationNames());
+		$this->columns = array_merge([''], $this->getLocationNames());
 		$this->title = "Birth Measures ($year)";
 		$this->row_labels = array_keys($this->data_categories);
 		$this->first_col_format = 'string';
