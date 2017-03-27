@@ -761,19 +761,32 @@ class ExcelReport extends Report {
 	}
 	
 	public function share_of_establishments($county = 1) {
-		// Gather data
-		$year = reset($this->dates);
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year) / 100;
-				$this->individual_value_formats[$loc_key][] = '0.00%';
-			}
-		}
+        // Gather data
+        $year = reset($this->dates);
+        $totals = [];
+        foreach ($this->data_categories as $label => $categoryId) {
+            foreach ($this->locations as $locKey => $location) {
+                $value = $this->Datum->getValue($categoryId, $location[0], $location[1], $year);
+                $totals[$locKey][$label] = $value;
+                $this->individual_value_formats[$locKey][] = '0.00%';
+            }
+        }
+
+        // Calculate percentages
+        foreach ($this->data_categories as $label => $categoryId) {
+            if ($label == 'Total Establishments') {
+                continue;
+            }
+            foreach ($this->locations as $locKey => $location) {
+                $percent = $totals[$locKey][$label] / $totals[$locKey]['Total Establishments'];
+                $this->values[$locKey][$label] = $percent;
+            }
+        }
 		
 		// Finalize
-		$this->columns = array_merge(array('Establishment Type'), $this->getLocationNames());
+		$this->columns = array_merge(['Establishment Type'], $this->getLocationNames());
 		$this->title = "Percent Share of Total Establishments ($year)";
-		$this->row_labels = array_keys($this->data_categories);
+		$this->row_labels = array_keys(array_slice($this->data_categories, 1));
 		$this->first_col_format = 'string';
 		$this->data_format = 'percent';
 		$this->data_precision = 2;

@@ -426,16 +426,35 @@ class TableReport extends Report {
 	
 	public function share_of_establishments($county = 1) {
 		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+        $totals = [];
+		foreach ($this->data_categories as $label => $categoryId) {
+			foreach ($this->locations as $locKey => $location) {
+				$value = $this->Datum->getValue($categoryId, $location[0], $location[1], $this->year);
+                $totals[$locKey][$label] = $value;
 			}
 		}
-		
+
+		// Calculate percentages
+        foreach ($this->data_categories as $label => $categoryId) {
+            if ($label == 'Total Establishments') {
+                continue;
+            }
+            foreach ($this->locations as $locKey => $location) {
+                $percent = $totals[$locKey][$label] / $totals[$locKey]['Total Establishments'];
+                $this->values[$locKey][$label] = $percent * 100;
+            }
+        }
+
 		// Finalize
-		$this->columns = array_merge(array('Establishment Type'), $this->getLocationNames());
+		$this->columns = array_merge(['Establishment Type'], $this->getLocationNames());
 		$this->title = "Percent Share of Total Establishments ($this->year)";
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
+		$this->table = $this->getFormattedTableArray(
+		    array_slice(array_keys($this->data_categories), 1),
+            $this->values,
+            'string',
+            'percent',
+            2
+        );
 	}
 	
 	public function employment_growth($county = 1) {

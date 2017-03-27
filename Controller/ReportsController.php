@@ -793,13 +793,14 @@ class ReportsController extends AppController {
 
 	public function share_of_establishments() {
 		$this->__setDataCategories(array(
-			'Percent of establishments: Logistics (Transportation, warehousing, wholsale, retail trade)' => 5813,
-			'Percent of establishments: Manufacturing' => 5814
+            'Total Establishments' => 5810,
+		    'Establishments: Logistics (Transportation, warehousing, wholesale, retail trade)' => 5811,
+			'Establishments: Manufacturing' => 5812
 		));
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2007);
+		$this->__setDates(2014);
 		return $this->__getOutput();
 	}
 

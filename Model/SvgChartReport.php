@@ -1553,80 +1553,86 @@ class SvgChartReport extends Report {
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
 		$this->chart->type("ColumnChart");
-		$county_name = $this->locations[0][2];
-		$this->chart->columns(array(
-	        'category' => array(
+		$countyName = $this->locations[0][2];
+		$this->chart->columns([
+	        'category' => [
 	        	'label' => 'Category', 
 	        	'type' => 'string'
-			),
-	        'county_value' => array(
-	        	'label' => $county_name, 
+			],
+	        'county_value' => [
+	        	'label' => $countyName,
 	        	'type' => 'number',
 	        	'format' => '0.00%'
-			),
-			'county_annotation' => array(
+			],
+			'county_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			),
-			'state_value' => array(
+			],
+			'state_value' => [
 	        	'label' => 'Indiana', 
 	        	'type' => 'number',
 	        	'format' => '0.00%'
-			),
-			'state_annotation' => array(
+			],
+			'state_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			),
-			'country_value' => array(
+			],
+			'country_value' => [
 	        	'label' => 'United States', 
 	        	'type' => 'number',
 	        	'format' => '0.00%'
-			),
-			'country_annotation' => array(
+			],
+			'country_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			)
-	    ));
+			]
+	    ]);
 		
 		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+		$totals = [];
+        foreach ($this->data_categories as $label => $categoryId) {
+			foreach ($this->locations as $locKey => $location) {
+                $value = $this->Datum->getValue($categoryId, $location[0], $location[1], $this->year);
+			    $totals[$locKey][$label] = $value;
 			}
 		}
 		
 		// Add bars
-		foreach ($this->data_categories as $label => $category_id) {
-			$values = array();
-			foreach ($this->locations as $key => $set) {
-				$values[] = $this->values[$key][$label];
+		foreach ($this->data_categories as $label => $categoryId) {
+            if ($label == 'Total Establishments') {
+                continue;
+            }
+
+            $values = [];
+			foreach ($this->locations as $locKey => $set) {
+			    $values[] = $totals[$locKey][$label] / $totals[$locKey]['Total Establishments'];
 			}
-			$short_label = '';
-			foreach (array('Logistics', 'Manufacturing') as $abbrev_category) {
-				if (stripos($label, $abbrev_category)) {
-					$short_label = $abbrev_category;
+			$shortLabel = '';
+			foreach (['Logistics', 'Manufacturing'] as $abbrevCategory) {
+				if (stripos($label, $abbrevCategory)) {
+					$shortLabel = $abbrevCategory;
 				}
 			} 
-			$this->chart->addRow(array(
-				'category' => $short_label, 
-				'county_value' => $values[0] / 100,
-				'county_annotation' => sprintf("%.2f", $values[0]).'%',
-				'state_value' => $values[1] / 100,
-				'state_annotation' => sprintf("%.2f", $values[1]).'%',
-				'country_value' => $values[2] / 100,
-				'country_annotation' => sprintf("%.2f", $values[2]).'%'
-			));
+			$this->chart->addRow([
+				'category' => $shortLabel,
+				'county_value' => $values[0],
+				'county_annotation' => sprintf('%.2f', $values[0] * 100) . '%',
+				'state_value' => $values[1],
+				'state_annotation' => sprintf('%.2f', $values[1] * 100) . '%',
+				'country_value' => $values[2],
+				'country_annotation' => sprintf('%.2f', $values[2] * 100) . '%'
+			]);
 		}
 		
 		// Finalize
 		$year = $this->getYears();
-		$this->applyOptions(array(
+		$this->applyOptions([
 			'colors' => array_slice($this->colors, 0, 3),
-			'title' => 'Percent Share of Total Establishments ('.$year.')'
-		));
+			'title' => 'Percent Share of Total Establishments (' . $year . ')'
+		]);
 		$this->prepDataAxis('percent', 0, 'v');
 	}
 
