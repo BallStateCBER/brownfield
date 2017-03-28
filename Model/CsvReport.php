@@ -779,9 +779,15 @@ class CsvReport extends Report {
 		}
 		
 		// Finalize
-		$this->columns = array_merge(array(''), $this->getLocationNames());
-		$this->title = "Average Number of Unhealthy\nDays Per Month ($this->years_label)";
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'number', 2);
+		$this->columns = array_merge([''], $this->getLocationNames());
+		$this->title = "Average Number of Unhealthy\nDays Per Month ($this->year)";
+		$this->table = $this->getFormattedTableArray(
+		    array_keys($this->data_categories),
+            $this->values,
+            'string',
+            'number',
+            2
+        );
 	}
 	
 	public function death_rate_by_cause($county = 1) {

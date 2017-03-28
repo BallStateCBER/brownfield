@@ -1155,8 +1155,8 @@ class ExcelReport extends Report {
 		}
 		
 		// Finalize
-		$this->columns = array_merge(array(''), $this->getLocationNames());
-		$this->title = "Average Number of Unhealthy Days Per Month ($this->years_label)";
+		$this->columns = array_merge([''], $this->getLocationNames());
+		$this->title = "Average Number of Unhealthy Days Per Month ($this->year)";
 		$this->row_labels = array_keys($this->data_categories);
 		$this->first_col_format = 'string';
 		$this->data_format = 'number';

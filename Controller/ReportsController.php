@@ -985,14 +985,13 @@ class ReportsController extends AppController {
 
 	public function unhealthy_days() {
 		$this->__setDataCategories(array(
-			'Avg number of physically unhealthy days per month (2004 to 2010)' => 5999,
-			'Avg number of mentally unhealthy days per month (2004 to 2010)' => 6000
+			'Avg number of physically unhealthy days per month' => 5999,
+			'Avg number of mentally unhealthy days per month' => 6000
 		));
 		$this->__setLocations(array(
 			array(2), array(3)
 		));
-		$this->__setDates(2010);
-		$this->{$this->report_subclass}->years_label = '2004-2010';
+		$this->__setDates(2016);
 		return $this->__getOutput();
 	}
 

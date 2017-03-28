@@ -2694,44 +2694,45 @@ class SvgChartReport extends Report {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
-		$this->chart->type("ColumnChart");
+		$this->chart->type('ColumnChart');
 		$county_name = $this->locations[0][2];
-		$this->chart->columns(array(
-	        'category' => array(
+		$this->chart->columns([
+	        'category' => [
 	        	'label' => 'Sex', 
 	        	'type' => 'string'
-			),
-	        'county_value' => array(
+			],
+	        'county_value' => [
 	        	'label' => $county_name, 
 	        	'type' => 'number'
-			),
-			'county_annotation' => array(
+			],
+			'county_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			),
-			'state_value' => array(
+			],
+			'state_value' => [
 	        	'label' => 'Indiana', 
 	        	'type' => 'number'
-			),
-			'state_annotation' => array(
+			],
+			'state_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			)
-	    ));
+			]
+	    ]);
 		
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $this->values[$loc_key][$label] = $value;
 			}
 		}
 		
 		// Add bars
 		$categories = array_keys($this->data_categories);
 		foreach ($categories as $category) {
-			$values = array();
+			$values = [];
 			foreach ($this->locations as $key => $set) {
 				$values[] = $this->values[$key][$category];
 			}
@@ -2740,21 +2741,21 @@ class SvgChartReport extends Report {
 			} else {
 				$label = 'Mentally Unhealthy';
 			}
-			$this->chart->addRow(array(
+			$this->chart->addRow([
 				'category' => $label, 
 				'county_value' => $values[0],
-				'county_annotation' => sprintf("%.1f", $values[0]),
+				'county_annotation' => sprintf('%.1f', $values[0]),
 				'state_value' => $values[1],
-				'state_annotation' => sprintf("%.1f", $values[1])
-			));
+				'state_annotation' => sprintf('%.1f', $values[1])
+			]);
 		}
 		
 		// Finalize
 		$year = $this->getYears();
-		$this->applyOptions(array(
+		$this->applyOptions([
 			'colors' => array_slice($this->colors, 0, 2),
-			'title' => 'Average Number of Unhealthy Days Per Month (2004 - '.$year.')'
-		));
+			'title' => "Average Number of Unhealthy Days Per Month ($year)"
+		]);
 	}
 
 	public function cancer_death_and_incidence_rates() {
