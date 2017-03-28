@@ -915,13 +915,14 @@ class ReportsController extends AppController {
 
 	public function deaths_by_sex() {
 		$this->__setDataCategories(array(
-			'Male' => 5856, // percent of deaths
-			'Female' => 5857 // percent of deaths
+            'Total' => 5853,
+            'Male' => 5854,
+            'Female' => 5855
 		));
 		$this->__setLocations(array(
 			array(2), array(3)
 		));
-		$this->__setDates(2007);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

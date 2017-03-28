@@ -637,18 +637,37 @@ class CsvReport extends Report {
 	}
 	
 	public function deaths_by_sex($county = 1) {
-		// Gather data
-		$year = reset($this->dates);
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
-			}
-		}
+        // Gather data
+        $totals = [];
+        $year = reset($this->dates);
+        foreach ($this->locations as $locKey => $location) {
+            foreach ($this->data_categories as $category => $categoryId) {
+                $value = $this->Datum->getValue($categoryId, $location[0], $location[1], $year);
+                $totals[$locKey][$category] = $value;
+            }
+        }
+
+        // Calculate percentages
+        foreach ($this->locations as $locKey => $location) {
+            foreach ($this->data_categories as $category => $categoryId) {
+                if ($category == 'Total') {
+                    continue;
+                }
+                $percent = $totals[$locKey][$category] / $totals[$locKey]['Total'];
+                $this->values[$locKey][$category] = $percent * 100;
+            }
+        }
 		
 		// Finalize
-		$this->columns = array_merge(array(''), $this->getLocationNames());
+		$this->columns = array_merge([''], $this->getLocationNames());
 		$this->title = "Deaths By Sex ($year)";
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
+		$this->table = $this->getFormattedTableArray(
+		    array_keys(array_slice($this->data_categories, 1)),
+            $this->values,
+            'string',
+            'percent',
+            2
+        );
 	}
 	
 	public function death_rate($county = 1) {

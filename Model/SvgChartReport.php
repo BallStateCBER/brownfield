@@ -2217,45 +2217,56 @@ class SvgChartReport extends Report {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
-		$this->chart->type("BarChart");		
-		$columns = array(
-	        'category' => array(
+		$this->chart->type('BarChart');
+		$columns = [
+	        'category' => [
 	        	'label' => 'category', 
 	        	'type' => 'string'
-			)
-	    );
-		$category_names = array_keys($this->data_categories);
-		foreach ($category_names as $k => $category_name) {
-	        $columns["cat_$k"] = array(
-	        	'label' => $category_name.' Deaths', 
+			]
+	    ];
+		$categoryNames = array_keys(array_slice($this->data_categories, 1));
+		foreach ($categoryNames as $k => $categoryName) {
+	        $columns["cat_$k"] = [
+	        	'label' => "$categoryName Deaths",
 	        	'type' => 'number',
 	        	'format' => '0.00%'
-			);
-			$columns["annotation_$k"] = array(
+			];
+			$columns["annotation_$k"] = [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			);
+			];
 		}
 		$this->chart->columns($columns);
 		
 		// Gather data
-		foreach ($this->locations as $loc_key => $location) {
-			foreach ($this->data_categories as $category => $category_id) {
-				$this->values[$category][$loc_key] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+		$totals = [];
+        foreach ($this->locations as $locKey => $location) {
+			foreach ($this->data_categories as $category => $categoryId) {
+				$value = $this->Datum->getValue($categoryId, $location[0], $location[1], $this->year);
+                $totals[$locKey][$category] = $value;
 			}
 		}
 
+		// Calculate percentages
+        foreach ($this->locations as $locKey => $location) {
+            foreach ($this->data_categories as $category => $categoryId) {
+                if ($category == 'Total') {
+                    continue;
+                }
+                $this->values[$locKey][$category] = $totals[$locKey][$category] / $totals[$locKey]['Total'];
+            }
+        }
+
 		// Add bars
-		foreach ($this->locations as $loc_key => $location) {
-			$row = array(
-				'category' => $location[2]
-			);
+		array_shift($this->data_categories);
+        foreach ($this->locations as $locKey => $location) {
+			$row = ['category' => $location[2]];
 			$k = 0;
-			foreach ($this->data_categories as $category => $category_id) {
-				$value = $this->values[$category][$loc_key];
-				$row["cat_$k"] = $value / 100;
-				$row["annotation_$k"] = sprintf("%.1f", $value).'%';
+			foreach ($categoryNames as $category) {
+				$value = $this->values[$locKey][$category];
+				$row["cat_$k"] = $value;
+				$row["annotation_$k"] = sprintf('%.1f', $value * 100) . '%';
 				$k++;
 			}
 			$this->chart->addRow($row);
@@ -2263,16 +2274,16 @@ class SvgChartReport extends Report {
 		
 		// Finalize
 		$year = $this->getYears();
-		$this->applyOptions(array(
+		$this->applyOptions([
 			'colors' => array_slice($this->colors, 0, 2),
-			'hAxis' => array(
-				'viewWindow' => array(
+			'hAxis' => [
+				'viewWindow' => [
 					'max' => 1
-				)
-			),
+				]
+			],
 			'isStacked' => true,
-			'title' => 'Deaths By Sex ('.$year.')'
-		));
+			'title' => "Deaths By Sex ($year)"
+		]);
 		$this->prepDataAxis('percent', 0, 'h');
 	}
 
