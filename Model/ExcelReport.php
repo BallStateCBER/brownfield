@@ -1131,13 +1131,13 @@ class ExcelReport extends Report {
 		}
 		
 		// Finalize
-		$this->columns = array_merge(array(''), $this->getLocationNames());
-		$this->title = "Self-rated Health Status: Fair/Poor ($this->years_label)";
+		$this->columns = array_merge([''], $this->getLocationNames());
+		$this->title = "Self-rated Health Status: Fair/Poor ($this->year)";
 		$this->options[] = 'hide_first_col';
 		$this->row_labels = array_keys($this->data_categories);
 		$this->first_col_format = 'string';
 		$this->data_format = 'percent';
-		$this->data_precision = 2;
+		$this->data_precision = 1;
 	}
 	
 	public function unhealthy_days($county = 1) {

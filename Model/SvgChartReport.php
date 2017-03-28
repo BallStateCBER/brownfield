@@ -2635,45 +2635,46 @@ class SvgChartReport extends Report {
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
 		$this->chart->type("ColumnChart");
-		$this->chart->columns(array(
-	        'category' => array(
+		$this->chart->columns([
+	        'category' => [
 	        	'label' => 'Location',
 	        	'type' => 'string'
-			),
-	        'value' => array(
+			],
+	        'value' => [
 	        	'label' => 'Percent',
 	        	'type' => 'number',
 	        	'format' => '0.00%'
-			),
-			'annotation' => array(
+			],
+			'annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			),
-			'colors' => array(
+			],
+			'colors' => [
 				'label' => 'Colors',
 				'type' => 'string',
 				'role' => 'style'
-			)
-	    ));
+			]
+	    ]);
 		
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $this->values[$loc_key][$label] = $value;
 			}
 		}
 		
 		// Add bars
 		$i = 0;
 		foreach ($this->locations as $loc_key => $location) {
-			$row = array(
+			$row = [
 				'category' => $location[2]
-			);
+			];
 			foreach ($this->data_categories as $label => $category_id) {
 				$value = $this->values[$loc_key][$label];
 				$row['value'] = $value / 100;
-				$row['annotation'] = sprintf("%.2f", $value).'%';
+				$row['annotation'] = sprintf('%.1f', $value) . '%';
 			}
 			$row['colors'] = $this->colors[$i];
 			$this->chart->addRow($row);
@@ -2682,12 +2683,10 @@ class SvgChartReport extends Report {
 		
 		// Finalize
 		$year = $this->getYears();
-		$this->applyOptions(array(
-			'legend' => array(
-				'position' => 'none'
-			),
-			'title' => 'Self-rated Health Status: Fair/Poor ('.$year.')'
-		));
+		$this->applyOptions([
+			'legend' => ['position' => 'none'],
+			'title' => "Self-rated Health Status: Fair/Poor ($year)"
+		]);
 		$this->prepDataAxis('percent', 0, 'v');
 	}
 

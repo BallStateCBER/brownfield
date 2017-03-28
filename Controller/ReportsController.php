@@ -974,13 +974,12 @@ class ReportsController extends AppController {
 
 	public function self_rated_poor_health() {
 		$this->__setDataCategories(array(
-			'Self-Rated Health Status: Fair/Poor (\'04-\'10)' => 5997 //percent
+			'Self-Rated Health Status: Fair/Poor' => 5997 //percent
 		));
 		$this->__setLocations(array(
 			array(2), array(3)
 		));
-		$this->__setDates(2010);
-		$this->{$this->report_subclass}->years_label = '2004-2010';
+		$this->__setDates(2016);
 		return $this->__getOutput();
 	}
 

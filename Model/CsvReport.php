@@ -752,10 +752,16 @@ class CsvReport extends Report {
 		}
 		
 		// Finalize
-		$this->columns = array_merge(array(''), $this->getLocationNames());
-		$this->title = "Self-rated Health Status: Fair/Poor ($this->years_label)";
+		$this->columns = array_merge([''], $this->getLocationNames());
+		$this->title = "Self-rated Health Status: Fair/Poor ($this->year)";
 		$this->options[] = 'hide_first_col';
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'percent', 2);
+		$this->table = $this->getFormattedTableArray(
+		    array_keys($this->data_categories),
+            $this->values,
+            'string',
+            'percent',
+            1
+        );
 	}
 	
 	public function unhealthy_days($county = 1) {
