@@ -1203,20 +1203,35 @@ class ExcelReport extends Report {
 	public function lung_diseases($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
-			}
-		}
+        $totals = [];
+        foreach ($this->data_categories as $label => $category_id) {
+            foreach ($this->locations as $loc_key => $location) {
+                $value = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+                $totals[$loc_key][$label] = $value;
+            }
+        }
+
+        // Calculate rate per 1,000 people
+        foreach ($this->data_categories as $label => $category_id) {
+            if ($label == 'Population') {
+                continue;
+            }
+            foreach ($this->locations as $loc_key => $location) {
+                $population = $totals[$loc_key]['Population'];
+                $incidences = $totals[$loc_key][$label];
+                $rate = $incidences / ($population / 1000);
+                $this->values[$loc_key][$label] = round($rate, 2);
+            }
+        }
 		
 		// Finalize
-		$this->columns = array_merge(array('Lung Disease'), $this->getLocationNames());
+		$this->columns = array_merge(['Lung Disease'], $this->getLocationNames());
 		$this->title = "Lung Disease Incidence Rates* ($year)";
-		$this->footnote = "* Per 1,000 Population";
-		$this->row_labels = array_keys($this->data_categories);
+		$this->footnote = '* Per 1,000 Population';
+		$this->row_labels = array_keys(array_slice($this->data_categories, 1));
 		$this->first_col_format = 'string';
 		$this->data_format = 'number';
-		$this->data_precision = 1;
+		$this->data_precision = 2;
 	}
 	
 	public function federal_spending($county = 1) {

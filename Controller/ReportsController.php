@@ -1033,16 +1033,16 @@ class ReportsController extends AppController {
 
 	public function lung_diseases() {
 		$this->__setDataCategories(array(
-			'Total Asthma' => 5834,
-			'Pediatric Asthma' => 5835,
-			'Adult Asthma' => 5836,
-			'Chronic Bronchitis' => 5837,
-			'Emphysema' => 5838
+		    'Population' => 1,
+            'Pediatric Asthma' => 5930,
+            'Adult Asthma' => 5931,
+            'Chronic Obstructive Pulmonary Disease' => 6028,
+            'Lung Cancer' => 6029
 		));
 		$this->__setLocations(array(
 			array(2), array(3)
 		));
-		$this->__setDates(2010);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

@@ -2845,68 +2845,84 @@ class SvgChartReport extends Report {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
-		$this->chart->type("BarChart");
+		$this->chart->type('BarChart');
 		$county_name = $this->locations[0][2];
-		$this->chart->columns(array(
-	        'category' => array(
+		$this->chart->columns([
+	        'category' => [
 	        	'label' => 'Category', 
 	        	'type' => 'string'
-			),
-	        'county_value' => array(
+			],
+	        'county_value' => [
 	        	'label' => $county_name, 
 	        	'type' => 'number',
 	        	'format' => '#.##'
-			),
-			'county_annotation' => array(
+			],
+			'county_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			),
-			'state_value' => array(
+			],
+			'state_value' => [
 	        	'label' => 'Indiana',
 	        	'type' => 'number',
 	        	'format' => '#.##'
-			),
-			'state_annotation' => array(
+			],
+			'state_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			)
-	    ));
+			]
+	    ]);
 		
 		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
+		$totals = [];
+        foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+                $totals[$loc_key][$label] = $value;
 			}
 		}
-		
+
+		// Calculate rate per 1,000 people
+        foreach ($this->data_categories as $label => $category_id) {
+            if ($label == 'Population') {
+                continue;
+            }
+            foreach ($this->locations as $loc_key => $location) {
+                $population = $totals[$loc_key]['Population'];
+                $incidences = $totals[$loc_key][$label];
+                $rate = $incidences / ($population / 1000);
+                $this->values[$loc_key][$label] = $rate;
+            }
+        }
+
 		// Add bars
+        array_shift($this->data_categories);
 		foreach ($this->data_categories as $label => $category_id) {
-			$values = array();
+			$values = [];
 			foreach ($this->locations as $key => $set) {
 				$values[] = $this->values[$key][$label];
 			}
-			$this->chart->addRow(array(
+			$this->chart->addRow([
 				'category' => $label, 
 				'county_value' => $values[0],
-				'county_annotation' => sprintf("%.2f", $values[0]),
+				'county_annotation' => sprintf('%.2f', $values[0]),
 				'state_value' => $values[1],
-				'state_annotation' => sprintf("%.2f", $values[1])
-			));
+				'state_annotation' => sprintf('%.2f', $values[1])
+			]);
 		}
 		
 		// Finalize
 		$years = $this->getYears();
-		$this->applyOptions(array(
-			'chartArea' => array(
+		$this->applyOptions([
+			'chartArea' => [
 				'height' => 320,
 				'left' => 150
-			),
+			],
 			'colors' => array_slice($this->colors, 0, 2),
 			'height' => 420,
 			'title' => "Lung Disease Incidence Rates Per 1,000 Population ($years)"
-		));
+		]);
 	}
 
 	public function grants_awarded() {
