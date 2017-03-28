@@ -188,11 +188,11 @@ class Report extends AppModel {
 			case 'year':
 				return substr($value, 0, 4);
 			case 'number':
-				return ($value < 1 ? '0.' : '').number_format($value, $precision);
+				return number_format($value, $precision);
 			case 'percent':
 				return number_format($value, $precision).'%';
 			case 'currency':
-				return '$'.($value < 1 ? '0.' : '').number_format($value, $precision);
+				return '$' . number_format($value, $precision);
 			case 'string':
 			default:
 				return $value;
