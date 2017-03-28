@@ -868,7 +868,7 @@ class ReportsController extends AppController {
 		$this->__setLocations(array(
 			array(2), array(3)
 		));
-		$this->__setDates(2006);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
