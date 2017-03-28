@@ -30,16 +30,12 @@
  */
 class ReportsController extends AppController {
 	public $name = 'Reports';
-	public $components = array(
-		'RequestHandler'
-	);
-	public $helpers = array(
-		'GoogleChart'
-	);
-	public $uses = array(
+	public $components = ['RequestHandler'];
+	public $helpers = ['GoogleChart'];
+	public $uses = [
 		'Report',
 		'Location'
-	);
+	];
 
 	public $type; //chart, table, source, csv, etc.
 	public $report_subclass; // ChartReport, TableReport, etc.
@@ -49,37 +45,44 @@ class ReportsController extends AppController {
 
 	public $cache_reports = false;
 
-	public function beforeFilter() {
+	public function beforeFilter()
+    {
 		parent::beforeFilter();
 		$this->cache_reports = Configure::read('cache_reports');
 	}
 
 	// These are the report subtypes that have topic methods, e.g. ChartReport::population()
-	public function __getReportSubclassesWithTopicMethods() {
-		return array('ChartReport', 'TableReport', 'CsvReport', 'ExcelReport');
+	public function __getReportSubclassesWithTopicMethods()
+    {
+		return ['ChartReport', 'TableReport', 'CsvReport', 'ExcelReport'];
 	}
 
-	public function getTopicList($categorized = true) {
+	public function getTopicList($categorized = true)
+    {
 		return $this->Report->getTopicList($categorized);
 	}
 
-	public function isTopic($topic) {
+	public function isTopic($topic)
+    {
 		return $this->Report->isTopic($topic);
 	}
 
-	public function is_caching_enabled() {
+	public function is_caching_enabled()
+    {
 		return $this->cache_reports;
 	}
 
 	// Used for determining the filename (excluding extension) for spreadsheet downloads
-	public function __getFilename() {
+	public function __getFilename()
+    {
 		$state = strtolower($this->Location->getStateAbbreviation($this->state_id));
 		$county = $this->Location->getCountySimplifiedName($this->county_id, $this->state_id);
 		return "{$state}_{$county}_{$this->topic}";
 	}
 
 	// Used by CSV reports, which include a list of sources
-	public function __getSources() {
+	public function __getSources()
+    {
 		// Fake a requestAction
 		$requested_placeholder = isset($this->params['requested']) ? $this->params['requested'] : null;
 		$this->params['requested'] = true;
@@ -94,7 +97,8 @@ class ReportsController extends AppController {
 
 	/* Checks cache for the report and if none is found, generates/caches.
 	 * Returns 0 if a report exists, or a non-zero error code if it doesn't. */
-	public function getStatus($type, $topic, $state, $county) {
+	public function getStatus($type, $topic, $state, $county)
+    {
 		// Set required variables and set up $this->{$this->report_subclass} object
 		$this->type = $type;
 		$this->topic = $topic;
@@ -112,16 +116,16 @@ class ReportsController extends AppController {
 			return $this->{$this->report_subclass}->error;
 		}
 		$this->layout = 'ajax';
-		$verbose_error_codes = array(
+		$verbose_error_codes = [
 			0 => 'No error',
-			1 => ucwords($type).' not applicable for this topic',
+			1 => ucwords($type) . ' not applicable for this topic',
 			2 => 'Required data not available',
 			3 => 'Error caching',
 			4 => 'Unknown topic',
 			5 => isset($this->{$this->report_subclass}->error_message) ?
                 $this->{$this->report_subclass}->error_message :
                 'Unknown error'
-		);
+		];
 		$error_code = $this->{$this->report_subclass}->error;
 		if ($error_code) {
 			$message = $error_code . ': ' . $verbose_error_codes[$error_code];
@@ -134,7 +138,8 @@ class ReportsController extends AppController {
 
 	/* Takes the serialized and cached data and places it where view() expects it to be.
 	 * Returns TRUE if a cached report (or cached error code) was found, FALSE otherwise. */
-	public function __loadFromCache($type, $topic, $county_id) {
+	public function __loadFromCache($type, $topic, $county_id)
+    {
 		// If report caching is disabled
 		if (! $this->cache_reports) {
 			return false;
@@ -165,7 +170,8 @@ class ReportsController extends AppController {
 		return true;
 	}
 
-	public function __generateReport() {
+	public function __generateReport()
+    {
 		// Make sure method matching name of topic exists in this controller
 		if (! method_exists($this, $this->topic)) {
 			$this->{$this->report_subclass}->error = 4; // Unknown topic
@@ -193,8 +199,8 @@ class ReportsController extends AppController {
 	}
 
 	// Requires that $this->type, $this->topic, $this->state_id, $this->county_id all be set
-	public function __initializeSubclass() {
-
+	public function __initializeSubclass()
+    {
 		// Determine the name of the type-specific model used for this report
 		switch ($this->type) {
 			case 'excel2007':	// derived from the ExcelReport model
@@ -205,7 +211,7 @@ class ReportsController extends AppController {
 			case 'svg_chart':
 			case 'table':
 			case 'csv':
-				$this->report_subclass = Inflector::camelize($this->type).'Report';
+				$this->report_subclass = Inflector::camelize($this->type) . 'Report';
 				break;
 			default:
 				// Exit immediately if using a special outlier type
@@ -235,45 +241,47 @@ class ReportsController extends AppController {
 		}
 	}
 
-	public function __loadHelpersAndVendors($type) {
+	public function __loadHelpersAndVendors($type)
+    {
 		// Load helpers and vendor files specific to the Report type
 		switch ($type) {
 			case 'chart':
 				$this->helpers[] = 'GoogleChart';
-				App::import('Vendor', 'GoogleChart', array(
+				App::import('Vendor', 'GoogleChart', [
 				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'GoogleChart.php'
-                ));
-				App::import('Vendor', 'GooglePieChart', array(
+                ]);
+				App::import('Vendor', 'GooglePieChart', [
 				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'GooglePieChart.php'
-                ));
-				App::import('Vendor', 'GoogleBarChart', array(
+                ]);
+				App::import('Vendor', 'GoogleBarChart', [
 				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'GoogleBarChart.php'
-                ));
-				App::import('Vendor', 'GoogleChartTextMarker', array(
+                ]);
+				App::import('Vendor', 'GoogleChartTextMarker', [
 				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'markers' . DS . 'GoogleChartTextMarker.php'
-                ));
-				App::import('Vendor', 'GoogleChartRangeMarker', array(
+                ]);
+				App::import('Vendor', 'GoogleChartRangeMarker', [
 				    'file' => 'googlechartphplib' . DS . 'lib' . DS . 'markers' . DS . 'GoogleChartRangeMarker.php'
-                ));
+                ]);
 				break;
 			case 'svg_chart':
 				App::uses('GoogleCharts', 'GoogleCharts.Lib');
 				break;
 			case 'excel2007':
-                App::import('Vendor', 'PHPExcel', array(
+                App::import('Vendor', 'PHPExcel', [
                     'file' => 'PHPExcel-1.8' . DS . 'Classes' . DS . 'PHPExcel.php'
-                ));
-				App::import('Vendor', 'PHPExcelWriter', array(
+                ]);
+				App::import('Vendor', 'PHPExcelWriter', [
 				    'file' => 'PHPExcel-1.8' . DS . 'Classes' . DS . 'PHPExcel' . DS . 'Writer' . DS . 'Excel2007.php'
-                ));
-				App::import('Vendor', 'PHPExcelAdvancedValueBinder', array(
+                ]);
+				App::import('Vendor', 'PHPExcelAdvancedValueBinder', [
 				    'file' => 'PHPExcel-1.8' . DS . 'Classes' . DS . 'Cell' . DS . 'AdvancedValueBinder.php'
-                ));
+                ]);
 				break;
 		}
 	}
 
-	public function __setDataCategories($data_categories) {
+	public function __setDataCategories($data_categories)
+    {
 		$this->{$this->report_subclass}->data_categories = $data_categories;
 	}
 
@@ -282,7 +290,8 @@ class ReportsController extends AppController {
 	 * 		location type ID (required)
 	 * 		location ID (optional, the selected county, state, and country are assumed if blank)
 	 * 		location name (optional, will be populated with the default name if no value is provided) */
-	public function __setLocations($locations) {
+	public function __setLocations($locations)
+    {
 		foreach ($locations as $lkey => $location) {
 			// If location ID is not set
 			if (! isset($location[1])) {
@@ -317,26 +326,29 @@ class ReportsController extends AppController {
 		$this->{$this->report_subclass}->locations = $locations;
 	}
 
-	public function __setDates($dates) {
+	public function __setDates($dates)
+    {
 		if (empty($dates)) {
 			return;
 		}
 		if (is_array($dates)) {
 			$this->{$this->report_subclass}->dates = $dates;
 		} else {
-			$this->{$this->report_subclass}->dates = array($dates);
+			$this->{$this->report_subclass}->dates = [$dates];
 
 			// The 'year' attribute is curretly being phased out in favor of just using 'dates'
 			$this->{$this->report_subclass}->year = $dates;
 		}
 	}
 
-	public function __getOutput() {
+	public function __getOutput()
+    {
 		return $this->{$this->report_subclass}->getOutput($this->topic);
 	}
 
 	// Renders an appropriate view (or returns a value if requestAction() is being used)
-	public function switchboard($type, $topic, $state, $county) {
+	public function switchboard($type, $topic, $state, $county)
+    {
 		// Allow manual override of $this->cache_reports value
 		if (isset($_GET['reportcache'])) {
 			$this->cache_reports = $_GET['reportcache'];
@@ -383,7 +395,7 @@ class ReportsController extends AppController {
 				} else {
 					$error_message .= '<p>Unfortunately, no other details are available for this error.</p>';
 				}
-				$this->set(array('message' => $error_message));
+				$this->set(['message' => $error_message]);
 				$this->render('/Pages/message');
 			default:
 				// no error
@@ -395,9 +407,10 @@ class ReportsController extends AppController {
 	}
 
 	// Assumes that $this->{$this->report_subclass} is already populated with the appropriate data
-	public function view($type) {
+	public function view($type)
+    {
 		if ($type == 'chart') {
-			$this->set(array('chart' => $this->ChartReport->gchart));
+			$this->set(['chart' => $this->ChartReport->gchart]);
 			if (isset($_GET['debug'])) {
 				echo '<pre>Values: ' . var_export($this->ChartReport->values, true) . '</pre>';
 				echo '<pre>$this->chart: ' . print_r($this->ChartReport->gchart, true) . '</pre>';
@@ -410,14 +423,14 @@ class ReportsController extends AppController {
 			return $this->SvgChartReport->chart;
 		} elseif ($type == 'table') {
 			// This set of values is requested in views/elements/reports/table
-			$table_vars = array(
+			$table_vars = [
 				'title' => $this->TableReport->title,
 				'columns' => $this->TableReport->columns,
 				'table' => $this->TableReport->table,
 				'footnote' => $this->TableReport->footnote,
 				'options' => $this->TableReport->options,
 				'error' => $this->TableReport->error
-			);
+			];
 			if (isset($this->params['named']['table_version']) && $this->params['named']['table_version'] == 2) {
 				return $table_vars;
 			}
@@ -433,14 +446,12 @@ class ReportsController extends AppController {
 			if (isset($this->params['requested'])) {
 				return $arranged_sources;
 			} else {
-				$this->set(array(
-					'sources' => $arranged_sources
-				));
+				$this->set(['sources' => $arranged_sources]);
 				$this->render('source');
 			}
 		} elseif ($type == 'csv') {
 			$filename = $this->__getFilename();
-			$this->set(array(
+			$this->set([
 				'filename' => $filename,
 				'sources' => $this->__getSources(),
 				'title' => $this->CsvReport->title,
@@ -448,32 +459,32 @@ class ReportsController extends AppController {
 				'table' => $this->CsvReport->table,
 				'footnote' => $this->CsvReport->footnote,
 				'options' => $this->CsvReport->options
-			));
+			]);
 			if (isset($_GET['debug'])) {
 				$this->layout = 'ajax';
 			} else {
 				$this->layout = 'reports/csv';
-				$this->response->type(array('csv' => 'text/csv'));
+				$this->response->type(['csv' => 'text/csv']);
 				$this->response->type('csv');
 				$this->response->download("$filename.csv");
 			}
 			$this->render('csv');
 		} elseif ($type == 'excel2007') {
 			$filename = $this->__getFilename();
-			$this->set(array(
+			$this->set([
 				'filename' => $filename,
 				'mockup' => $this->ExcelReport->mockup,
 				'output_type' => $this->ExcelReport->output_type,
 				'values' => $this->ExcelReport->values,
 				'objPHPExcel' => $this->ExcelReport->objPHPExcel
-			));
+			]);
 			if (isset($_GET['debug'])) {
 				$this->layout = 'ajax';
 			} else {
 				$this->layout = "reports/$type";
-                $this->response->type(array(
+                $this->response->type([
                     'excel2007' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                ));
+                ]);
                 $this->response->type('excel2007');
                 $this->response->download("$filename.xlsx");
 			}
@@ -482,56 +493,62 @@ class ReportsController extends AppController {
 	}
 
 	// Invalid report type for topic or invalid topic entirely
-	public function invalid($type, $county_id) {
+	public function invalid($type, $county_id)
+    {
 		if ($type == 'chart') {
-			$this->set(array(
+			$this->set([
 				'image' => file_get_contents('../webroot/img/error_chart_not_found.png')
-			));
+			]);
 			$this->layout = 'png';
 			$this->render('/Charts/error');
 		}
 	}
 
 	// Data not available for the selected county
-	public function data_unavailable($type, $county_id) {
+	public function data_unavailable($type, $county_id)
+    {
 		if ($type == 'chart') {
-			$this->set(array(
+			$this->set([
 				'image' => file_get_contents('../webroot/img/county_data_unavailable.png')
-			));
+			]);
 			$this->layout = 'png';
 			$this->render('/Charts/error');
 		}
 	}
 
 	// Unknown chart
-	public function unknown($type) {
+	public function unknown($type)
+    {
 		if ($type == 'chart') {
-			$this->set(array(
+			$this->set([
 				'image' => file_get_contents('../webroot/img/error_chart_not_found.png')
-			));
+			]);
 			$this->layout = 'png';
 			$this->render('/Charts/error');
 		}
 	}
 
-	public function populate_cache() {
+	public function populate_cache()
+    {
 		$this->cacheAction = null;
 		$topics = $this->getTopicList(false);
 		$states = $this->Location->getStateAbbreviations(true);
-		$counties = array();
+		$counties = [];
 		foreach ($states as $state_id => $state) {
 			$counties[$state_id] = $this->Location->getCountiesFull($state_id);
 		}
 		$this->set(compact('topics', 'counties', 'states'));
 	}
 
-	public function flush_cache() {
+	public function flush_cache()
+    {
 		$this->Report->query('TRUNCATE TABLE reports;');
 		$this->set('message', 'Reports cache cleared.');
 		$this->render('/Pages/message');
 	}
 
-	public function all_charts($state, $county) {
+	public function all_charts($state, $county)
+    {
 		if (is_numeric($state)) {
 			$state_id =  $state;
 			$state = strtolower($this->Location->getStateAbbreviation($state_id));
@@ -558,42 +575,46 @@ class ReportsController extends AppController {
 
 
 
-	public function population() {
-		$this->__setDataCategories(array(
+	public function population()
+    {
+		$this->__setDataCategories([
 			'Population' => 1
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(null);
 		return $this->__getOutput();
 	}
 
-	public function population_growth() {
-		$this->__setDataCategories(array(
+	public function population_growth()
+    {
+		$this->__setDataCategories([
 			'Population' => 1
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
-		$this->__setDates(array(1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
+		$this->__setDates([1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015]);
 		return $this->__getOutput();
 	}
 
-	public function density() {
-		$this->__setDataCategories(array(
+	public function density()
+    {
+		$this->__setDataCategories([
 			'Population' => 1,
 			'Housing units' => 350
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function population_age_breakdown() {
-		$this->__setDataCategories(array(
+	public function population_age_breakdown()
+    {
+		$this->__setDataCategories([
             'Total' => 1,
             'Under 5' => 6010,
             '5 to 14' => 5723,
@@ -603,56 +624,60 @@ class ReportsController extends AppController {
             '60 to 74' => 5727,
             '75 and older' => 5728,
             'Under 18' => 6011
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function female_age_breakdown() {
-		$this->__setDataCategories(array(
+	public function female_age_breakdown()
+    {
+		$this->__setDataCategories([
             'Total Females' => 271,
 			'Young Women (< 15)' => 5735,
 			'Women of child bearing age (15 to 44)' => 5736,
 			'Women (> 44)' => 5737
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function population_by_sex() {
-		$this->__setDataCategories(array(
+	public function population_by_sex()
+    {
+		$this->__setDataCategories([
 		    'Total' => 1,
 			'Male' => 270,
 	 		'Female' => 271
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function dependency_ratios() {
-		$this->__setDataCategories(array(
+	public function dependency_ratios()
+    {
+		$this->__setDataCategories([
             'Total Population' => 1,
             'Total 0 to 14 years old' => 6012,
             'Total Over 65 years old' => 6013
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function educational_attainment() {
-		$this->__setDataCategories(array(
+	public function educational_attainment()
+    {
+		$this->__setDataCategories([
 		    'Population 25 years and over' => 453,
             'Less than 9th grade' => 6017,
             '9th to 12th grade, no diploma' => 456,
@@ -661,26 +686,27 @@ class ReportsController extends AppController {
             'Associate\'s degree' => 460,
             'Bachelor\'s degree' => 461,
             'Graduate or professional degree' => 6019
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function graduation_rate() {
-		$this->__setDataCategories(array(
+	public function graduation_rate()
+    {
+		$this->__setDataCategories([
 			'High School Graduation Rate' => 5396
-		));
+		]);
 
 		$county_id = $this->{$this->report_subclass}->county_id;
 		$school_corps = $this->Location->getCountysSchoolCorps($county_id);
-		$locations = array();
+		$locations = [];
 		foreach ($school_corps as $corp_name => $corp_id) {
-			$locations[] = array(6, $corp_id, $corp_name);
+			$locations[] = [6, $corp_id, $corp_name];
 		}
-		$locations[] = array(3);
+		$locations[] = [3];
 		$this->__setLocations($locations);
 		$locations = $this->{$this->report_subclass}->locations;
 		$location_count = count($locations);
@@ -691,311 +717,337 @@ class ReportsController extends AppController {
 		return $this->__getOutput();
 	}
 
-	public function household_size() {
-		$this->__setDataCategories(array(
+	public function household_size()
+    {
+		$this->__setDataCategories([
 			'Average household size' => 348
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function households_with_minors() {
-		$this->__setDataCategories(array(
+	public function households_with_minors()
+    {
+		$this->__setDataCategories([
 			'Households with one or more people under 18 years' => 438
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function household_types_with_minors() {
-		$this->__setDataCategories(array(
+	public function household_types_with_minors()
+    {
+		$this->__setDataCategories([
 			'Married-couple family' => 5762,
 			'Male householder, no wife present' => 5764,
 			'Female householder, no husband present' => 5766,
 	 	 	'Nonfamily households' => 5768,
 			'Households with one or more people under 18 years' => 346 //Not part of chart, used for calculation
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function households_with_over_60() {
-		$this->__setDataCategories(array(
+	public function households_with_over_60()
+    {
+		$this->__setDataCategories([
 			'Percent of households with one or more people 60 years and over' => 6025
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function poverty() {
-		$this->__setDataCategories(array(
+	public function poverty()
+    {
+		$this->__setDataCategories([
 			'Poverty Percent: All Ages' => 5686,
  	 		'Poverty Percent: Under 18' => 5688
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function lunches() {
-		$this->__setDataCategories(array(
+	public function lunches()
+    {
+		$this->__setDataCategories([
 			'Free lunches' => 5780,
 		 	'Reduced lunches' => 5781,
 		 	'Free + reduced' => 5782,
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function disabled() {
-		$this->__setDataCategories(array(
+	public function disabled()
+    {
+		$this->__setDataCategories([
 		    'Population' => 1,
 			'Total population with a disability' => 5794
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function disabled_ages() {
-		$this->__setDataCategories(array(
+	public function disabled_ages()
+    {
+		$this->__setDataCategories([
 			'5 to 17 years' => 6014,
 			'18 to 34 years' => 6015,
 			'35 to 64 years' => 6016,
 			'65 to 74 years' => 5803,
 			'75+ years' => 5804
-		));
-		$this->__setLocations(array(
-			array(2)
-		));
+		]);
+		$this->__setLocations([
+			[2]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function share_of_establishments() {
-		$this->__setDataCategories(array(
+	public function share_of_establishments()
+    {
+		$this->__setDataCategories([
             'Total Establishments' => 5810,
 		    'Establishments: Logistics (Transportation, warehousing, wholesale, retail trade)' => 5811,
 			'Establishments: Manufacturing' => 5812
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2014);
 		return $this->__getOutput();
 	}
 
-	public function employment_growth() {
-		$this->__setDataCategories(array(
+	public function employment_growth()
+    {
+		$this->__setDataCategories([
 			'Employment' => 5815
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(range(1995, 2015, 5));
 		return $this->__getOutput();
 	}
 
-	public function employment_trend() {
-		$this->__setDataCategories(array(
+	public function employment_trend()
+    {
+		$this->__setDataCategories([
 			'Non-farm Employment' => 5815
-		));
-		$this->__setLocations(array(
-			array(2)
-		));
+		]);
+		$this->__setLocations([
+			[2]
+		]);
 		$this->__setDates(null);
 		return $this->__getOutput();
 	}
 
-	public function unemployment_rate() {
-		$this->__setDataCategories(array(
+	public function unemployment_rate()
+    {
+		$this->__setDataCategories([
 			'Unemployment Rate' => 569
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 
 		$this->__setDates(null);
 		return $this->__getOutput();
 	}
 
-	public function personal_and_household_income() {
-		$this->__setDataCategories(array(
+	public function personal_and_household_income()
+    {
+		$this->__setDataCategories([
 			'Per capita personal income' => 47,
  	 		'Median household income' => 5689
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function income_inequality() {
-		$this->__setDataCategories(array(
+	public function income_inequality()
+    {
+		$this->__setDataCategories([
 			'Income inequality' => 5668
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
-		$this->__setDates(array(1970, 1980, 1990, 2000, 2010));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
+		$this->__setDates([1970, 1980, 1990, 2000, 2010]);
 		return $this->__getOutput();
 	}
 
-	public function birth_rate() {
-		$this->__setDataCategories(array(
+	public function birth_rate()
+    {
+		$this->__setDataCategories([
 			'Birth Rate = Live Births per 1,000 population' => 5827
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function birth_rate_by_age() {
-		$this->__setDataCategories(array(
+	public function birth_rate_by_age()
+    {
+		$this->__setDataCategories([
 			'10 to 49' => 5840,
 			'Under 18' => 5841,
 			'18 to 39' => 5842,
 			'40 to 49' => 5843
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2006);
 		return $this->__getOutput();
 	}
 
-	public function birth_measures() {
-		$this->__setDataCategories(array(
+	public function birth_measures()
+    {
+		$this->__setDataCategories([
 			'Low Birthweight' => 5844, //(less than 2,500 grams)
 			'Very Low Birthweight' => 5845, //(less than 1,500 grams)
 			'< 37 Weeks Gestation' => 5846,
 			'Prenatal Care, 1st Trimester' => 5847,
 			'Mother Unmarried' => 5848
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function fertility_rates() {
-		$this->__setDataCategories(array(
+	public function fertility_rates()
+    {
+		$this->__setDataCategories([
 			'General' => 5849,
 			'Total' => 5850
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function deaths_by_sex() {
-		$this->__setDataCategories(array(
+	public function deaths_by_sex()
+    {
+		$this->__setDataCategories([
             'Total' => 5853,
             'Male' => 5854,
             'Female' => 5855
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function death_rate() {
-		$this->__setDataCategories(array(
+	public function death_rate()
+    {
+		$this->__setDataCategories([
 			'All causes: Death rate, age-adjusted' => 5852
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function infant_mortality() {
-		$this->__setDataCategories(array(
+	public function infant_mortality()
+    {
+		$this->__setDataCategories([
 			'Infant death rate per 1,000 live births' => 5908
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2013);
 		return $this->__getOutput();
 	}
 
-	public function life_expectancy() {
-		$this->__setDataCategories(array(
+	public function life_expectancy()
+    {
+		$this->__setDataCategories([
 			'Average life expectancy' => 5995
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2010);
 		$this->{$this->report_subclass}->years_label = '2010';
 		return $this->__getOutput();
 	}
 
-	public function years_of_potential_life_lost() {
-		$this->__setDataCategories(array(
+	public function years_of_potential_life_lost()
+    {
+		$this->__setDataCategories([
 			'Years of potential life lost before age 75 per 10,000 population (age-adjusted)' => 5996
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2016);
 		return $this->__getOutput();
 	}
 
-	public function self_rated_poor_health() {
-		$this->__setDataCategories(array(
+	public function self_rated_poor_health()
+    {
+		$this->__setDataCategories([
 			'Self-Rated Health Status: Fair/Poor' => 5997 //percent
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2016);
 		return $this->__getOutput();
 	}
 
-	public function unhealthy_days() {
-		$this->__setDataCategories(array(
+	public function unhealthy_days()
+    {
+		$this->__setDataCategories([
 			'Avg number of physically unhealthy days per month' => 5999,
 			'Avg number of mentally unhealthy days per month' => 6000
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2016);
 		return $this->__getOutput();
 	}
 
-	public function death_rate_by_cause() {
-		$this->__setDataCategories(array(
+	public function death_rate_by_cause()
+    {
+		$this->__setDataCategories([
 			'Malignant neoplasms' => 5868,	// All of these are the death rate, age adjusted
 			'Diabetes mellitus' => 5872,
 			'Alzheimer\'s disease' => 5876,
@@ -1005,80 +1057,86 @@ class ReportsController extends AppController {
 			'Chronic liver disease and cirrhosis' => 5892,
 			'Nephritis, nephrotic syndrome, and nephrosis' => 5896,
 			'Motor vehicle accidents' => 5900
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2007);
 		return $this->__getOutput();
 	}
 
-	public function cancer_death_and_incidence_rates() {
-		$this->__setDataCategories(array(
+	public function cancer_death_and_incidence_rates()
+    {
+		$this->__setDataCategories([
 			'Incidence Rate: All Cancers' => 6001,
 			'Death Rate: All Cancers' => 6003,
 			'Incidence Rate: Lung and Bronchus Cancer' => 6005,
 			'Death Rate: Lung and Bronchus Cancer' => 6007
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2013);
 		$this->{$this->report_subclass}->years_label = '2009-2013';
 		return $this->__getOutput();
 	}
 
-	public function lung_diseases() {
-		$this->__setDataCategories(array(
+	public function lung_diseases()
+    {
+		$this->__setDataCategories([
 		    'Population' => 1,
             'Pediatric Asthma' => 5930,
             'Adult Asthma' => 5931,
             'Chronic Obstructive Pulmonary Disease' => 6028,
             'Lung Cancer' => 6029
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function federal_spending() {
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
-		$this->__setDataCategories(array(
+	public function federal_spending()
+    {
+		$this->__setLocations([
+			[2], [3]
+		]);
+		$this->__setDataCategories([
 			'Total Federal Government Expenditure' => 5822
-		));
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function public_assistance() {
-		$this->__setDataCategories(array(
+	public function public_assistance()
+    {
+		$this->__setDataCategories([
 			'Women, Infants, and Children (WIC) Participants' => 5783,
 		 	'Monthly Average of Families Receiving TANF' => 5785,
 		 	'Monthly Average of Persons Issued Food Stamps (FY)' => 5787
-		));
-		$this->__setLocations(array(
-			array(2), array(3)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3]
+		]);
 		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 
-	public function grants_awarded() {
+	public function grants_awarded()
+    {
 		return $this->__getOutput();
 	}
 
 	/*
-	public function __template() {
-		$this->__setDataCategories(array(
+	public function __template()
+	{
+		$this->__setDataCategories([
 
-		));
-		$this->__setLocations(array(
-			array(2), array(3), array(4)
-		));
+		]);
+		$this->__setLocations([
+			[2], [3], [4]
+		]);
 		$this->__setDates(2000);
 		return $this->__getOutput();
 	}
