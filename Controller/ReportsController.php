@@ -962,13 +962,12 @@ class ReportsController extends AppController {
 
 	public function years_of_potential_life_lost() {
 		$this->__setDataCategories(array(
-			'Years of potential life lost before age 75 (2006-2008)' => 5996
+			'Years of potential life lost before age 75 per 10,000 population (age-adjusted)' => 5996
 		));
 		$this->__setLocations(array(
 			array(2), array(3)
 		));
-		$this->__setDates(2008);
-		$this->{$this->report_subclass}->years_label = '2006-2008';
+		$this->__setDates(2016);
 		return $this->__getOutput();
 	}
 

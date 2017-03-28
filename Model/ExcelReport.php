@@ -1099,14 +1099,15 @@ class ExcelReport extends Report {
 		$year = reset($this->dates);
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+			    $this->values[$loc_key][$label] = $value;
 			}
 		}
 		
 		// Finalize
-		$this->columns = array_merge(array(''), $this->getLocationNames());
-		$this->title = "Years of Potential Life Lost* ($this->years_label)";
-		$this->footnote = '* Before age 75';
+		$this->columns = array_merge([''], $this->getLocationNames());
+		$this->title = "Years of Potential Life Lost* ($year)";
+        $this->footnote = '* Before age 75 per 10,000 population (age-adjusted)';
 		$this->options[] = 'hide_first_col';
 		$this->row_labels = array_keys($this->data_categories);
 		$this->first_col_format = 'string';

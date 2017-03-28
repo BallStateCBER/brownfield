@@ -2567,42 +2567,41 @@ class SvgChartReport extends Report {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
-		$this->chart->type("BarChart");
-		$this->chart->columns(array(
-	        'category' => array(
+		$this->chart->type('BarChart');
+		$this->chart->columns([
+	        'category' => [
 	        	'label' => 'Location',
 	        	'type' => 'string'
-			),
-	        'value' => array(
+			],
+	        'value' => [
 	        	'label' => 'Years of Potential Life Lost',
 	        	'type' => 'number',
 	        	'format' => '#,###'
-			),
-			'annotation' => array(
+			],
+			'annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			),
-			'colors' => array(
+			],
+			'colors' => [
 				'label' => 'Colors',
 				'type' => 'string',
 				'role' => 'style'
-			)
-	    ));
+			]
+	    ]);
 		
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $this->values[$loc_key][$label] = $value;
 			}
 		}
 		
 		// Add bars
 		$i = 0;
 		foreach ($this->locations as $loc_key => $location) {
-			$row = array(
-				'category' => $location[2]
-			);
+			$row = ['category' => $location[2]];
 			foreach ($this->data_categories as $label => $category_id) {
 				$value = $this->values[$loc_key][$label];
 				$row['value'] = $value;
@@ -2614,19 +2613,12 @@ class SvgChartReport extends Report {
 		}
 		
 		// Finalize
-		$year = $this->getYears();
-		$this->applyOptions(array(
-			'chartArea' => array(
-				'left' => 150
-			),
-			'hAxis' => array(
-				'minValue' => null
-			),
-			'legend' => array(
-				'position' => 'none'
-			),
-			'title' => "Years of Potential Life Lost Before Age 75 ($year)"
-		));
+		$this->applyOptions([
+			'chartArea' => ['left' => 150],
+			'hAxis' => ['minValue' => null],
+			'legend' => ['position' => 'none'],
+			'title' => "Years of Potential Life Lost Before Age 75 ($this->year)"
+		]);
 		$this->prepDataAxis('number', 0, 'h');
 	}
 
