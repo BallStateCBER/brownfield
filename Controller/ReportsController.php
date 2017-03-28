@@ -1025,8 +1025,8 @@ class ReportsController extends AppController {
 		$this->__setLocations(array(
 			array(2), array(3), array(4)
 		));
-		$this->__setDates(2008);
-		$this->{$this->report_subclass}->years_label = '2004-2008';
+		$this->__setDates(2013);
+		$this->{$this->report_subclass}->years_label = '2009-2013';
 		return $this->__getOutput();
 	}
 
