@@ -578,16 +578,39 @@ class TableReport extends Report {
 	
 	public function birth_rate_by_age($county = 1) {
 		// Gather data
+        $totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			    $totals[$loc_key][$label] = $value;
 			}
 		}
+
+        // Calculate birth rate
+        foreach ($this->data_categories as $label => $categoryId) {
+            if (strpos($label, 'population')) {
+                continue;
+            }
+            foreach ($this->locations as $locKey => $location) {
+                $births = $totals[$locKey][$label];
+                $populationLabel = str_replace('Births, mother', 'Female population', $label);
+                $population = $totals[$locKey][$populationLabel];
+                $rate = $births / ($population / 1000);
+                $rateLabel = str_replace('Births, mother ', '', $label);
+                $this->values[$locKey][$rateLabel] = round($rate, 1);
+            }
+        }
 		
 		// Finalize
-		$this->columns = array_merge(array('Age Group'), $this->getLocationNames());
+		$this->columns = array_merge(['Age Group'], $this->getLocationNames());
 		$this->title = "Birth Rate By Age Group ($this->year)";
-		$this->table = $this->getFormattedTableArray(array_keys($this->data_categories), $this->values, 'string', 'number', 2);
+        $this->table = $this->getFormattedTableArray(
+            array_keys($this->values[0]),
+            $this->values,
+            'string',
+            'number',
+            2
+        );
 	}
 	
 	public function birth_measures($county = 1) {

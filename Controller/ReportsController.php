@@ -916,15 +916,17 @@ class ReportsController extends AppController {
 	public function birth_rate_by_age()
     {
 		$this->__setDataCategories([
-			'10 to 49' => 5840,
-			'Under 18' => 5841,
-			'18 to 39' => 5842,
-			'40 to 49' => 5843
+			'Births, mother 10 to 19' => 6034,
+			'Births, mother 20 to 39' => 6035,
+			'Births, mother 40 to 49' => 6036,
+            'Female population 10 to 19' => 6030,
+            'Female population 20 to 39' => 6031,
+            'Female population 40 to 49' => 6032
 		]);
 		$this->__setLocations([
 			[2], [3]
 		]);
-		$this->__setDates(2006);
+		$this->__setDates(2015);
 		return $this->__getOutput();
 	}
 

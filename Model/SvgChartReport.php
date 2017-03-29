@@ -2012,61 +2012,78 @@ class SvgChartReport extends Report {
 		// Create chart
 		$this->chart = new GoogleCharts();
 		$this->applyDefaultOptions();
-		$this->chart->type("ColumnChart");
-		$county_name = $this->locations[0][2];
-		$this->chart->columns(array(
-	        'category' => array(
+		$this->chart->type('ColumnChart');
+		$countyName = $this->locations[0][2];
+		$this->chart->columns([
+	        'category' => [
 	        	'label' => 'Category', 
 	        	'type' => 'string'
-			),
-	        'county_value' => array(
-	        	'label' => $county_name, 
+            ],
+	        'county_value' => [
+	        	'label' => $countyName,
 	        	'type' => 'number'
-			),
-			'county_annotation' => array(
+            ],
+			'county_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			),
-			'state_value' => array(
+            ],
+			'state_value' => [
 	        	'label' => 'Indiana', 
 	        	'type' => 'number'
-			),
-			'state_annotation' => array(
+            ],
+			'state_annotation' => [
 				'label' => 'Annotation',
 				'type' => 'string',
 				'role' => 'annotation'
-			)
-	    ));
+            ]
+        ]);
 		
 		// Gather data
-		foreach ($this->data_categories as $label => $category_id) {
-			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+		$totals = [];
+        foreach ($this->data_categories as $label => $categoryId) {
+			foreach ($this->locations as $locKey => $location) {
+				$value = $this->Datum->getValue($categoryId, $location[0], $location[1], $this->year);
+			    $totals[$locKey][$label] = $value;
 			}
 		}
+
+		// Calculate birth rate
+        foreach ($this->data_categories as $label => $categoryId) {
+		    if (strpos($label, 'population')) {
+		        continue;
+            }
+            foreach ($this->locations as $locKey => $location) {
+		        $births = $totals[$locKey][$label];
+                $populationLabel = str_replace('Births, mother', 'Female population', $label);
+		        $population = $totals[$locKey][$populationLabel];
+                $rate = $births / ($population / 1000);
+                $rateLabel = str_replace('Births, mother ', '', $label);
+                $this->values[$locKey][$rateLabel] = round($rate, 1);
+            }
+        }
 		
 		// Add bars
-		foreach ($this->data_categories as $label => $category_id) {
-			$values = array();
+		foreach ($this->values[0] as $label => $value) {
+			$values = [];
 			foreach ($this->locations as $key => $set) {
 				$values[] = $this->values[$key][$label];
 			}
-			$this->chart->addRow(array(
+			$this->chart->addRow([
 				'category' => $label, 
 				'county_value' => $values[0],
 				'county_annotation' => $values[0],
 				'state_value' => $values[1],
 				'state_annotation' => $values[1]
-			));
+            ]);
 		}
 		
 		// Finalize
 		$years = $this->getYears();
-		$this->applyOptions(array(
+		$this->applyOptions([
 			'colors' => array_slice($this->colors, 0, 2),
 			'title' => "Birth Rate By Age Group ($years)"
-		));
+        ]);
 	}
 
 	public function birth_measures() {

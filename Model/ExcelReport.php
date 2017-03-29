@@ -946,16 +946,33 @@ class ExcelReport extends Report {
 	public function birth_rate_by_age($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
+		$totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
-				$this->values[$loc_key][$label] = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
+                $totals[$loc_key][$label] = $value;
 			}
 		}
+
+        // Calculate birth rate
+        foreach ($this->data_categories as $label => $categoryId) {
+            if (strpos($label, 'population')) {
+                continue;
+            }
+            foreach ($this->locations as $locKey => $location) {
+                $births = $totals[$locKey][$label];
+                $populationLabel = str_replace('Births, mother', 'Female population', $label);
+                $population = $totals[$locKey][$populationLabel];
+                $rate = $births / ($population / 1000);
+                $rateLabel = str_replace('Births, mother ', '', $label);
+                $this->values[$locKey][$rateLabel] = round($rate, 1);
+            }
+        }
 		
 		// Finalize
-		$this->columns = array_merge(array('Age Group'), $this->getLocationNames());
+		$this->columns = array_merge(['Age Group'], $this->getLocationNames());
 		$this->title = "Birth Rate By Age Group ($year)";
-		$this->row_labels = array_keys($this->data_categories);
+		$this->row_labels = array_keys($this->values[0]);
 		$this->first_col_format = 'string';
 		$this->data_format = 'number';
 		$this->data_precision = 2;
