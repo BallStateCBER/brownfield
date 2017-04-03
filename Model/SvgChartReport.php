@@ -2040,28 +2040,12 @@ class SvgChartReport extends Report {
         ]);
 		
 		// Gather data
-		$totals = [];
         foreach ($this->data_categories as $label => $categoryId) {
 			foreach ($this->locations as $locKey => $location) {
 				$value = $this->Datum->getValue($categoryId, $location[0], $location[1], $this->year);
-			    $totals[$locKey][$label] = $value;
+			    $this->values[$locKey][$label] = $value;
 			}
 		}
-
-		// Calculate birth rate
-        foreach ($this->data_categories as $label => $categoryId) {
-		    if (strpos($label, 'population')) {
-		        continue;
-            }
-            foreach ($this->locations as $locKey => $location) {
-		        $births = $totals[$locKey][$label];
-                $populationLabel = str_replace('Births, mother', 'Female population', $label);
-		        $population = $totals[$locKey][$populationLabel];
-                $rate = $births / ($population / 1000);
-                $rateLabel = str_replace('Births, mother ', '', $label);
-                $this->values[$locKey][$rateLabel] = round($rate, 1);
-            }
-        }
 		
 		// Add bars
 		foreach ($this->values[0] as $label => $value) {
