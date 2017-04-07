@@ -587,12 +587,32 @@ class CsvReport extends Report {
 	public function birth_rate_by_age($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
+		$totals = [];
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {
 				$value = $this->Datum->getValue($category_id, $location[0], $location[1], $year);
-                $this->values[$loc_key][$label] = $value;
+			    $totals[$loc_key][$label] = $value;
 			}
 		}
+
+        // Calculate birth rate
+        foreach ($this->data_categories as $label => $categoryId) {
+            if (stripos($label, 'population')) {
+                continue;
+            }
+            foreach ($this->locations as $locKey => $location) {
+                $births = $totals[$locKey][$label];
+                $populationLabel = str_replace(
+                    'Number of births, mother aged',
+                    'Female Population, ages',
+                    $label
+                );
+                $population = $totals[$locKey][$populationLabel];
+                $rate = $births / ($population / 1000);
+                $rateLabel = str_replace('Number of births, mother aged ', '', $label) . ' years';
+                $this->values[$locKey][$rateLabel] = round($rate, 1);
+            }
+        }
 		
 		// Finalize
 		$this->columns = array_merge(['Age Group'], $this->getLocationNames());
