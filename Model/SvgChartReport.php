@@ -2063,7 +2063,7 @@ class SvgChartReport extends Report {
 		        $population = $totals[$locKey][$populationLabel];
                 $rate = $births / ($population / 1000);
                 $rateLabel = str_replace('Number of births, mother aged ', '', $label) . ' years';
-                $this->values[$locKey][$rateLabel] = round($rate, 1);
+                $this->values[$locKey][$rateLabel] = round($rate);
             }
         }
 		
