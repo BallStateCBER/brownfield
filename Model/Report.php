@@ -289,7 +289,10 @@ class Report extends AppModel {
 	}
 	
 	public function getFirstTopic() {
-		return reset(array_keys($this->getTopicList(false)));
+		$topicList = $this->getTopicList(false);
+		$topicCategories = array_keys($topicList);
+
+	    return reset($topicCategories);
 	}
 	
 	public function getTopicFullName($topic) {
