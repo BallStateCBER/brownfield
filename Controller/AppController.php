@@ -40,9 +40,16 @@ class AppController extends Controller {
 		'DebugKit.Toolbar',
 		'DataCenter.Flash',
 		'Cookie',
-		'RequestHandler'
+		'RequestHandler',
+        'Security'
 	);
-	
+
+    public function beforeFilter()
+    {
+        $this->Security->blackHoleCallback = 'forceSSL';
+        $this->Security->requireSecure();
+    }
+
 	public function beforeRender() {
 		$this->setSidebarVars();
 	}
@@ -135,4 +142,14 @@ class AppController extends Controller {
 		
 		$this->set($retval);
 	}
+
+    /**
+     * Redirects the current request to HTTPS
+     *
+     * @return mixed
+     */
+    public function forceSSL()
+    {
+        return $this->redirect('https://' . env('SERVER_NAME') . $this->here);
+    }
 }
