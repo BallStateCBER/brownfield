@@ -40,15 +40,8 @@ class AppController extends Controller {
 		'DebugKit.Toolbar',
 		'DataCenter.Flash',
 		'Cookie',
-		'RequestHandler',
-        'Security'
+		'RequestHandler'
 	);
-
-    public function beforeFilter()
-    {
-        $this->Security->blackHoleCallback = 'forceSSL';
-        $this->Security->requireSecure();
-    }
 
 	public function beforeRender() {
 		$this->setSidebarVars();
