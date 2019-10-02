@@ -987,7 +987,7 @@ class SvgChartReport extends Report {
             $this->values[$loc_key] = $value;
 			$color = $location[2] == '(Indiana average)' ? $this->colors[1] : $this->colors[0];
 			$this->chart->addRow(array(
-				'category' => $location[2],
+				'category' => trim($location[2]),
 				'value' => $value,
 				'annotation' => sprintf("%.1f", ($value * 100)).'%',
 				'colors' => $color
