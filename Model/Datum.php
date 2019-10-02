@@ -118,8 +118,13 @@ class Datum extends AppModel {
 		
 		$values = $dates = array();
 		foreach ($results as $result) {
+		    $value = $result['Datum']['value'];
+		    if ($value == '0') {
+		        return 0;
+            }
+
 			// Remove trailing zeros (and trailing decimal point) to minimize query length
-			$value = rtrim(trim($result['Datum']['value'], '0'), '.');
+			$value = rtrim(trim($value, '0'), '.');
 			return ($value == '') ? 0 : $value;
 		}
 		return false;
