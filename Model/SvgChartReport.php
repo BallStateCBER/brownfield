@@ -976,14 +976,16 @@ class SvgChartReport extends Report {
 		$category_id = end($this->data_categories);
 		$i = 1;
 		foreach ($this->locations as $loc_key => $location) {
-			$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year) / 100;
-			if ($value) {
-				$this->values[$loc_key] = $value;
-			} else {
-				unset($this->locations[$loc_key]);
-			}
-			
-			$color = $i < count($this->locations) ? $this->colors[0] : $this->colors[1];
+			$value = $this->Datum->getValue($category_id, $location[0], $location[1], $this->year);
+			if ($value === false) {
+                unset($this->locations[$loc_key]);
+                $i++;
+                continue;
+            }
+
+			$value = $value / 100;
+            $this->values[$loc_key] = $value;
+			$color = $location[2] == '(Indiana average)' ? $this->colors[1] : $this->colors[0];
 			$this->chart->addRow(array(
 				'category' => $location[2],
 				'value' => $value,
@@ -1001,7 +1003,7 @@ class SvgChartReport extends Report {
 		// Finalize
 		$year = $this->getYears();
 		$county_name = $this->Location->getLocationName(2, $this->county_id, true);
-		$colors = array_fill(0, count($this->locations) - 1, $this->colors[0]);
+		$colors = array_fill(0, $location_count - 1, $this->colors[0]);
 		$colors[] = $this->colors[1];
 		$this->applyOptions(array(
 			'chartArea' => array(
