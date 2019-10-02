@@ -120,7 +120,14 @@ class Datum extends AppModel {
 		    return false;
         }
 
-        return $results[0]['Datum']['value'];
+		$value = $results[0]['Datum']['value'];
+
+		// Remove trailing zeros (and trailing decimal point) for floats
+        if (strpos($value, '.')) {
+            $value = rtrim(trim($value, '0'), '.');
+        }
+
+		return $value;
 	}
 	
 	public function getGrantsAwarded() {
