@@ -123,8 +123,6 @@ class Datum extends AppModel {
 		        return 0;
             }
 
-			// Remove trailing zeros (and trailing decimal point) to minimize query length
-			$value = rtrim(trim($value, '0'), '.');
 			return ($value == '') ? 0 : $value;
 		}
 		return false;
