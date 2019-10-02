@@ -115,17 +115,12 @@ class Datum extends AppModel {
 			),
 			'limit' => 1
 		));
-		
-		$values = $dates = array();
-		foreach ($results as $result) {
-		    $value = $result['Datum']['value'];
-		    if ($value == '0') {
-		        return 0;
-            }
 
-			return ($value == '') ? 0 : $value;
-		}
-		return false;
+		if (empty($results) || !isset($results[0]['Datum']['value'])) {
+		    return false;
+        }
+
+        return $results[0]['Datum']['value'];
 	}
 	
 	public function getGrantsAwarded() {
