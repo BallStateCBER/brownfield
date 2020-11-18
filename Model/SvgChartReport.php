@@ -186,7 +186,7 @@ class SvgChartReport extends Report {
 	 * @param array $data
 	 * @param array $segment_params Keys may include 'locations', 'categories', 'dates', and 'county_id'
 	 * @param array $structure Optional array passed to Chart to help with rearranging data
-	 * @return GoogleCharts
+	 * @return GoogleCharts|array
 	 */
 	public function getChart($segment, $data, $segment_params, $structure) {
 		// TODO: Change references to 'segment' (used in County Profiles) into 'topic' (used in this site, more intuitive)
