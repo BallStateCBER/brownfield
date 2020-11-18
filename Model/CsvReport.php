@@ -286,7 +286,7 @@ class CsvReport extends Report {
 		$this->table = $this->getFormattedTableArray($this->getLocationNames(), $this->values, 'string', 'percent', 1);
 	}
 	
-	public function household_size($county = 1) {;
+	public function household_size($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
 		foreach ($this->data_categories as $label => $category_id) {

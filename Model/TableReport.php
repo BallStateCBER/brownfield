@@ -294,7 +294,7 @@ class TableReport extends Report {
 		$this->table = $this->getFormattedTableArray($this->getLocationNames(), $this->values, 'string', 'percent', 1);
 	}
 	
-	public function household_size($county = 1) {;
+	public function household_size($county = 1) {
 		// Gather data
 		foreach ($this->data_categories as $label => $category_id) {
 			foreach ($this->locations as $loc_key => $location) {

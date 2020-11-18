@@ -595,7 +595,7 @@ class ExcelReport extends Report {
 		$this->data_precision = 1;
 	}
 	
-	public function household_size($county = 1) {;
+	public function household_size($county = 1) {
 		// Gather data
 		$year = reset($this->dates);
 		foreach ($this->data_categories as $label => $category_id) {
